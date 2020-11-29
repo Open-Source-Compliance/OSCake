@@ -17,11 +17,27 @@
   <a href="#licensing">Licensing</a>
 </p>
 
-The goal of this project is ... _TBD_
+![OSCake logo](img/oscake-logo-186x224.png)
+The goal of the OSCake project is to develop an XTEXT / XTEND based intelligent Open Source Compliance artifact knowledge engine, that
+
+* takes a description of a package collection and the compliance artifacts found in the packages
+
+* creates the one **O**pen **S**ource **C**ompliance **F**ile that - if distributed together with package collection - assures that the package collection is distributed compliantly = in accordance with the requirements of the involved licenses.
+
+The point of this project is, that the knowledge which Open Source compliance artifacts have to be created / delivered in the context of which licenses and which architectural constraints is inherently embedded into the Domain Specific Language(s) defined and evaluated by XText and XTend.
+
 
 ## About this component
 
-_TBD_
+If you read the [reasons to set up the TDOSCA initiative](https://github.com/Open-Source-Compliance/tdosca) and especially the transcription of our lecture given on the [Open Compliance Summit 2020](https://github.com/Open-Source-Compliance/tdosca/blob/master/doc/20201201-lecture-at-open-compliance-summit/README.md), then you end up in sheet signaling in which sense (for example) ORT and OSCake will cooperate: OSCake takes results gathered by ORT and compiles the really license adequate Open Source Compliance File:
+
+![ORT & OSCake cooperation](img/a-ort-oscake-cooperation.png)
+
+OSCake applies the Open Source License Compliance knowledge - inherently in a declarative manner represented into the domain specific language - and creates the inherently license adequate Open Source Declaration File from which it derives the distributable markdown version.
+
+Existing Open Source scan tools create large lists of compliance entities that in any sense could be relevant for creating Open Source Compliance Artifact(s). OSCake knows which of them must used in which license context and creates the one Open Source Compliance File which really meets the requirements of the involved licenses.
+
+![OSCake architecture](img/b-oscake-architecture.png)
 
 ## Development
 
@@ -43,7 +59,8 @@ Consequently, all content will be made available primarily in English. We also a
 
 ## Documentation
 
-The full documentation for the telekom can be found in _TBD_
+_TBD_
+
 ## Support and Feedback
 The following channels are available for discussions, feedback, and support requests:
 
