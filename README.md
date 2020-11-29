@@ -3,9 +3,9 @@
 </h1>
 
 <p align="center">
-    <a href="https://github.com/telekom/OSCake/commits/" title="Last Commit"><img src="https://img.shields.io/github/last-commit/telekom/OSCake?style=flat"></a>
-    <a href="https://github.com/telekom/OSCake/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/telekom/OSCake?style=flat"></a>
-    <a href="https://github.com/telekom/OSCake/blob/master/LICENSE" title="License"><img src="https://img.shields.io/badge/License-EPL%202.0-red.svg?style=flat"></a>
+    <a href="https://github.com/open-source-compliance/OSCake/commits/" title="Last Commit"><img src="https://img.shields.io/github/last-commit/open-source-compliance/OSCake?style=flat"></a>
+    <a href="https://github.com/open-source-compliance/OSCake/issues" title="Open Issues"><img src="https://img.shields.io/github/issues/open-source-compliance/OSCake?style=flat"></a>
+    <a href="https://github.com/open-source-compliance/OSCake/blob/master/LICENSE" title="License"><img src="https://img.shields.io/badge/License-EPL%202.0-red.svg?style=flat"></a>
 </p>
 
 <p align="center">
@@ -66,7 +66,7 @@ The following channels are available for discussions, feedback, and support requ
 
 | Type                     | Channel                                                |
 | ------------------------ | ------------------------------------------------------ |
-| **Issues**   | <a href="https://github.com/telekom/OSCake/issues/new/choose" title="General Discussion"><img src="https://img.shields.io/github/issues/telekom/OSCake?style=flat-square"></a> </a>   |
+| **Issues**   | <a href="https://github.com/open-source-compliance/OSCake/issues/new/choose" title="General Discussion"><img src="https://img.shields.io/github/issues/open-source-compliance/OSCake?style=flat-square"></a> </a>   |
 | **Other Requests**    | <a href="mailto:opensource@telekom.de" title="Email Open Source Team"><img src="https://img.shields.io/badge/email-Open%20Source%20Team-green?logo=mail.ru&style=flat-square&logoColor=white"></a>   |
 
 ## How to Contribute
