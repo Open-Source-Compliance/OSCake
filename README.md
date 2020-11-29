@@ -17,7 +17,8 @@
   <a href="#licensing">Licensing</a>
 </p>
 
-![OSCake logo](img/oscake-logo-186x224.png)
+![OSCake logo](img/oscake-logo-100x121.png)
+
 The goal of the OSCake project is to develop an XTEXT / XTEND based intelligent Open Source Compliance artifact knowledge engine, that
 
 * takes a description of a package collection and the compliance artifacts found in the packages
@@ -33,11 +34,12 @@ If you read the [reasons to set up the TDOSCA initiative](https://github.com/Ope
 
 ![ORT & OSCake cooperation](img/a-ort-oscake-cooperation.png)
 
-OSCake applies the Open Source License Compliance knowledge - inherently in a declarative manner represented into the domain specific language - and creates the inherently license adequate Open Source Declaration File from which it derives the distributable markdown version.
-
-Existing Open Source scan tools create large lists of compliance entities that in any sense could be relevant for creating Open Source Compliance Artifact(s). OSCake knows which of them must used in which license context and creates the one Open Source Compliance File which really meets the requirements of the involved licenses.
+OSCake applies the Open Source License Compliance knowledge - inherently in a declarative manner represented into the domain specific language - and creates the inherently license adequate Open Source Declaration File from which it derives the distributable markdown version. The more precise architecture of *OSCake* looks like this
 
 ![OSCake architecture](img/b-oscake-architecture.png)
+
+So, existing Open Source scan tools create large lists of compliance entities that in any sense could be relevant for creating Open Source Compliance Artifact(s). *OSCake* takes these more or less complete and mostly over-fulfillinf sets. The *Open Source Compliance artifact knowledge engine* knows which of the articats found by the Open Source scanning tools must used in which license context and derives the one Open Source Compliance File which really meets the requirements of the involved licenses.
+
 
 ## Development
 
