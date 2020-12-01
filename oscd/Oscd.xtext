@@ -1,0 +1,127 @@
+/********************************************************
+ * OSCake
+ *
+ * Copyright (c) {2020 Karsten Reincke, Deutsche Telekom AG
+ *
+ * This program is made available under the terms of the
+ * Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0
+ *
+ * SPDX-License-Identifier: EPL-2.0
+  *******************************************************/
+
+grammar de.oscake.strict.Oscd with org.eclipse.xtext.common.Terminals
+
+generate oscd "http://www.oscake.de/strict/Oscd"
+
+/**
+ * A strict Compliance Artifact Collection consist of
+ * a) Meta-Data
+ * b) a list of complianceArtifactPackages (each referring to a software package)
+ * c) a list of not instantiated = multiply usable license texts
+ */
+ComplianceArtifactCollection:
+'{'
+  '"complianceArtifactCollection"' ':' '{'
+    '"cacId"' ':' cacid=STRING ','
+    ('"cacAuthor"' ':' cacComposer=STRING ',')?
+    ('"cacRelease"' ':' cacReleaseNumber=STRING ',')?
+    ('"cacDate"' ':' cacReleaseDate=STRING ',')?  
+    '"cacContainerPath"' ':' cacContPath=STRING ','
+    '"cacContainerType"' ':' cacContType=('"ZIP"'|'"DIR"')
+  '}' ','
+
+  '"complianceArtifactPackages"' ':' '['
+    '{'
+      (complianceArtifactPackages+=ComplianceArtifactPackage '}' ',' '{')*
+      (complianceArtifactPackages+=ComplianceArtifactPackage '}')
+  ']'
+
+  ( ',' '"multiplyUsableFossLicenses"' ':' '['
+      '{'
+        (multiplyUsableFossLicenses+=MultiplyUsableFossLicense '}' ',' '{')* 
+        (multiplyUsableFossLicenses+=MultiplyUsableFossLicense '}')
+    ']'  
+  )?
+'}';
+
+/**
+ * Each ComplianceArtifactPackage refers to one software package of the 
+ * distributable collection 
+ */
+
+ComplianceArtifactPackage:
+  '"capId"' ':' capid=STRING ','
+  '"capRelease"' ':' capReleaseNumber=STRING ',' 
+  '"capRepository"' ':' capRepoUrl=STRING ',' 
+  
+  '"defaultComplianceArtifacts"' ':' '{'
+      '"scope"' ':' scope='"DEFAULT"' ','
+      dcas=ComplianceArtifactSet
+  '}'
+
+  (
+    ',' '"dirReleatedComplianceArtifacts"' ':' '['
+      '{'
+       (dirReleatedComplianceArtifactSets+=DirReleatedComplianceArtifactSet '}' ',' '{')* 
+       (dirReleatedComplianceArtifactSets+=DirReleatedComplianceArtifactSet '}')
+    ']'  
+  )?
+
+  (
+    ',' '"fileReleatedComplianceArtifacts"' ':' '['
+      '{'
+        (fileReleatedComplianceArtifactSets+=FileReleatedComplianceArtifactSet '}' ',' '{')* 
+        (fileReleatedComplianceArtifactSets+=FileReleatedComplianceArtifactSet '}')
+    ']'  
+  )?
+ ;
+ 
+ DirReleatedComplianceArtifactSet:
+  '"scope"' ':' scope='"DIR"' ','
+  '"scopePath"' ':' path=STRING ','
+  cas=ComplianceArtifactSet
+;
+
+FileReleatedComplianceArtifactSet:
+  '"scope"' ':' scope='"FILE"' ','
+  '"scopePath"' ':' path=STRING ','
+  cas=ComplianceArtifactSet
+;
+ 
+ 
+ ComplianceArtifactSet:
+  '"spdxId"' ':'
+  ( ( spdxId='"MIT"' ',' casMit=ComplianceArtifactSetMIT )|
+     (spdxId='"BSD-2-Clause"' ',' casBsd2Cl=ComplianceArtifactSetBSD2Clause) |
+     (spdxId='"BSD-3-Clause"' ',' casBsd3Cl=ComplianceArtifactSetBSD3Clause) |
+     (spdxId='"Apache-2.0"' ',' casApache20=ComplianceArtifactSetApache20) 
+   )
+;
+ComplianceArtifactSetMIT:
+  '"licenseText"' ':' lfPath=(STRING | 'Null') /* TODO TEST & FIX! */
+;
+
+ComplianceArtifactSetBSD2Clause:
+  /*'"licenseText"' ':' (lfPath=STRING | nil='Null')*/
+  '"licenseText"' ':' lfPath=(STRING | 'Null')
+;
+
+ComplianceArtifactSetBSD3Clause:
+  /*'"licenseText"' ':' (lfPath=STRING | nil='Null')*/
+  '"licenseText"' ':' lfPath=(STRING | 'Null')
+;
+
+ComplianceArtifactSetApache20:
+  /*'"licenseText"' ':' (lfPath=STRING | nil='Null')*/
+  '"licenseText"' ':' apl='"multiply-usable"' ','
+  '"noticeText"' ':' nfPath=(STRING | 'Null')
+; 
+
+MultiplyUsableFossLicense:
+  '"spdxId"' ':'  
+  spdxId= ( '"Apache-2.0"' | 
+            '"Apache-1.0"'
+          ) ','
+  '"licenseText"' ':' lfPath=STRING 
+;
