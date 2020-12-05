@@ -1,6 +1,7 @@
 /********************************************************
- * OSCake
- *
+ * OSCake / OSCD = Open Source Compliance Description
+ * Open Source Compliance artifacts knowledge engine
+ * 
  * Copyright (c) {2020 Karsten Reincke, Deutsche Telekom AG
  *
  * This program is made available under the terms of the
@@ -78,25 +79,25 @@ have been gathered into the file `«cac.cacid+'.oscf.md'»` «IF  (  ((cac.cacCo
   «FOR pkg : cac.complianceArtifactPackages»
 <a name="«clearId(pkg.capid)»"></a>
 ### 3.«(iter+=1).toString» Package: «pkg.capid»
-- Release:
-- Repository:
+- Release: «pkg.capReleaseNumber»
+- Repository: [«pkg.capRepoUrl»](«pkg.capRepoUrl»)
 - ComplianceArtifacts:
-«mtab»- Scope: «pkg.scope»
-«insertCas(pkg.dcas, mtab+mtab)»
-    «FOR scas : pkg.dirReleatedComplianceArtifactSets»
-«mtab»- Scope: «scas.scope»
-«mtab+mtab»- Dir: «scas.path»
+    «FOR dcas : pkg.defComplianceArtifactSets»
+«mtab»- Scope: DEFAULT
+«insertCas(dcas.cas, mtab+mtab)»
+    «ENDFOR»
+    «FOR scas : pkg.dirComplianceArtifactSets»
+«mtab»- Scope: DIR
+«mtab+mtab»- Dir: «scas.dpath»
 «insertCas(scas.cas, mtab+mtab)»
     «ENDFOR»
-    «FOR scas : pkg.fileReleatedComplianceArtifactSets»
-«mtab»- Scope: «scas.scope»
-«mtab+mtab»- File: «scas.path»
+    «FOR scas : pkg.fileComplianceArtifactSets»
+«mtab»- Scope: FILE    
+«mtab+mtab»- File: «scas.fpath»
 «insertCas(scas.cas, mtab+mtab)»
     «ENDFOR»
   «ENDFOR»
-
 «ENDIF»
-
 
 «IF ( cac.multiplyUsableFossLicenses !== null && cac.multiplyUsableFossLicenses.length > 0)»
 «var int oter=0»
@@ -159,9 +160,6 @@ def String insertMitCas(
 «quoteFileContent(cas.lfPath,cacContPath,cacContType)»
 «ENDIF»
 '''
-
-
-
 
 /**
  * inserts the artifacts required my the BSD-2-Clause license
@@ -227,6 +225,7 @@ def String insertApache20Cas(
 «IF (cas.casApache20 == 'Null')»
 «lmtab»- NoticeFile: not part of the repository
 «ELSE»
+«lmtab»- NoticeFile: 
 «quoteFileContent(cas.casApache20.nfPath,cacContPath,cacContType)»
 «ENDIF»
 ''' 
@@ -266,6 +265,7 @@ def String quoteFileContent(String filePath, String repoPath, String repoType) '
 *«repoPath»* (type *«repoType»*)
 and insert its content as a quote at this position
 ```
+
 '''
 
 }

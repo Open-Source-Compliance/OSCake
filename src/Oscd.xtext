@@ -1,6 +1,7 @@
 /********************************************************
- * OSCake
- *
+ * OSCake / OSCD = Open Source Compliance Description
+ * Open Source Compliance artifacts knowledge engine
+ * 
  * Copyright (c) {2020 Karsten Reincke, Deutsche Telekom AG
  *
  * This program is made available under the terms of the
@@ -23,26 +24,26 @@ generate oscd "http://www.oscake.de/strict/Oscd"
 ComplianceArtifactCollection:
 '{'
   '"complianceArtifactCollection"' ':' '{'
-    '"cacId"' ':' cacid=STRING ','
-    ('"cacAuthor"' ':' cacComposer=STRING ',')?
-    ('"cacRelease"' ':' cacReleaseNumber=STRING ',')?
-    ('"cacDate"' ':' cacReleaseDate=STRING ',')?  
-    '"cacContainerPath"' ':' cacContPath=STRING ','
-    '"cacContainerType"' ':' cacContType=('"ZIP"'|'"DIR"')
+    '"cid"' ':' cacid=STRING ','
+    ('"author"' ':' cacComposer=STRING ',')?
+    ('"release"' ':' cacReleaseNumber=STRING ',')?
+    ('"date"' ':' cacReleaseDate=STRING ',')?  
+    '"containerPath"' ':' cacContPath=STRING ','
+    '"containerType"' ':' cacContType=('"ZIP"'|'"DIR"')
   '}' ','
 
   '"complianceArtifactPackages"' ':' '['
     '{'
       (complianceArtifactPackages+=ComplianceArtifactPackage '}' ',' '{')*
       (complianceArtifactPackages+=ComplianceArtifactPackage '}')
-  ']'
-
-  ( ',' '"multiplyUsableFossLicenses"' ':' '['
+  ']' ','
+  '"multiplyUsableFossLicenses"' ':' '['
+    (
       '{'
         (multiplyUsableFossLicenses+=MultiplyUsableFossLicense '}' ',' '{')* 
         (multiplyUsableFossLicenses+=MultiplyUsableFossLicense '}')
-    ']'  
-  )?
+    )?
+  ']' 
 '}';
 
 /**
@@ -51,47 +52,49 @@ ComplianceArtifactCollection:
  */
 
 ComplianceArtifactPackage:
-  '"capId"' ':' capid=STRING ','
-  '"capRelease"' ':' capReleaseNumber=STRING ',' 
-  '"capRepository"' ':' capRepoUrl=STRING ',' 
+  '"pid"' ':' capid=STRING ','
+  '"release"' ':' capReleaseNumber=STRING ',' 
+  '"repository"' ':' capRepoUrl=STRING ',' 
   
-  '"defaultComplianceArtifacts"' ':' '{'
-      '"scope"' ':' scope='"DEFAULT"' ','
-      dcas=ComplianceArtifactSet
-  '}'
-
-  (
-    ',' '"dirReleatedComplianceArtifacts"' ':' '['
+  '"defaultLicensings"' ':' '['
       '{'
-       (dirReleatedComplianceArtifactSets+=DirReleatedComplianceArtifactSet '}' ',' '{')* 
-       (dirReleatedComplianceArtifactSets+=DirReleatedComplianceArtifactSet '}')
-    ']'  
-  )?
-
-  (
-    ',' '"fileReleatedComplianceArtifacts"' ':' '['
+       (defComplianceArtifactSets+=DefComplianceArtifactSet'}' ',' '{')* 
+       (defComplianceArtifactSets+=DefComplianceArtifactSet '}')
+  ']' ',' 
+  '"dirLicensings"' ':' '['
+    (
       '{'
-        (fileReleatedComplianceArtifactSets+=FileReleatedComplianceArtifactSet '}' ',' '{')* 
-        (fileReleatedComplianceArtifactSets+=FileReleatedComplianceArtifactSet '}')
-    ']'  
-  )?
- ;
+       (dirComplianceArtifactSets+=DirComplianceArtifactSet '}' ',' '{')* 
+       (dirComplianceArtifactSets+=DirComplianceArtifactSet '}')
+    )?
+  ']' ',' 
+  '"fileLicensings"' ':' '['
+    (
+      '{'
+        (fileComplianceArtifactSets+=FileComplianceArtifactSet '}' ',' '{')* 
+        (fileComplianceArtifactSets+=FileComplianceArtifactSet '}')
+    )?
+  ']'  
+;
  
- DirReleatedComplianceArtifactSet:
-  '"scope"' ':' scope='"DIR"' ','
-  '"scopePath"' ':' path=STRING ','
+DefComplianceArtifactSet:
+  '"defaultScope"' ':' dstatus=('"MAIN"'|'"ALT"') ','
+  cas=ComplianceArtifactSet 
+;
+
+ DirComplianceArtifactSet:
+  '"dirScope"' ':' dpath=STRING ','
   cas=ComplianceArtifactSet
 ;
 
-FileReleatedComplianceArtifactSet:
-  '"scope"' ':' scope='"FILE"' ','
-  '"scopePath"' ':' path=STRING ','
+FileComplianceArtifactSet:
+  '"fileScope"' ':' fpath=STRING ','
   cas=ComplianceArtifactSet
 ;
  
  
  ComplianceArtifactSet:
-  '"spdxId"' ':'
+  '"license"' ':'
   ( ( spdxId='"MIT"' ',' casMit=ComplianceArtifactSetMIT )|
      (spdxId='"BSD-2-Clause"' ',' casBsd2Cl=ComplianceArtifactSetBSD2Clause) |
      (spdxId='"BSD-3-Clause"' ',' casBsd3Cl=ComplianceArtifactSetBSD3Clause) |
@@ -119,7 +122,7 @@ ComplianceArtifactSetApache20:
 ; 
 
 MultiplyUsableFossLicense:
-  '"spdxId"' ':'  
+  '"license"' ':'  
   spdxId= ( '"Apache-2.0"' | 
             '"Apache-1.0"'
           ) ','

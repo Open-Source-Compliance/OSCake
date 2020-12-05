@@ -1,0 +1,33 @@
+{ 
+  "complianceArtifactCollection" : {
+    "cid" : "tdosca-tc05",
+    "author" : "Karsten Reincke", 
+    "release" : "0.22",
+    "date" : "2020-11-02T15:00",
+    "containerPath" : "/home/karsten/data/tdosca-tc05.zip" ,
+    "containerType" : "ZIP"
+  } ,
+  "complianceArtifactPackages" : [
+    { 
+      "pid" : "tc05", 
+      "release" : "1.0" ,
+      "repository" : "https://github.com/Open-Source-Compliance/tdosca-tc05-simplhw/tree/master/input-sources" ,
+      "defaultLicensings" : [
+        {
+          "defaultScope" : "MAIN" ,
+          "license" : "MIT" ,
+          "licenseText" : "tc05.default.copying" 
+        }
+      ],
+      "dirLicensings" : [ ],
+      "fileLicensings" : [
+        { 
+          "fileScope" : "src/main/java/de/tdosca/common/EnvService.java" ,
+          "license" : "BSD-2-Clause",
+          "licenseText" : "tc05.de.common.envservice.license"
+        }
+      ]
+    }
+  ],
+  "multiplyUsableFossLicenses" : [ ]
+ }

@@ -1,0 +1,42 @@
+{ 
+  "complianceArtifactCollection" : {
+    "cid" : "tc03" ,
+    "author" : "Karsten Reincke" , 
+    "release" : "0.22" ,
+    "date" : "2020-11-02T15:00" ,
+    "containerPath" : "/home/karsten/data/tdosca-tc03.zip" ,
+    "containerType" : "ZIP"
+  }, 
+  "complianceArtifactPackages" : [
+    {  
+      "pid" : "tc03" ,
+      "release" : "1.0" ,
+      "repository" : "https://github.com/Open-Source-Compliance/tdosca-tc03-simplhw/tree/master/input-sources" , 
+      "defaultLicensings" : [
+        { 
+          "defaultScope" : "MAIN" ,
+          "license" : "MIT" ,
+          "licenseText" : "tc03.default.copying" 
+        }
+      ], 
+      "dirLicensings" : [ ] ,  
+      "fileLicensings" : [
+        { 
+          "fileScope" : "src/main/java/de/tdosca/common/EnvService.java" ,
+          "license" : "BSD-2-Clause" ,
+          "licenseText" : "tc03.de.common.enservice.license"
+        },
+        { 
+          "fileScope" : "src/main/java/de/tdosca/tc03/GreetingService.java" ,
+          "license" : "MIT" ,
+          "licenseText" : Null
+        },
+        { 
+          "fileScope" : "src/main/java/de/tdosca/tc03/Main.java" ,
+          "license" : "MIT" ,
+          "licenseText" : Null
+        }
+      ]
+    }
+  ] 
+}

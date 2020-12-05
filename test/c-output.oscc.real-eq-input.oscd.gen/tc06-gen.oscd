@@ -1,0 +1,84 @@
+{ 
+  "complianceArtifactCollection" : {
+    "cid" : "tc06-gen" ,
+    "author" : "Karsten Reincke" ,
+    "release" : "0.22" ,
+    "date" : "2020-11-23T23:34" ,
+    "containerPath" : "/home/karsten/data/tdosca.tc06" ,
+    "containerType" : "DIR"
+  } ,
+  "complianceArtifactPackages" : [
+    {
+      "pid" : "tc06" , 
+      "release" : "1.0" ,
+      "repository" : "https://github.com/Open-Source-Compliance/tdosca-tc06-plainhw/tree/master/input-sources" ,
+      "defaultLicensings" : [
+        {
+          "defaultScope" : "MAIN" ,
+          "license" : "MIT" ,
+          "licenseText" : "tc06.default.license"
+        }
+      ] ,
+      "dirLicensings" : [
+        {
+          "dirScope" : "src/main/java/de/tdosca/common/" ,
+          "license" : "BSD-3-Clause" ,
+          "licenseText" : "tc06.de.tdosca.common.license"
+        }
+      ] ,
+      "fileLicensings" : [
+        {
+          "fileScope" : "src/main/java/de/tdosca/tc06/Tipster.java" ,
+          "license" : "BSD-3-Clause" ,
+          "licenseText" : "not part of the repository"
+        } ,
+        {
+          "fileScope" : "src/main/java/de/tdosca/tc04/Greeter.java" ,
+          "license" : "Apache-2.0" ,
+          "licenseText" : "multiply-usable" ,
+          "noticeText" : "tc04.de.tdosca.tc04.greeter.notice"
+        } ,
+        {
+          "fileScope" : "src/main/java/de/tdosca/tc04/Main.java" ,
+          "license" : "MIT" ,
+          "licenseText" : "not part of the repository"
+        }
+      ]     
+    } ,
+    {
+      "pid" : "log4j" , 
+      "release" : "2.14.0" ,
+      "repository" : "https://logging.apache.org/log4j/2.x/download.html" ,
+      "defaultLicensings" : [
+        {
+          "defaultScope" : "MAIN" ,
+          "license" : "Apache-2.0" ,
+          "licenseText" : "multiply-usable" ,
+          "noticeText" : "log4j.default.notice"
+        }
+      ] ,
+      "dirLicensings" : [
+      ] ,
+      "fileLicensings" : [
+      ]     
+    } ,
+    {
+      "pid" : "joda-time" , 
+      "release" : "2.10.8" ,
+      "repository" : "https://github.com/JodaOrg/joda-time" ,
+      "defaultLicensings" : [
+        {
+          "defaultScope" : "MAIN" ,
+          "license" : "Apache-2.0" ,
+          "licenseText" : "multiply-usable" ,
+          "noticeText" : "joda-time.default.notice"
+        }
+      ] ,
+      "dirLicensings" : [
+      ] ,
+      "fileLicensings" : [
+      ]     
+    }
+  ],
+  "multiplyUsableFossLicenses" : [ ]
+}

@@ -1,0 +1,103 @@
+
+/********************************************************
+ * OSCake / OSCC = Open Source Compliance Collection
+ * Open Source Compliance artifacts knowledge engine
+ * 
+ * Copyright (c) {2020 Karsten Reincke, Deutsche Telekom AG
+ *
+ * This program is made available under the terms of the
+ * Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0
+ *
+ * SPDX-License-Identifier: EPL-2.0
+  *******************************************************/
+
+grammar de.oscake.weak.Oscc with org.eclipse.xtext.common.Terminals
+
+generate oscc "http://www.oscake.de/weak/Oscc"
+
+/**
+ * A strict Compliance Artifact Collection consist of
+ * a) Meta-Data
+ * b) a list of complianceArtifactPackages (each referring to a software package)
+ * c) a list of not instantiated = multiply usable license texts
+ */
+ComplianceArtifactCollection:
+'{'
+  '"complianceArtifactCollection"' ':' '{'
+    '"cid"' ':' cacid=STRING ','
+    ('"author"' ':' cacComposer=STRING ',')?
+    ('"release"' ':' cacReleaseNumber=STRING ',')?
+    ('"date"' ':' cacReleaseDate=STRING ',')?  
+    '"containerPath"' ':' cacContPath=STRING ','
+    '"containerType"' ':' cacContType=('"ZIP"'|'"DIR"')
+  '}' ','
+  
+  '"complianceArtifactPackages"' ':' '['
+    '{'
+      (complianceArtifactPackages+=ComplianceArtifactPackage '}' ',' '{')*
+      (complianceArtifactPackages+=ComplianceArtifactPackage '}')
+  ']'  
+'}';
+
+/**
+ * Each ComplianceArtifactPackage refers to one software package of the 
+ * distributable collection 
+ */
+
+ComplianceArtifactPackage:
+  '"pid"' ':' capid=STRING ','
+  ('"release"' ':' capReleaseNumber=STRING ',')?
+  ('"repository"' ':' capRepoUrl=STRING ',')? 
+  
+  '"defaultLicensings"' ':' '['
+      '{'
+       (defComplianceArtifactSets+=DefComplianceArtifactSet'}' ',' '{')* 
+       (defComplianceArtifactSets+=DefComplianceArtifactSet '}')
+  ']' ',' 
+  '"dirLicensings"' ':' '['
+    (
+      '{'
+       (dirComplianceArtifactSets+=DirComplianceArtifactSet '}' ',' '{')* 
+       (dirComplianceArtifactSets+=DirComplianceArtifactSet '}')
+    )?
+  ']' ',' 
+  '"fileLicensings"' ':' '['
+    (
+      '{'
+        (fileComplianceArtifactSets+=FileComplianceArtifactSet '}' ',' '{')* 
+        (fileComplianceArtifactSets+=FileComplianceArtifactSet '}')
+    )?
+  ']'  
+;
+ 
+ DefComplianceArtifactSet:
+  '"defaultScope"' ':' dstatus=('"MAIN"'|'"ALT"') ','
+ 	cas=ComplianceArtifactSet 
+;
+
+ DirComplianceArtifactSet:
+  '"dirScope"' ':' dpath=STRING ','
+  cas=ComplianceArtifactSet
+ ; 
+
+ FileComplianceArtifactSet:
+  '"fileScope"' ':' fpath=STRING ','
+  cas=ComplianceArtifactSet
+ ; 
+
+ ComplianceArtifactSet:
+  '"license"' ':'
+    spdxId= (
+      '"MIT"' | 
+      '"BSD-2-Clause"' |
+      '"BSD-3-Clause"' |
+      '"Apache-2.0"'
+    ) 
+  
+  (',' '"licenseText"' ':' ((status='"unclear"') | lfPath=('Null' | STRING )))?
+  (',' '"noticeText"' ':' nfPath=(STRING | 'Null'))?
+   
+;
+
+
