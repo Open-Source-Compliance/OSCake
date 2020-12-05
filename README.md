@@ -40,6 +40,7 @@ OSCake applies the Open Source License Compliance knowledge - inherently in a de
 
 So, existing Open Source scan tools create large lists of compliance entities that in any sense could be relevant for creating Open Source Compliance Artifact(s). *OSCake* takes these more or less complete and mostly over-fulfillinf sets. The *Open Source Compliance artifact knowledge engine* knows which of the articats found by the Open Source scanning tools must used in which license context and derives the one Open Source Compliance File which really meets the requirements of the involved licenses.
 
+## Getting the OSCX-System to run:
 
 ## Getting the OSCD language definition run:
 
