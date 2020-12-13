@@ -46,14 +46,15 @@ override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorCo
  *  @param cac the ComplianceArtifactCollection 
  *  @param mtag the main indentation
  */
+
 def CharSequence toCode(ComplianceArtifactCollection cac, String mtab) '''
 # Open Source Compliance File for the package «cac.cacid» 
 ## 0.) About this file:
 
-Based on the data container `«cac.cacContPath»` (type: «cac.cacContType»), the
-Open Source Compliance Artifacts of and for the program collection **«cac.cacid»**
-have been gathered into the file `«cac.cacid+'.oscf.md'»` «IF  (  ((cac.cacComposer !== null) || (cac.cacReleaseDate !== null))
-      || ( cac.cacReleaseNumber !== null ))»which
+Based on the data container `«cac.cacContPath»` of type: «cac.cacContType», 
+the Open Source Compliance Artifacts of and for the program collection 
+**«cac.cacid»** have been gathered into the *Open Source Compliance File*
+`«cac.cacid+'.oscf.md'»`. «IF  moreMeta(cac)»This OSCF ...
       
 «IF ( cac.cacComposer !== null)»* was compiled by «cac.cacComposer»,«ENDIF»
 «IF ( cac.cacReleaseDate !== null )»* was released at «cac.cacReleaseDate»,«ENDIF»
@@ -64,43 +65,53 @@ have been gathered into the file `«cac.cacid+'.oscf.md'»` «IF  (  ((cac.cacCo
 
 *OSCake*-***TODO*** *organize an include of company specific data*
 
-## 2.) Index of included FOSS packages (= BOM) 
+## 2.) Summary of the included FOSS packages (BOM)
 
 «IF ( cac.complianceArtifactPackages !== null && cac.complianceArtifactPackages.length > 0)»
   «FOR pkg : cac.complianceArtifactPackages»
-- [«pkg.capid»](#«clearId(pkg.capid)»)
+- [«pkg.capid»](#«clearId(pkg.capid)») («pkg.capReleaseNumber») «pkg.casl.head.spdxId»
   «ENDFOR»  
 «ENDIF»
 
-## 3.) Compliance Artifacts for the included FOSS packages
+## 3.) Compliance artifacts for the included FOSS packages
 «var int iter=0»
-
+«var int oter=0»
 «IF ( cac.complianceArtifactPackages !== null && cac.complianceArtifactPackages.length > 0)»
-  «FOR pkg : cac.complianceArtifactPackages»
+«FOR pkg : cac.complianceArtifactPackages»
 <a name="«clearId(pkg.capid)»"></a>
 ### 3.«(iter+=1).toString» Package: «pkg.capid»
 - Release: «pkg.capReleaseNumber»
 - Repository: [«pkg.capRepoUrl»](«pkg.capRepoUrl»)
 - ComplianceArtifacts:
-    «FOR dcas : pkg.defComplianceArtifactSets»
 «mtab»- Scope: DEFAULT
-«insertCas(dcas.cas, mtab+mtab)»
-    «ENDFOR»
-    «FOR scas : pkg.dirComplianceArtifactSets»
+  «IF ((oter=0)==0)»«ENDIF»
+  «FOR dcas : pkg.casl»
+«mtab+mtab»- «(oter+=1).toString». Default LicensingStatement
+«insertCas(dcas,mtab+mtab+mtab)»
+  «ENDFOR»
+  «FOR scasl : pkg.dirComplianceArtifactSets»
 «mtab»- Scope: DIR
-«mtab+mtab»- Dir: «scas.dpath»
-«insertCas(scas.cas, mtab+mtab)»
-    «ENDFOR»
-    «FOR scas : pkg.fileComplianceArtifactSets»
-«mtab»- Scope: FILE    
-«mtab+mtab»- File: «scas.fpath»
-«insertCas(scas.cas, mtab+mtab)»
+«mtab+mtab»- Dir: «scasl.dpath»
+    «IF ((oter=0)==0)»«ENDIF»
+    «FOR cas : scasl.dcasl»
+«mtab+mtab»- Compliance artifacts for the «(oter+=1).toString». licensing in scope *«scasl.dpath»*: 
+«insertCas(cas, mtab+mtab+mtab)»
     «ENDFOR»
   «ENDFOR»
+  «FOR scasl : pkg.fileComplianceArtifactSets»
+«mtab»- Scope: FILE    
+«mtab+mtab»- File: «scasl.fpath»
+    «IF ((oter=0)==0)»«ENDIF»
+    «FOR cas : scasl.fcasl»
+«mtab+mtab»- Compliance artifacts for the «(oter+=1).toString». licensing in scope *«scasl.fpath»*:  
+«insertCas(cas, mtab+mtab+mtab)»
+    «ENDFOR»
+  «ENDFOR»
+«ENDFOR»  
 «ENDIF»
 
 «IF ( cac.multiplyUsableFossLicenses !== null && cac.multiplyUsableFossLicenses.length > 0)»
-«var int oter=0»
+«IF ((oter=0)==0)»«ENDIF»
 ## 4.) Multiply used license texts:
   «FOR lic : cac.multiplyUsableFossLicenses»
 <a name=«clearId(lic.spdxId)»></a>
@@ -110,6 +121,22 @@ have been gathered into the file `«cac.cacid+'.oscf.md'»` «IF  (  ((cac.cacCo
 «ENDIF»
 '''
 
+def boolean moreMeta(ComplianceArtifactCollection cac) {
+  if (cac.cacComposer !== null) return true;
+  if (cac.cacReleaseDate !== null) return true;
+  if (cac.cacReleaseNumber !== null) return true;
+  return false;
+}
+ 
+/* 
+
+
+
+
+
+
+'''
+*/
 /**
  * routes the writer to the license specific artifacts
  * 
@@ -118,6 +145,8 @@ have been gathered into the file `«cac.cacid+'.oscf.md'»` «IF  (  ((cac.cacCo
  *
  * @todo containerPath and type must be determined by evaluating the meta data
  */
+
+
 
 def insertCas(ComplianceArtifactSet cas, String tabs) '''
 «tabs»- LicenseID: «cas.spdxId»
@@ -261,7 +290,7 @@ def String clearId(String istr) {
 def String quoteFileContent(String filePath, String repoPath, String repoType) '''
 
 ```
-*OSCake*-***TODO*** fetch the file «filePath» from repository 
+*OSCake*-***TODO*** fetch the file **«filePath»** from repository 
 *«repoPath»* (type *«repoType»*)
 and insert its content as a quote at this position
 ```

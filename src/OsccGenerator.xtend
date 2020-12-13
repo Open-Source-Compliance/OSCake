@@ -20,6 +20,7 @@ import org.eclipse.xtext.generator.IGeneratorContext
 import de.oscake.weak.oscc.ComplianceArtifactCollection
 import de.oscake.weak.oscc.ComplianceArtifactPackage
 import de.oscake.weak.oscc.ComplianceArtifactSet
+import de.oscake.weak.oscc.FileComplianceArtifactSet
 
 /**
  * Generates code from your model files on save.
@@ -32,7 +33,7 @@ class OsccGenerator extends AbstractGenerator {
 
 override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
  val cac = resource.contents.head as ComplianceArtifactCollection;
- fsa.generateFile(cac.cacid+'-gen.oscd', cac.toCode());
+ fsa.generateFile(cac.cacid+'.oscd', cac.toCode());
 }
 /**
  *  aggregates and pipes the ComplianceArtifactCollection (evaluates the OSCD file)
@@ -43,110 +44,168 @@ override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorCo
 def CharSequence toCode(ComplianceArtifactCollection cac) '''
 { 
   "complianceArtifactCollection" : {
-    "cid" : "«cac.cacid»-gen" ,
+    "cid" : "«cac.cacid»" ,
     «IF (isDefined(cac.cacComposer))»"author" : "«cac.cacComposer»" ,«ENDIF»
     «IF (isDefined(cac.cacReleaseNumber))»"release" : "«cac.cacReleaseNumber»" ,«ENDIF»
     «IF (isDefined(cac.cacReleaseDate))»"date" : "«cac.cacReleaseDate»" ,«ENDIF»
-    "containerPath" : "«cac.cacContPath»" ,
-    "containerType" : «cac.cacContType»
+    "archivePath" : "«cac.cacContPath»" ,
+    "archiveType" : «cac.cacContType»
   } ,
   "complianceArtifactPackages" : [
-    «FOR pkg : cac.complianceArtifactPackages BEFORE '' SEPARATOR ' ,' AFTER ''»
+    «FOR pkg : cac.complianceArtifactPackages BEFORE '' SEPARATOR ',' AFTER ''»
     {
       "pid" : "«pkg.capid»" , 
       «IF (isDefined(pkg.capReleaseNumber))»"release" : "«pkg.capReleaseNumber»" ,«ENDIF»
       «IF (isDefined(pkg.capRepoUrl))»"repository" : "«pkg.capRepoUrl»" ,«ENDIF»
       "defaultLicensings" : [
-        «IF (pkg.defComplianceArtifactSets !== null && pkg.defComplianceArtifactSets.length > 0) »
-        «FOR dcas : pkg.defComplianceArtifactSets BEFORE '' SEPARATOR ' ,' AFTER ''»
+        «IF (pkg.casl !== null && pkg.casl.length > 0) »
+        «FOR dcas : pkg.casl BEFORE '' SEPARATOR ',' AFTER ''»
         {
-          "defaultScope" : «dcas.dstatus» ,
-          «insertCas(dcas.cas)»
+          «insertCas(dcas)»
         }
         «ENDFOR»
         «ENDIF»
-      ] ,
+      ],
       "dirLicensings" : [
         «IF (pkg.dirComplianceArtifactSets !== null && pkg.dirComplianceArtifactSets.length > 0) »
-        «FOR dcas : pkg.dirComplianceArtifactSets BEFORE '' SEPARATOR ' ,' AFTER ''»
+        «FOR dcasp : pkg.dirComplianceArtifactSets BEFORE '' SEPARATOR ',' AFTER ''»
         {
-          "dirScope" : "«dcas.dpath»" ,
-          «insertCas(dcas.cas)»
+          "dirScope" : "«dcasp.dpath»" ,
+          «FOR dcasl : dcasp.dcasl BEFORE '' SEPARATOR ',' AFTER ''»
+          "dirLicense" : {
+            «insertCas(dcasl)»
+          }
+          «ENDFOR»
         }
         «ENDFOR»
         «ENDIF»
-      ] ,
+      ],
       "fileLicensings" : [
         «IF (pkg.fileComplianceArtifactSets !== null && pkg.fileComplianceArtifactSets.length > 0) »
-        «FOR fcas : pkg.fileComplianceArtifactSets BEFORE '' SEPARATOR ' ,' AFTER ''»
+        «val size=pkg.fileComplianceArtifactSets.size()»«var int current=0»
+        «FOR fcasp : pkg.fileComplianceArtifactSets BEFORE '' SEPARATOR '' AFTER ''»
+        «IF isAnyLicenseReferenceValid(fcasp)» 
+        «IF (current>0)»,«ENDIF»
+        «IF ((current+=1)<size)»«ENDIF»
         {
-          "fileScope" : "«fcas.fpath»" ,
-          «insertCas(fcas.cas)»
+          "fileScope" : "«clearScopeString(fcasp.fpath)»" ,
+          «IF (fcasp.fcPath!==null && isNoticeFile(fcasp.fpath))»
+          "fileContentInArchive" : "«fcasp.fcPath»" ,
+          «ENDIF»
+          «FOR fcas : fcasp.fcasl BEFORE '' SEPARATOR ',' AFTER ''»
+          "fileLicense" : {
+            «insertCas(fcas)»
+          }
+          «ENDFOR»
         }
+        «ELSE»
+          «IF ((current+=1)<size)»«ENDIF»
+        «ENDIF»
         «ENDFOR»
         «ENDIF»
       ]     
     }
-    «ENDFOR»
-  ],
+    «ENDFOR»            
+  ] ,
   "multiplyUsableFossLicenses" : [ ]
 }
 '''
+
+def boolean isNoticeFile(String scope) {
+  if (scope === null) return false;
+  if (scope == '"NOTICE"') return true;
+  if (scope == '"NOTICE.txt"') return true;
+  if (scope == '"NOTICE.md"') return true;
+  return false;
+}
+
+def String clearScopeString(String scope) {
+  if (scope === null) return "911";
+  if (scope == '"NOTICE"') return "NOTICE";
+  if (scope == '"NOTICE.txt"') return "NOTICE.txt";
+  if (scope == '"NOTICE.md"') return "NOTICE.md";
+  return scope;
+}
+
+
+def boolean isAnyLicenseReferenceValid (FileComplianceArtifactSet fcasl) {
+
+  for ( ComplianceArtifactSet fcas :  fcasl.fcasl) {
+    if (fcas.spdxId !== null) {
+      if (fcas.spdxId != 'null') return true;
+    }
+  }
+  return false;
+}
 
 def String insertCas(ComplianceArtifactSet cas) {
   if (cas.spdxId == '"MIT"') return insertMitCas(cas);
   if (cas.spdxId == '"BSD-2-Clause"') return insertBsd2clCas(cas);
   if (cas.spdxId == '"BSD-3-Clause"') return insertBsd3clCas(cas);
-  if (cas.spdxId == '"Apache-2.0"') return insertApache20Cas(cas);
+  if (cas.spdxId == '"Apache-2.0"') return insertApache20Cas(cas); 
+  if (cas.spdxId == 'null') return insertNullCas(); 
   return insertUnknownCas(cas);
 }
 
 def String insertMitCas(ComplianceArtifactSet cas) '''
 "license" : «cas.spdxId» ,
-«IF (cas.status !== null && cas.status=='"unclear"')»
-"licenseText" : "ERROR! Review needed"
-«ELSEIF cas.lfPath=='Null'»
-"licenseText" : "not part of the repository"
-«ELSE»
-"licenseText" : "«cas.lfPath»"
-«ENDIF»
+«writeRequiredValue("licenseTextInArchive",cas.lfPath)»
 '''
 
 def String insertBsd2clCas(ComplianceArtifactSet cas) '''
 "license" : «cas.spdxId» ,
-«IF (cas.status !== null && cas.status=='"unclear"')»
-"licenseText" : "ERROR! Review needed"
-«ELSEIF cas.lfPath=='Null'»
-"licenseText" : "not part of the repository"
-«ELSE»
-"licenseText" : "«cas.lfPath»"
-«ENDIF»
+«writeRequiredValue("licenseTextInArchive",cas.lfPath)»
 '''
 
 def String insertBsd3clCas(ComplianceArtifactSet cas) '''
 "license" : «cas.spdxId» ,
-«IF (cas.status !== null && cas.status=='"unclear"')»
-"licenseText" : "ERROR! Review needed"
-«ELSEIF cas.lfPath =='Null'»
-"licenseText" : "not part of the repository"
-«ELSE»
-"licenseText" : "«cas.lfPath»"
-«ENDIF»
+«writeRequiredValue("licenseTextInArchive",cas.lfPath)»
 '''
 
+/* TODO
+ * Der OsccGenerator muss checken, ob überhaupt eine Datei
+ * namens NOTICE, NOTICE.txt, NOTICE.md im übermittelten
+ * Dateibestand das Packages existiert.
+ * 
+ * Vereinfachende Annahme für den Beginn:
+ * Das ApacheNoticeFile liegt im TopDirectory
+ * 
+ * Ob so ein File existiert kann der Generator daran testen
+ * ob der Wert fcPath in einem FileComplianceArtifactSet gesetzt ist.
+ * 
+ * Gibt es eine solche Datei, muss der generator
+ * den Wert von fcPath hier als Wert von "apacheNoticeTextInArchive" 
+ * schreiben.
+ * 
+ * Achtung: der OSCD-Generator muss anders operieren:
+ * Er überpfügt die Dateien nicht, sondern verlässt sich auf diesen Wert.
+ */
 def String insertApache20Cas(ComplianceArtifactSet cas) '''
 "license" : «cas.spdxId» ,
-"licenseText" : "multiply-usable" ,
-«IF (cas.nfPath == 'Null')»
-"noticeText" : "not part of the repository"
-«ELSE»
-"noticeText" : "«cas.nfPath»"
-«ENDIF»
+"licenseTextInArchive" : "multiply-usable" ,
+«writeRequiredValue("apacheNoticeTextInArchive","muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden")»
+'''
+
+def String insertNullCas() '''
+"license" : null ,
+"licenseTextInArchive" : null
 '''
 
 def String insertUnknownCas(ComplianceArtifactSet cas) '''
 "license" : «cas.spdxId» ,
-"licenseText" : "ERROR: OSCake does not know this license"
+"licenseTextInArchive" : "911"
+'''
+
+def writeRequiredValue(String kword, String kval) '''
+«IF (kval === null)»
+"«kword»" : "911"
+«ELSEIF (kval=="911")»
+"«kword»" : "911"
+«ELSEIF (kval == 'null')»
+"«kword»" : null
+«ELSE»
+"«kword»" : "«kval»"
+«ENDIF»
 '''
 
 def Boolean isDefined(String istr) {

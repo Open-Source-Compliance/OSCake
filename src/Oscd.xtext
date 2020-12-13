@@ -28,8 +28,8 @@ ComplianceArtifactCollection:
     ('"author"' ':' cacComposer=STRING ',')?
     ('"release"' ':' cacReleaseNumber=STRING ',')?
     ('"date"' ':' cacReleaseDate=STRING ',')?  
-    '"containerPath"' ':' cacContPath=STRING ','
-    '"containerType"' ':' cacContType=('"ZIP"'|'"DIR"')
+    '"archivePath"' ':' cacContPath=STRING ','
+    '"archiveType"' ':' cacContType=('"ZIP"'|'"DIR"')
   '}' ','
 
   '"complianceArtifactPackages"' ':' '['
@@ -57,10 +57,11 @@ ComplianceArtifactPackage:
   '"repository"' ':' capRepoUrl=STRING ',' 
   
   '"defaultLicensings"' ':' '['
-      '{'
-       (defComplianceArtifactSets+=DefComplianceArtifactSet'}' ',' '{')* 
-       (defComplianceArtifactSets+=DefComplianceArtifactSet '}')
+    '{'
+      (casl+=ComplianceArtifactSet '}' ',' '{')* 
+      (casl+=ComplianceArtifactSet '}')    
   ']' ',' 
+  
   '"dirLicensings"' ':' '['
     (
       '{'
@@ -77,19 +78,35 @@ ComplianceArtifactPackage:
   ']'  
 ;
  
-DefComplianceArtifactSet:
-  '"defaultScope"' ':' dstatus=('"MAIN"'|'"ALT"') ','
-  cas=ComplianceArtifactSet 
-;
-
  DirComplianceArtifactSet:
   '"dirScope"' ':' dpath=STRING ','
-  cas=ComplianceArtifactSet
+  '"dirLicense"' ':' '{'
+      (dcasl+=ComplianceArtifactSet '}' ',' '"dirLicense"' ':' '{')* 
+      (dcasl+=ComplianceArtifactSet '}') 
 ;
 
+/*
+ * ACHTUNG: nur übergangshalber. In der Endausbaustufe erscheinen
+ * Notice-Dateien nicht als eigenständige Dateien in der Fileliste.
+ * Aber ihr inArchivePath erscheint im ComplianceArtifactSetApache20
+ * 
+ * Es ist Aufgabe des OSCC-Generators dieses Verhalten zu implementieren.
+ * 
+ */
 FileComplianceArtifactSet:
-  '"fileScope"' ':' fpath=STRING ','
-  cas=ComplianceArtifactSet
+  
+  '"fileScope"' ':'
+  ( ( fpath=('"NOTICE"' | '"NOTICE.txt"' | '"NOTICE.md"') ','
+    '"fileContentInArchive"' ':' fcPath=('null' | "911" | STRING  ) 
+    )
+    |
+    ( fpath=STRING )
+  ) ','
+  
+  '"fileLicense"' ':' '{'
+      (fcasl+=ComplianceArtifactSet '}' ',' '"fileLicense"' ':' '{')* 
+      (fcasl+=ComplianceArtifactSet '}')
+   
 ;
  
  
@@ -101,24 +118,22 @@ FileComplianceArtifactSet:
      (spdxId='"Apache-2.0"' ',' casApache20=ComplianceArtifactSetApache20) 
    )
 ;
+
 ComplianceArtifactSetMIT:
-  '"licenseText"' ':' lfPath=(STRING | 'Null') /* TODO TEST & FIX! */
+  '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | "911") 
 ;
 
 ComplianceArtifactSetBSD2Clause:
-  /*'"licenseText"' ':' (lfPath=STRING | nil='Null')*/
-  '"licenseText"' ':' lfPath=(STRING | 'Null')
+  '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | "911")
 ;
 
 ComplianceArtifactSetBSD3Clause:
-  /*'"licenseText"' ':' (lfPath=STRING | nil='Null')*/
-  '"licenseText"' ':' lfPath=(STRING | 'Null')
+  '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | "911")
 ;
 
 ComplianceArtifactSetApache20:
-  /*'"licenseText"' ':' (lfPath=STRING | nil='Null')*/
-  '"licenseText"' ':' apl='"multiply-usable"' ','
-  '"noticeText"' ':' nfPath=(STRING | 'Null')
+  '"licenseTextInArchive"' ':' apl='"multiply-usable"' ','
+  '"apacheNoticeTextInArchive"' ':' nfPath=(STRING | 'null' | "911")
 ; 
 
 MultiplyUsableFossLicense:
@@ -126,5 +141,5 @@ MultiplyUsableFossLicense:
   spdxId= ( '"Apache-2.0"' | 
             '"Apache-1.0"'
           ) ','
-  '"licenseText"' ':' lfPath=STRING 
+  '"licenseTextInArchive"' ':' lfPath=STRING 
 ;

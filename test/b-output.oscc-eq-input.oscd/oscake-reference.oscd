@@ -1,0 +1,105 @@
+{ 
+  "complianceArtifactCollection" : {
+    "cid" : "oscake-reference" ,
+    "author" : "Karsten Reincke" ,
+    "release" : "0.22" ,
+    "date" : "2020-12-02T15:00" ,
+    "archivePath" : "/home/karsten/data-oscake-reference" ,
+    "archiveType" : "DIR"
+  } ,
+  "complianceArtifactPackages" : [
+    {
+      "pid" : "cap1" , 
+      "release" : "1.1" ,
+      "repository" : "repo1" ,
+      "defaultLicensings" : [
+        {
+          "license" : "MIT" ,
+          "licenseTextInArchive" : "woauchimmer"
+        },
+        {
+          "license" : "BSD-2-Clause" ,
+          "licenseTextInArchive" : null
+        }
+      ],
+      "dirLicensings" : [
+        {
+          "dirScope" : "dpath-1.1" ,
+          "dirLicense" : {
+            "license" : "Apache-2.0" ,
+            "licenseTextInArchive" : "multiply-usable" ,
+            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+          },
+          "dirLicense" : {
+            "license" : "BSD-2-Clause" ,
+            "licenseTextInArchive" : null
+          }
+        },
+        {
+          "dirScope" : "dpath-1.2" ,
+          "dirLicense" : {
+            "license" : "BSD-2-Clause" ,
+            "licenseTextInArchive" : null
+          }
+        }
+      ],
+      "fileLicensings" : [
+        {
+          "fileScope" : "fpath-1.1" ,
+          "fileLicense" : {
+            "license" : "Apache-2.0" ,
+            "licenseTextInArchive" : "multiply-usable" ,
+            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+          },
+          "fileLicense" : {
+            "license" : "BSD-2-Clause" ,
+            "licenseTextInArchive" : null
+          }
+        }
+        ,
+        {
+          "fileScope" : "fpath-1.2" ,
+          "fileLicense" : {
+            "license" : "BSD-2-Clause" ,
+            "licenseTextInArchive" : null
+          }
+        }
+      ]     
+    },
+    {
+      "pid" : "cap2" , 
+      "release" : "2.0" ,
+      "repository" : "repo2" ,
+      "defaultLicensings" : [
+        {
+          "license" : "Apache-2.0" ,
+          "licenseTextInArchive" : "multiply-usable" ,
+          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+        }
+      ],
+      "dirLicensings" : [
+      ],
+      "fileLicensings" : [
+        {
+          "fileScope" : "NOTICE.md" ,
+          "fileContentInArchive" : "woauch immer" ,
+          "fileLicense" : {
+            "license" : "Apache-2.0" ,
+            "licenseTextInArchive" : "multiply-usable" ,
+            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+          }
+        }
+        ,
+        {
+          "fileScope" : "LICENSE" ,
+          "fileLicense" : {
+            "license" : "Apache-2.0" ,
+            "licenseTextInArchive" : "multiply-usable" ,
+            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+          }
+        }
+      ]     
+    }
+  ] ,
+  "multiplyUsableFossLicenses" : [ ]
+}

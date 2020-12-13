@@ -29,8 +29,8 @@ ComplianceArtifactCollection:
     ('"author"' ':' cacComposer=STRING ',')?
     ('"release"' ':' cacReleaseNumber=STRING ',')?
     ('"date"' ':' cacReleaseDate=STRING ',')?  
-    '"containerPath"' ':' cacContPath=STRING ','
-    '"containerType"' ':' cacContType=('"ZIP"'|'"DIR"')
+    '"archivePath"' ':' cacContPath=STRING ','
+    '"archiveType"' ':' cacContType=('"ZIP"'|'"DIR"')
   '}' ','
   
   '"complianceArtifactPackages"' ':' '['
@@ -51,10 +51,11 @@ ComplianceArtifactPackage:
   ('"repository"' ':' capRepoUrl=STRING ',')? 
   
   '"defaultLicensings"' ':' '['
-      '{'
-       (defComplianceArtifactSets+=DefComplianceArtifactSet'}' ',' '{')* 
-       (defComplianceArtifactSets+=DefComplianceArtifactSet '}')
+    '{'
+      (casl+=ComplianceArtifactSet '}' ',' '{')* 
+      (casl+=ComplianceArtifactSet '}')    
   ']' ',' 
+  
   '"dirLicensings"' ':' '['
     (
       '{'
@@ -71,20 +72,31 @@ ComplianceArtifactPackage:
   ']'  
 ;
  
- DefComplianceArtifactSet:
-  '"defaultScope"' ':' dstatus=('"MAIN"'|'"ALT"') ','
- 	cas=ComplianceArtifactSet 
-;
-
  DirComplianceArtifactSet:
   '"dirScope"' ':' dpath=STRING ','
-  cas=ComplianceArtifactSet
- ; 
+  '"dirLicense"' ':' '{'
+      (dcasl+=ComplianceArtifactSet '}' ',' '"dirLicense"' ':' '{')* 
+      (dcasl+=ComplianceArtifactSet '}') 
+;
 
- FileComplianceArtifactSet:
-  '"fileScope"' ':' fpath=STRING ','
-  cas=ComplianceArtifactSet
- ; 
+FileComplianceArtifactSet:
+  
+  '"fileScope"' ':'
+  ( ( fpath=('"NOTICE"' | '"NOTICE.txt"' | '"NOTICE.md"') ','
+    /* Abmachung für den ORT-Writer: wenn so eine Datei existiert, ist sie im archive */
+    '"fileContentInArchive"' ':' fcPath=STRING
+    )
+    |
+    ( fpath=STRING 
+      (',' '"fileContentInArchive"' ':' fcPath=('null' | "911" | STRING  ))?
+    )
+  ) ','
+  
+  '"fileLicense"' ':' '{'
+      (fcasl+=ComplianceArtifactSet '}' ',' '"fileLicense"' ':' '{')* 
+      (fcasl+=ComplianceArtifactSet '}')
+   
+;
 
  ComplianceArtifactSet:
   '"license"' ':'
@@ -92,12 +104,12 @@ ComplianceArtifactPackage:
       '"MIT"' | 
       '"BSD-2-Clause"' |
       '"BSD-3-Clause"' |
-      '"Apache-2.0"'
+      '"Apache-2.0"' |
+      'null'
     ) 
   
-  (',' '"licenseText"' ':' ((status='"unclear"') | lfPath=('Null' | STRING )))?
-  (',' '"noticeText"' ':' nfPath=(STRING | 'Null'))?
-   
+  (',' '"licenseTextInArchive"' ':' lfPath=('null' | "911" | STRING ))?
+  (',' '"dummyComplianceArtifact"' ':' dummyArtifact=('null' | "911" | STRING ))?
 ;
 
 

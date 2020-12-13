@@ -1,0 +1,149 @@
+{ 
+  "complianceArtifactCollection" : {
+    "cid" : "tc04" ,
+    "author" : "Karsten Reincke" ,
+    "release" : "0.22" ,
+    "date" : "2020-11-23T23:34" ,
+    "archivePath" : "/home/karsten/data.dsl/tdosca.tc04" ,
+    "archiveType" : "DIR"
+  } ,
+  "complianceArtifactPackages" : [
+    {
+      "pid" : "tc04" , 
+      "release" : "1.0" ,
+      "repository" : "https://github.com/Open-Source-Compliance/tdosca-tc04-plainhw/tree/master/input-sources" ,
+      "defaultLicensings" : [
+        {
+          "license" : "MIT" ,
+          "licenseTextInArchive" : "tc04.default.license"
+        },
+        {
+          "license" : "Apache-2.0" ,
+          "licenseTextInArchive" : "multiply-usable" ,
+          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+        }
+      ],
+      "dirLicensings" : [
+      ],
+      "fileLicensings" : [
+        {
+          "fileScope" : "AUTHORS" ,
+          "fileLicense" : {
+            "license" : "MIT" ,
+            "licenseTextInArchive" : null
+          }
+        }
+        ,
+        {
+          "fileScope" : "LICENSE" ,
+          "fileLicense" : {
+            "license" : "MIT" ,
+            "licenseTextInArchive" : "tc04.default.license.mit"
+          }
+        }
+        ,
+        {
+          "fileScope" : "LICENSE.Apache-2.0" ,
+          "fileLicense" : {
+            "license" : "Apache-2.0" ,
+            "licenseTextInArchive" : "multiply-usable" ,
+            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+          }
+        }
+        ,
+        {
+          "fileScope" : "NOTICE.md" ,
+          "fileContentInArchive" : "tc04.notice.md" ,
+          "fileLicense" : {
+            "license" : "Apache-2.0" ,
+            "licenseTextInArchive" : "multiply-usable" ,
+            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+          }
+        }
+        ,
+        {
+          "fileScope" : "src/main/java/de/all/common/Tipster.java" ,
+          "fileLicense" : {
+            "license" : "BSD-3-Clause" ,
+            "licenseTextInArchive" : "tc04.de.tdosca.all.tipster.license"
+          }
+        }
+        ,
+        {
+          "fileScope" : "src/main/java/de/tdosca/tc04/Greeter.java" ,
+          "fileLicense" : {
+            "license" : "Apache-2.0" ,
+            "licenseTextInArchive" : "multiply-usable" ,
+            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+          }
+        }
+        ,
+        {
+          "fileScope" : "src/main/java/de/tdosca/tc04/Main.java" ,
+          "fileLicense" : {
+            "license" : "MIT" ,
+            "licenseTextInArchive" : null
+          }
+        }
+      ]     
+    },
+    {
+      "pid" : "log4j" , 
+      "release" : "2.14.0" ,
+      "repository" : "https://logging.apache.org/log4j/2.x/download.html" ,
+      "defaultLicensings" : [
+        {
+          "license" : "Apache-2.0" ,
+          "licenseTextInArchive" : "multiply-usable" ,
+          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+        }
+      ],
+      "dirLicensings" : [
+      ],
+      "fileLicensings" : [
+      ]     
+    },
+    {
+      "pid" : "joda-time" , 
+      "release" : "2.10.8" ,
+      "repository" : "https://github.com/JodaOrg/joda-time" ,
+      "defaultLicensings" : [
+        {
+          "license" : "Apache-2.0" ,
+          "licenseTextInArchive" : "multiply-usable" ,
+          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+        }
+      ],
+      "dirLicensings" : [
+      ],
+      "fileLicensings" : [
+      ]     
+    },
+    {
+      "pid" : "gradle" , 
+      "release" : "???" ,
+      "repository" : "???" ,
+      "defaultLicensings" : [
+        {
+          "license" : "Apache-2.0" ,
+          "licenseTextInArchive" : "multiply-usable" ,
+          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+        }
+      ],
+      "dirLicensings" : [
+      ],
+      "fileLicensings" : [
+        ,
+        {
+          "fileScope" : "gradle/wrapper/gradle-wrapper.jar" ,
+          "fileLicense" : {
+            "license" : "Apache-2.0" ,
+            "licenseTextInArchive" : "multiply-usable" ,
+            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+          }
+        }
+      ]     
+    }
+  ] ,
+  "multiplyUsableFossLicenses" : [ ]
+}
