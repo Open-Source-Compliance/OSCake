@@ -9,7 +9,7 @@
   }, 
   "complianceArtifactPackages" : [
     {  
-      "pid" : "tc03" ,
+      "pid" : "tc03a",
       "release" : "1.0" ,
       "repository" : "https://github.com/Open-Source-Compliance/tdosca-tc03a-simplhw/tree/master/input-sources" ,    
       "defaultLicensings" : [
@@ -22,89 +22,113 @@
       "fileLicensings" : [
         { 
           "fileScope" : "AUTHORS" ,
-          "fileLicense" : { 
-            "license" : "MIT" ,
-            "licenseTextInArchive" : null
+          "fileLicenses" : [ 
+            { 
+              "license" : "MIT" ,
+              "licenseTextInArchive" : null
             }
+          ]
         },
         { 
           "fileScope" : "build.gradle" ,
-          "fileLicense" : { 
-            "license" : null ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            { 
+              "license" : null ,
+              "licenseTextInArchive" : null
+            }
+          ]
         },  
         { 
           "fileScope" : "COPYING" ,
-          "fileLicense" : { 
-            "license" : "MIT" ,
-            "licenseTextInArchive" : "tc03.default.copying"
+          "fileLicenses" : [ 
+            { 
+              "license" : "MIT" ,
+              "licenseTextInArchive" : "tc03.default.copying"
             }
+          ]
         } ,
         { 
           "fileScope" : "gradle.properties" ,
-          "fileLicense" : { 
-            "license" : null ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            { 
+              "license" : null ,
+              "licenseTextInArchive" : null
+            }
+          ]
         },     
         { 
           "fileScope" : "NEWS.md" ,
-          "fileLicense" : { 
-            "license" : "MIT" ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            { 
+              "license" : "MIT" ,
+              "licenseTextInArchive" : null
+            }
+          ]
         } ,         
         { 
           "fileScope" : "README" ,
-          "fileLicense" : { 
-            "license" : null ,
-            "licenseTextInArchive" : null
+          "fileLicenses" : [ 
+            { 
+              "license" : null ,
+              "licenseTextInArchive" : null
             }
+          ]
         } ,
         { 
           "fileScope" : "settings.gradle" ,
-          "fileLicense" : { 
-            "license" : null ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            { 
+              "license" : null ,
+              "licenseTextInArchive" : null
+            }
+          ]
         } ,        
         { 
           "fileScope" : "src/main/java/de/tdosca/all/EnvService.java" ,
-          "fileLicense" : {
-            "license" : "BSD-2-Clause" ,
-            "licenseTextInArchive" : "tc03.de.common.enservice.license"
-          }
+          "fileLicenses" : [ 
+            {
+              "license" : "BSD-2-Clause" ,
+              "licenseTextInArchive" : "tc03.de.common.enservice.license"
+            }
+          ]
         } ,       
         { 
           "fileScope" : "src/main/java/de/tdosca/tc03a/GreetingService.java" ,
-          "fileLicense" : {
-            "license" : "MIT" ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            {
+              "license" : "MIT" ,
+              "licenseTextInArchive" : null
+            }
+          ]
         },
         { 
           "fileScope" : "src/main/java/de/tdosca/tc03a/Main.java" ,
-          "fileLicense" : {
-            "license" : "MIT" ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            {
+              "license" : "MIT" ,
+              "licenseTextInArchive" : null
+            }
+          ]
         },
         { 
           "fileScope" : "src/test/java/de/tdosca/all/EnvService.java" ,
-          "fileLicense" : {
-            "license" : "BSD-2-Clause" ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            {
+              "license" : "BSD-2-Clause" ,
+              "licenseTextInArchive" : null
+            }
+          ]
         },
         { 
           "fileScope" : "src/test/java/de/tdosca/tc03a/GreetingService.java" ,
-          "fileLicense" : {
-            "license" : "MIT" ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            {
+              "license" : "MIT" ,
+              "licenseTextInArchive" : null
+            }
+          ]
         }
-       ]
+      ]
     }
   ] 
 }

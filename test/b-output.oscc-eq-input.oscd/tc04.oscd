@@ -15,75 +15,89 @@
       "defaultLicensings" : [
         {
           "license" : "MIT" ,
-          "licenseTextInArchive" : "tc04.default.license"
+          "licenseTextInArchive" : "tc04.default.license" 
         },
         {
           "license" : "Apache-2.0" ,
           "licenseTextInArchive" : "multiply-usable" ,
-          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
         }
       ],
       "dirLicensings" : [
       ],
       "fileLicensings" : [
-        {
+        { 
           "fileScope" : "AUTHORS" ,
-          "fileLicense" : {
-            "license" : "MIT" ,
-            "licenseTextInArchive" : null
-          }
-        }
+          "fileLicenses" : [
+            { 
+              "license" : "MIT" ,
+              "licenseTextInArchive" : null
+            }
+          ]
+        } 
         ,
-        {
+        { 
           "fileScope" : "LICENSE" ,
-          "fileLicense" : {
-            "license" : "MIT" ,
-            "licenseTextInArchive" : "tc04.default.license.mit"
-          }
+          "fileLicenses" : [
+            { 
+              "license" : "MIT" ,
+              "licenseTextInArchive" : "tc04.default.license.mit" 
+            }
+          ]
         }
         ,
-        {
+        { 
           "fileScope" : "LICENSE.Apache-2.0" ,
-          "fileLicense" : {
-            "license" : "Apache-2.0" ,
-            "licenseTextInArchive" : "multiply-usable" ,
-            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
-          }
+          "fileLicenses" : [
+            { 
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : "multiply-usable" ,
+              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
+            }
+          ]
         }
         ,
-        {
+        { 
           "fileScope" : "NOTICE.md" ,
           "fileContentInArchive" : "tc04.notice.md" ,
-          "fileLicense" : {
-            "license" : "Apache-2.0" ,
-            "licenseTextInArchive" : "multiply-usable" ,
-            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
-          }
+          "fileLicenses" : [
+            { 
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : "multiply-usable" ,
+              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
+            }
+          ]
         }
         ,
-        {
+        { 
           "fileScope" : "src/main/java/de/all/common/Tipster.java" ,
-          "fileLicense" : {
-            "license" : "BSD-3-Clause" ,
-            "licenseTextInArchive" : "tc04.de.tdosca.all.tipster.license"
-          }
+          "fileLicenses" : [
+            { 
+              "license" : "BSD-3-Clause" ,
+              "licenseTextInArchive" : "tc04.de.tdosca.all.tipster.license" 
+            }
+          ]
         }
         ,
-        {
+        { 
           "fileScope" : "src/main/java/de/tdosca/tc04/Greeter.java" ,
-          "fileLicense" : {
-            "license" : "Apache-2.0" ,
-            "licenseTextInArchive" : "multiply-usable" ,
-            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
-          }
+          "fileLicenses" : [
+            { 
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : "multiply-usable" ,
+              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
+            }
+          ]
         }
         ,
-        {
+        { 
           "fileScope" : "src/main/java/de/tdosca/tc04/Main.java" ,
-          "fileLicense" : {
-            "license" : "MIT" ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [
+            { 
+              "license" : "MIT" ,
+              "licenseTextInArchive" : null
+            }
+          ]
         }
       ]     
     },
@@ -95,7 +109,7 @@
         {
           "license" : "Apache-2.0" ,
           "licenseTextInArchive" : "multiply-usable" ,
-          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
         }
       ],
       "dirLicensings" : [
@@ -111,7 +125,7 @@
         {
           "license" : "Apache-2.0" ,
           "licenseTextInArchive" : "multiply-usable" ,
-          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
         }
       ],
       "dirLicensings" : [
@@ -121,26 +135,27 @@
     },
     {
       "pid" : "gradle" , 
-      "release" : "???" ,
-      "repository" : "???" ,
+      "release" : "6.7" ,
+      "repository" : "https://github.com/gradle/gradle" ,
       "defaultLicensings" : [
         {
           "license" : "Apache-2.0" ,
           "licenseTextInArchive" : "multiply-usable" ,
-          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
         }
       ],
       "dirLicensings" : [
       ],
       "fileLicensings" : [
-        ,
-        {
+        { 
           "fileScope" : "gradle/wrapper/gradle-wrapper.jar" ,
-          "fileLicense" : {
-            "license" : "Apache-2.0" ,
-            "licenseTextInArchive" : "multiply-usable" ,
-            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
-          }
+          "fileLicenses" : [
+            { 
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : "multiply-usable" ,
+              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
+            }
+          ]
         }
       ]     
     }

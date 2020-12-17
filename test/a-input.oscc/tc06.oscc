@@ -8,7 +8,7 @@
     "archiveType" : "DIR"
   } , 
   "complianceArtifactPackages" : [
-    {  
+    {   
       "pid" : "tc06", 
       "release" : "1.0" ,
       "repository" : "https://github.com/Open-Source-Compliance/tdosca-tc06-plainhw/tree/master/input-sources" ,
@@ -25,114 +25,143 @@
       "dirLicensings" : [
         { 
           "dirScope" : "src/main/java/de/tdosca/common/" ,
-          "dirLicense" : {
-            "license" : "BSD-3-Clause" ,
-            "licenseTextInArchive": "tc06.de.tdosca.common.license"
-          }
+          "dirLicenses" : [ 
+            {
+              "license" : "BSD-3-Clause" ,
+              "licenseTextInArchive": "tc06.de.tdosca.common.license"
+            }          
+          ]
         }
       ] , 
       "fileLicensings" : [
         { 
           "fileScope" : "AUTHORS" ,
-          "fileLicense" : { 
-            "license" : "MIT" ,
-            "licenseTextInArchive" : null
-            }
+          "fileLicenses" : [ 
+            { 
+              "license" : "MIT" ,
+              "licenseTextInArchive" : null
+            }           
+          ]
         },
         { 
           "fileScope" : "bin/tc06.sh" ,
-          "fileLicense" : { 
-            "license" : null ,
-            "licenseTextInArchive" : null
+          "fileLicenses" : [ 
+            { 
+              "license" : null ,
+              "licenseTextInArchive" : null
             }
+          ]
         },
         { 
           "fileScope" : "LICENSE" ,
-          "fileLicense" : { 
-            "license" : "MIT" ,
-            "licenseTextInArchive" : "tc06.default.license.mit"
+          "fileLicenses" : [ 
+            { 
+              "license" : "MIT" ,
+              "licenseTextInArchive" : "tc06.default.license.mit"
             }
+          ]
         }, 
         { 
           "fileScope" : "LICENSE.Apache-2.0" ,
           "fileContentInArchive" : "tc06.default.license.apache-2.0" ,
-          "fileLicense" : { 
-            "license" : "Apache-2.0" ,
-            "licenseTextInArchive" : "tc06.default.license.apache-2.0"
+          "fileLicenses" : [ 
+            { 
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : "tc06.default.license.apache-2.0"
             }
+          ]
         }, 
         { 
           "fileScope" : "NOTICE.md" ,
           "fileContentInArchive" : "tc06.notice.md" ,
-          "fileLicense" : {
-            "license" : "Apache-2.0" ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            {
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : null
+            }
+          ]
         },
         { 
           "fileScope" : "pom.xml" ,
-          "fileLicense" : {
-            "license" : null,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            {
+              "license" : null,
+              "licenseTextInArchive" : null
+            }
+          ]
         },                    
         { 
           "fileScope" : "README" ,
-          "fileLicense" : {
-            "license" : null,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            {
+              "license" : null,
+              "licenseTextInArchive" : null
+            }
+          ]
         },        
         { 
           "fileScope" : "src/main/assembly/bin.xml" ,
-          "fileLicense" : { 
-            "license" : null ,
-            "licenseTextInArchive" : null
+          "fileLicenses" : [ 
+            { 
+              "license" : null ,
+              "licenseTextInArchive" : null
             }
+          ]
         },
-        
         { 
           "fileScope" : "src/main/java/de/tdosca/common/LICENSE" ,
           "fileContentInArchive" : "tc06.de.tdosca.common.license" ,       
-          "fileLicense" : {
-            "license" : "BSD-3-Clause" ,
-            "licenseTextInArchive" : "tc06.de.tdosca.common.license" 
+          "fileLicenses" : [ 
+            {
+              "license" : "BSD-3-Clause" ,
+              "licenseTextInArchive" : "tc06.de.tdosca.common.license" 
             }  
+          ]
         } ,
         { 
           "fileScope" : "src/main/java/de/tdosca/common/Tipster.java" ,
-          "fileLicense" : {
-            "license" : "BSD-3-Clause",
-            "licenseTextInArchive" : null
+          "fileLicenses" : [ 
+            {
+              "license" : "BSD-3-Clause",
+              "licenseTextInArchive" : null
             }
+          ]
         }, 
         { 
           "fileScope" : "src/main/java/de/tdosca/tc04/Greeter.java" ,
-          "fileLicense" : {
-            "license" : "Apache-2.0",
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            {
+              "license" : "Apache-2.0",
+              "licenseTextInArchive" : null
+            }
+          ]
         },
         { 
           "fileScope" : "src/main/java/de/tdosca/tc04/Main.java" ,
-          "fileLicense" : {
-            "license" : "MIT",
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            {
+              "license" : "MIT",
+              "licenseTextInArchive" : null
+            }
+          ]
         },
         { 
           "fileScope" : "src/test/java/de/tdosca/common/TipsterTest.java" ,
-          "fileLicense" : {
-            "license" : "BSD-3-Clause",
-            "licenseTextInArchive" : null
+          "fileLicenses" : [ 
+            {
+              "license" : "BSD-3-Clause",
+              "licenseTextInArchive" : null
             }
+          ]
         }, 
         { 
           "fileScope" : "src/test/java/de/tdosca/tc04/GreeterTest.java" ,
-          "fileLicense" : {
-            "license" : "Apache-2.0",
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            {
+              "license" : "Apache-2.0",
+              "licenseTextInArchive" : null
+            }
+          ]
         }        
       ]
     },
@@ -151,10 +180,12 @@
         { 
           "fileScope" : "NOTICE.txt" ,
           "fileContentInArchive" : "log4j.default.notice" ,
-          "fileLicense" : {
-            "license" : null ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            {
+              "license" : null ,
+              "licenseTextInArchive" : null
+            }
+          ]
         }
       ]
     } ,
@@ -172,10 +203,12 @@
         {
           "fileScope" : "NOTICE.txt" ,
           "fileContentInArchive" : "joda-time.default.notice" ,
-          "fileLicense" : {
-            "license" : null ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [ 
+            {
+              "license" : null ,
+              "licenseTextInArchive" : null
+            }
+          ]
         }
       ]
     }

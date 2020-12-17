@@ -34,6 +34,9 @@ import de.oscake.strict.oscd.MultiplyUsableFossLicense
  */
 
 class OscdGenerator extends AbstractGenerator {
+  
+val String notDeliverable="-> can not be included in this copy/portion of the software";
+val String notInOrigRepo="neither part of the file nor part of the original repository";
 
 override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
  val cac = resource.contents.head as ComplianceArtifactCollection;
@@ -86,7 +89,7 @@ the Open Source Compliance Artifacts of and for the program collection
 «mtab»- Scope: DEFAULT
   «IF ((oter=0)==0)»«ENDIF»
   «FOR dcas : pkg.casl»
-«mtab+mtab»- «(oter+=1).toString». Default LicensingStatement
+«mtab+mtab»- Compliance artifacts for the «(oter+=1).toString». default licensing statement 
 «insertCas(dcas,mtab+mtab+mtab)»
   «ENDFOR»
   «FOR scasl : pkg.dirComplianceArtifactSets»
@@ -94,7 +97,7 @@ the Open Source Compliance Artifacts of and for the program collection
 «mtab+mtab»- Dir: «scasl.dpath»
     «IF ((oter=0)==0)»«ENDIF»
     «FOR cas : scasl.dcasl»
-«mtab+mtab»- Compliance artifacts for the «(oter+=1).toString». licensing in scope *«scasl.dpath»*: 
+«mtab+mtab»- Compliance artifacts for the «(oter+=1).toString». licensing statement in dir *«scasl.dpath»*: 
 «insertCas(cas, mtab+mtab+mtab)»
     «ENDFOR»
   «ENDFOR»
@@ -103,10 +106,11 @@ the Open Source Compliance Artifacts of and for the program collection
 «mtab+mtab»- File: «scasl.fpath»
     «IF ((oter=0)==0)»«ENDIF»
     «FOR cas : scasl.fcasl»
-«mtab+mtab»- Compliance artifacts for the «(oter+=1).toString». licensing in scope *«scasl.fpath»*:  
+«mtab+mtab»- Compliance artifacts for the «(oter+=1).toString». licensing statement in file *«scasl.fpath»*:  
 «insertCas(cas, mtab+mtab+mtab)»
     «ENDFOR»
   «ENDFOR»
+  
 «ENDFOR»  
 «ENDIF»
 
@@ -129,10 +133,6 @@ def boolean moreMeta(ComplianceArtifactCollection cac) {
 }
  
 /* 
-
-
-
-
 
 
 '''
@@ -158,6 +158,8 @@ def insertCas(ComplianceArtifactSet cas, String tabs) '''
   «insertBsd3clCas(tabs,cas.casBsd3Cl,"contPath","contType")»
 «ELSEIF (cas.spdxId == '"Apache-2.0"')»
   «insertApache20Cas(tabs,cas,"contPath","contType")»
+«ELSEIF (cas.spdxId == '"noassertion"')»
+  «insertNoAssertCas(tabs)»
 «ELSE»«insertUnknownCas(tabs)»
 «ENDIF»
 '''
@@ -182,8 +184,9 @@ def String insertMitCas(
     String cacContPath,
     String cacContType
   ) '''
-«IF (cas.lfPath == 'Null')»
-«lmtab»- LicenseText: not part of the repository
+«IF (cas.lfPath == 'null')»
+«lmtab»- LicenseText: «notInOrigRepo» «notDeliverable»
+
 «ELSE»
 «lmtab»- LicenseText:
 «quoteFileContent(cas.lfPath,cacContPath,cacContType)»
@@ -204,8 +207,9 @@ def String insertBsd2clCas(
     String cacContPath,
     String cacContType
   ) '''
-«IF (cas.lfPath == 'Null')»
-«lmtab»- LicenseText: not part of the repository
+«IF (cas.lfPath == 'null')»
+«lmtab»- LicenseText: «notInOrigRepo» «notDeliverable»
+
 «ELSE»
 «lmtab»- LicenseText:
 «quoteFileContent(cas.lfPath,cacContPath,cacContType)»
@@ -227,8 +231,9 @@ def String insertBsd3clCas(
     String cacContPath,
     String cacContType
   ) '''
-«IF (cas.lfPath == 'Null')»
-«lmtab»- LicenseText: not part of the repository
+«IF (cas.lfPath == 'null')»
+«lmtab»- LicenseText: «notInOrigRepo» «notDeliverable»
+
 «ELSE»
 «lmtab»- LicenseText:
 «quoteFileContent(cas.lfPath,cacContPath,cacContType)»
@@ -251,13 +256,27 @@ def String insertApache20Cas(
     String cacContType
   ) '''
 «lmtab»- LicenseText: see [«cas.spdxId»](«clearId(cas.spdxId)»)
-«IF (cas.casApache20 == 'Null')»
-«lmtab»- NoticeFile: not part of the repository
+«IF (cas.casApache20 == 'null')»
+«lmtab»- NoticeFile: «lmtab»- LicenseText: «notInOrigRepo» «notDeliverable»
+
 «ELSE»
 «lmtab»- NoticeFile: 
 «quoteFileContent(cas.casApache20.nfPath,cacContPath,cacContType)»
 «ENDIF»
 ''' 
+
+/**
+ * reacts on an unclear license assertion
+ * 
+ * @param lmtab the indentation string (due to the md-quotations we must manage this manually) 
+ */
+def String insertNoAssertCas(
+    String lmtab
+  ) '''
+«lmtab»- ERROR. OSDF must not be delivered in this form. 'No-Assertion' of the scanning tool must be clarified manually!
+
+'''
+
 /**
  * reacts on an unkown license
  * 
@@ -266,7 +285,7 @@ def String insertApache20Cas(
 def String insertUnknownCas(
     String lmtab
   ) '''
-«lmtab»- LicenseText: unknown License => compliance artifacts can be compiled
+«lmtab»- LicenseText: unknown License => compliance artifacts can not be compiled!
 '''
 
 /**

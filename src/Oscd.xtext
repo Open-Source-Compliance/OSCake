@@ -80,9 +80,11 @@ ComplianceArtifactPackage:
  
  DirComplianceArtifactSet:
   '"dirScope"' ':' dpath=STRING ','
-  '"dirLicense"' ':' '{'
-      (dcasl+=ComplianceArtifactSet '}' ',' '"dirLicense"' ':' '{')* 
+  '"dirLicenses"' ':' '['
+    '{'
+      (dcasl+=ComplianceArtifactSet '}' ',' '{')* 
       (dcasl+=ComplianceArtifactSet '}') 
+  ']'
 ;
 
 /*
@@ -97,15 +99,17 @@ FileComplianceArtifactSet:
   
   '"fileScope"' ':'
   ( ( fpath=('"NOTICE"' | '"NOTICE.txt"' | '"NOTICE.md"') ','
-    '"fileContentInArchive"' ':' fcPath=('null' | "911" | STRING  ) 
+    '"fileContentInArchive"' ':' fcPath=('null' | '"911"' | STRING  ) 
     )
     |
     ( fpath=STRING )
   ) ','
   
-  '"fileLicense"' ':' '{'
-      (fcasl+=ComplianceArtifactSet '}' ',' '"fileLicense"' ':' '{')* 
+  '"fileLicenses"' ':' '['
+    '{'
+      (fcasl+=ComplianceArtifactSet '}' ',' '{')* 
       (fcasl+=ComplianceArtifactSet '}')
+   ']'
    
 ;
  
@@ -115,25 +119,31 @@ FileComplianceArtifactSet:
   ( ( spdxId='"MIT"' ',' casMit=ComplianceArtifactSetMIT )|
      (spdxId='"BSD-2-Clause"' ',' casBsd2Cl=ComplianceArtifactSetBSD2Clause) |
      (spdxId='"BSD-3-Clause"' ',' casBsd3Cl=ComplianceArtifactSetBSD3Clause) |
-     (spdxId='"Apache-2.0"' ',' casApache20=ComplianceArtifactSetApache20) 
+     (spdxId='"Apache-2.0"' ',' casApache20=ComplianceArtifactSetApache20) |
+     (spdxId='"noassertion"' ',' casNoAssert=ComplianceArtifactSetNoAssert) 
    )
 ;
 
+ComplianceArtifactSetNoAssert:
+  '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | '"911"') 
+;
+
+
 ComplianceArtifactSetMIT:
-  '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | "911") 
+  '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | '"911"') 
 ;
 
 ComplianceArtifactSetBSD2Clause:
-  '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | "911")
+  '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | '"911"')
 ;
 
 ComplianceArtifactSetBSD3Clause:
-  '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | "911")
+  '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | '"911"')
 ;
 
 ComplianceArtifactSetApache20:
   '"licenseTextInArchive"' ':' apl='"multiply-usable"' ','
-  '"apacheNoticeTextInArchive"' ':' nfPath=(STRING | 'null' | "911")
+  '"apacheNoticeTextInArchive"' ':' nfPath=(STRING | 'null' | '"911"')
 ; 
 
 MultiplyUsableFossLicense:

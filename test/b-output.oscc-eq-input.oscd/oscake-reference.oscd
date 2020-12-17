@@ -15,7 +15,7 @@
       "defaultLicensings" : [
         {
           "license" : "MIT" ,
-          "licenseTextInArchive" : "woauchimmer"
+          "licenseTextInArchive" : "woauchimmer" 
         },
         {
           "license" : "BSD-2-Clause" ,
@@ -25,44 +25,63 @@
       "dirLicensings" : [
         {
           "dirScope" : "dpath-1.1" ,
-          "dirLicense" : {
-            "license" : "Apache-2.0" ,
-            "licenseTextInArchive" : "multiply-usable" ,
-            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
-          },
-          "dirLicense" : {
-            "license" : "BSD-2-Clause" ,
-            "licenseTextInArchive" : null
-          }
+          "dirLicenses" : [
+            {
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : "multiply-usable" ,
+              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
+            },
+            {
+              "license" : "BSD-2-Clause" ,
+              "licenseTextInArchive" : null
+            }
+          ]
         },
         {
           "dirScope" : "dpath-1.2" ,
-          "dirLicense" : {
-            "license" : "BSD-2-Clause" ,
-            "licenseTextInArchive" : null
-          }
+          "dirLicenses" : [
+            {
+              "license" : "BSD-2-Clause" ,
+              "licenseTextInArchive" : null
+            }
+          ]
         }
       ],
       "fileLicensings" : [
-        {
+        { 
           "fileScope" : "fpath-1.1" ,
-          "fileLicense" : {
-            "license" : "Apache-2.0" ,
-            "licenseTextInArchive" : "multiply-usable" ,
-            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
-          },
-          "fileLicense" : {
-            "license" : "BSD-2-Clause" ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [
+            { 
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : "multiply-usable" ,
+              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
+            }
+            ,
+            { 
+              "license" : "BSD-2-Clause" ,
+              "licenseTextInArchive" : null
+            }
+          ]
         }
         ,
-        {
+        { 
           "fileScope" : "fpath-1.2" ,
-          "fileLicense" : {
-            "license" : "BSD-2-Clause" ,
-            "licenseTextInArchive" : null
-          }
+          "fileLicenses" : [
+            { 
+              "license" : "BSD-2-Clause" ,
+              "licenseTextInArchive" : null
+            }
+          ]
+        }
+        ,
+        { 
+          "fileScope" : "fpath-1.3" ,
+          "fileLicenses" : [
+            { 
+              "license" : "noassertion" ,
+              "licenseTextInArchive" : null /* TODO MUST: write an OSCC-Task: resolve noassertion */
+            }
+          ]
         }
       ]     
     },
@@ -74,29 +93,150 @@
         {
           "license" : "Apache-2.0" ,
           "licenseTextInArchive" : "multiply-usable" ,
-          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
+          "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
         }
       ],
       "dirLicensings" : [
       ],
       "fileLicensings" : [
-        {
+        { 
           "fileScope" : "NOTICE.md" ,
           "fileContentInArchive" : "woauch immer" ,
-          "fileLicense" : {
-            "license" : "Apache-2.0" ,
-            "licenseTextInArchive" : "multiply-usable" ,
-            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
-          }
+          "fileLicenses" : [
+            { 
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : "multiply-usable" ,
+              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
+            }
+          ]
         }
         ,
-        {
+        { 
+          "fileScope" : "STRANGE.txt" ,
+          "fileLicenses" : [
+            { 
+              "license" : "noassertion" ,
+              "licenseTextInArchive" : null /* TODO MUST: write an OSCC-Task: resolve noassertion */
+            }
+          ]
+        }
+        ,
+        { 
           "fileScope" : "LICENSE" ,
-          "fileLicense" : {
-            "license" : "Apache-2.0" ,
-            "licenseTextInArchive" : "multiply-usable" ,
-            "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden"
-          }
+          "fileLicenses" : [
+            { 
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : "multiply-usable" ,
+              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
+            }
+          ]
+        }
+        ,
+        { 
+          "fileScope" : "file-with-911-apache-licensing statement" ,
+          "fileLicenses" : [
+            { 
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : "multiply-usable" ,
+              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
+            }
+          ]
+        }
+        ,
+        { 
+          "fileScope" : "file-with-911-license text statement" ,
+          "fileLicenses" : [
+            { 
+              "license" : "MIT" ,
+              "licenseTextInArchive" : "911"
+            }
+          ]
+        }
+        ,
+        { 
+          "fileScope" : "file-with-null-license text statement" ,
+          "fileLicenses" : [
+            { 
+              "license" : "MIT" ,
+              "licenseTextInArchive" : null
+            }
+          ]
+        }
+      ]     
+    },
+    {
+      "pid" : "t1" , 
+      "release" : "unknown" , /* TODO write an OSCC task: value for release MUST be inserted */
+      "repository" : "unknown" , /* TODO write an OSCC task: value for repository SHOULD be inserted */
+      "defaultLicensings" : [
+        {
+          "license" : "MIT" ,
+          "licenseTextInArchive" : "911"
+        }
+      ],
+      "dirLicensings" : [
+      ],
+      "fileLicensings" : [
+        { 
+          "fileScope" : "takeover2" ,
+          "fileLicenses" : [
+            { 
+              "license" : "noassertion" ,
+              "licenseTextInArchive" : null /* TODO MUST: write an OSCC-Task: resolve noassertion */
+            }
+          ]
+        }
+        ,
+        { 
+          "fileScope" : "takeover5" ,
+          "fileLicenses" : [
+            { 
+              "license" : "noassertion" ,
+              "licenseTextInArchive" : null /* TODO MUST: write an OSCC-Task: resolve noassertion */
+            }
+            ,
+            { 
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : "multiply-usable" ,
+              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
+            }
+          ]
+        }
+      ]     
+    }, 
+    {
+      "pid" : "t3" , 
+      "release" : "unknown" , /* TODO write an OSCC task: value for release MUST be inserted */
+      "repository" : "unknown" , /* TODO write an OSCC task: value for repository SHOULD be inserted */
+      "defaultLicensings" : [
+        {
+          "license" : "noassertion" ,
+          "licenseTextInArchive" : null /* TODO MUST: write an OSCC-Task: resolve noassertion */
+        }
+      ],
+      "dirLicensings" : [
+      ],
+      "fileLicensings" : [
+        { 
+          "fileScope" : "2apnull" ,
+          "fileLicenses" : [
+            { 
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : "multiply-usable" ,
+              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
+            }
+          ]
+        }
+        ,
+        { 
+          "fileScope" : "4apnull" ,
+          "fileLicenses" : [
+            { 
+              "license" : "Apache-2.0" ,
+              "licenseTextInArchive" : "multiply-usable" ,
+              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
+            }
+          ]
         }
       ]     
     }

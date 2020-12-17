@@ -16,11 +16,26 @@ grammar de.oscake.weak.Oscc with org.eclipse.xtext.common.Terminals
 
 generate oscc "http://www.oscake.de/weak/Oscc"
 
+/*************
+ * General semantical definitions:
+ * 
+ * Sometimes the scanning tools inserts the values 'null' or "911"
+ * instead of a valid string value. The meaning of these statements:
+ * 
+ * 'null' : the scanning tool has looked for the element but didn't
+ *          find it Hence, it does not exist in the repository
+ * "911"  : the scanning tool has looked for the element and found
+ *          something, that the scanner didn't understand, although
+ *          it seems to be meaningful in the respective context
+ *************/
+
+
 /**
- * A strict Compliance Artifact Collection consist of
+ * A weak Compliance Artifact Collection consist of
  * a) Meta-Data
- * b) a list of complianceArtifactPackages (each referring to a software package)
- * c) a list of not instantiated = multiply usable license texts
+ * b) a list 'software packages' =  
+ *    - the licensing statements inside of a package
+ *    - the compliance artifacts required by the respective licenses
  */
 ComplianceArtifactCollection:
 '{'
@@ -42,7 +57,11 @@ ComplianceArtifactCollection:
 
 /**
  * Each ComplianceArtifactPackage refers to one software package of the 
- * distributable collection 
+ * distributable collection and is defined 
+ * - by some meta information,
+ * - by a set of default licensing statements
+ * - a list of directories which contain their own licensing statements
+ * - a list of files which contain their own licensing statements
  */
 
 ComplianceArtifactPackage:
@@ -72,13 +91,40 @@ ComplianceArtifactPackage:
   ']'  
 ;
  
+ /*
+  * A directory containing its' own licensing statement is defined
+  * - by path of the directory, that contains its own licensing statement
+  * - a list of 1:n licensing statements
+  */
  DirComplianceArtifactSet:
   '"dirScope"' ':' dpath=STRING ','
-  '"dirLicense"' ':' '{'
-      (dcasl+=ComplianceArtifactSet '}' ',' '"dirLicense"' ':' '{')* 
+  '"dirLicenses"' ':' '['
+    '{'
+      (dcasl+=ComplianceArtifactSet '}' ',' '{')* 
       (dcasl+=ComplianceArtifactSet '}') 
+  ']'
 ;
 
+ /*
+  * A file that is relevant for the compliance is
+  * - either a file that is needed to fulfill a requirement (NOTICE,...) 
+  * - or contains itself 1:n licensing statements
+  * 
+  * For any general file, the generally may say that it
+  * - didn't stored the file content in the compliance fulfillment archive ('null')
+  * - had any troubles to store the content ("911")
+  * - has successfully stored the content
+  * 
+  * For some specific files OSCake expects that the scanners store the content
+  * in the compliance fulfillment archive.
+  * 
+  * The meaning of 'null' '911', STRING is this
+  * - If OSCake does not need the content, the the OSCC-Generator 
+  *   hides the information when writing the OSCD file
+  * - If OSCake knows, that it needs the file content in any context, the OSCC-Generator 
+  *   - writes a 'get more information-' or 'resolve-the-trouble-' task into the todo-file
+  *   - marks the generated OSCD.md as undistributable.
+  */
 FileComplianceArtifactSet:
   
   '"fileScope"' ':'
@@ -88,16 +134,39 @@ FileComplianceArtifactSet:
     )
     |
     ( fpath=STRING 
-      (',' '"fileContentInArchive"' ':' fcPath=('null' | "911" | STRING  ))?
+      (',' '"fileContentInArchive"' ':' fcPath=('null' | '"911"' | STRING  ))?
     )
   ) ','
   
-  '"fileLicense"' ':' '{'
-      (fcasl+=ComplianceArtifactSet '}' ',' '"fileLicense"' ':' '{')* 
+  '"fileLicenses"' ':' '['
+    '{'
+      (fcasl+=ComplianceArtifactSet '}' ',' '{')* 
       (fcasl+=ComplianceArtifactSet '}')
+   ']'
    
 ;
 
+/*
+ * A weak compliance artifact set contains 
+ * - a SPDX license identifier 
+ * - some elements to fulfill some license requirements.
+ * 
+ * Note: 
+ * 
+ * 1) it's not the task of the scanner to know, which artifacts have 
+ *    to be used in which context.
+ * 2) So the scanner may insert all artifacts he can find in the 
+ *    respective scope, regardless whether the found license does require
+ *    them or does not require them.
+ * 
+ * It is the task (competence) of OSCake to look for the necessary 
+ * compliance artifacts and 
+ * - if possible to insert them into the OSCD.md file created at the end 
+ * - or
+ *   - to insert a 'get more information-' or 'resolve-the-trouble-' task into 
+ *   the todo-file
+ *   - to mark the the generated OSCD.md as undistributable
+ */
  ComplianceArtifactSet:
   '"license"' ':'
     spdxId= (
@@ -105,11 +174,12 @@ FileComplianceArtifactSet:
       '"BSD-2-Clause"' |
       '"BSD-3-Clause"' |
       '"Apache-2.0"' |
+      '"noassertion"' |
       'null'
     ) 
   
-  (',' '"licenseTextInArchive"' ':' lfPath=('null' | "911" | STRING ))?
-  (',' '"dummyComplianceArtifact"' ':' dummyArtifact=('null' | "911" | STRING ))?
+  (',' '"licenseTextInArchive"' ':' lfPath=('null' | '"911"' | STRING ))?
+  (',' '"dummyComplianceArtifact"' ':' dummyArtifact=('null' | '"911"' | STRING ))?
 ;
 
 

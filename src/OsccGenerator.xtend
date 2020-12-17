@@ -55,8 +55,8 @@ def CharSequence toCode(ComplianceArtifactCollection cac) '''
     «FOR pkg : cac.complianceArtifactPackages BEFORE '' SEPARATOR ',' AFTER ''»
     {
       "pid" : "«pkg.capid»" , 
-      «IF (isDefined(pkg.capReleaseNumber))»"release" : "«pkg.capReleaseNumber»" ,«ENDIF»
-      «IF (isDefined(pkg.capRepoUrl))»"repository" : "«pkg.capRepoUrl»" ,«ENDIF»
+      «createKeyValuePairOfOptionalOsccElement("release", pkg.capReleaseNumber ,"," ,"MUST")»
+      «createKeyValuePairOfOptionalOsccElement("repository", pkg.capRepoUrl , "," ,"SHOULD")»
       "defaultLicensings" : [
         «IF (pkg.casl !== null && pkg.casl.length > 0) »
         «FOR dcas : pkg.casl BEFORE '' SEPARATOR ',' AFTER ''»
@@ -71,35 +71,40 @@ def CharSequence toCode(ComplianceArtifactCollection cac) '''
         «FOR dcasp : pkg.dirComplianceArtifactSets BEFORE '' SEPARATOR ',' AFTER ''»
         {
           "dirScope" : "«dcasp.dpath»" ,
-          «FOR dcasl : dcasp.dcasl BEFORE '' SEPARATOR ',' AFTER ''»
-          "dirLicense" : {
-            «insertCas(dcasl)»
-          }
+          "dirLicenses" : [
+            «FOR dcasl : dcasp.dcasl BEFORE '' SEPARATOR ',' AFTER ''»
+            {
+              «insertCas(dcasl)»
+            }
           «ENDFOR»
+          ]
         }
         «ENDFOR»
         «ENDIF»
       ],
       "fileLicensings" : [
         «IF (pkg.fileComplianceArtifactSets !== null && pkg.fileComplianceArtifactSets.length > 0) »
-        «val size=pkg.fileComplianceArtifactSets.size()»«var int current=0»
-        «FOR fcasp : pkg.fileComplianceArtifactSets BEFORE '' SEPARATOR '' AFTER ''»
-        «IF isAnyLicenseReferenceValid(fcasp)» 
-        «IF (current>0)»,«ENDIF»
-        «IF ((current+=1)<size)»«ENDIF»
-        {
-          "fileScope" : "«clearScopeString(fcasp.fpath)»" ,
-          «IF (fcasp.fcPath!==null && isNoticeFile(fcasp.fpath))»
-          "fileContentInArchive" : "«fcasp.fcPath»" ,
-          «ENDIF»
-          «FOR fcas : fcasp.fcasl BEFORE '' SEPARATOR ',' AFTER ''»
-          "fileLicense" : {
-            «insertCas(fcas)»
+        «var boolean ofirst=true»
+        «FOR fcasp : pkg.fileComplianceArtifactSets BEFORE '' SEPARATOR '' AFTER ''» 
+        «IF isAnyLicenseReferenceValid(fcasp)»    
+          «IF (!(ofirst))»,«ELSE»«IF (ofirst=false)»«ENDIF»«ENDIF»
+          { 
+            "fileScope" : "«clearScopeString(fcasp.fpath)»" ,
+            «IF (fcasp.fcPath!==null && isNoticeFile(fcasp.fpath))»
+            "fileContentInArchive" : "«fcasp.fcPath»" ,
+            «ENDIF»
+            "fileLicenses" : [
+              «var boolean ifirst=true»
+              «FOR fcas : fcasp.fcasl BEFORE '' SEPARATOR '' AFTER ''»
+              «IF (fcas.spdxId!==null && fcas.spdxId!='null')»
+              «IF (!(ifirst))»,«ELSE»«IF (ifirst=false)»«ENDIF»«ENDIF»
+              { 
+                «insertCas(fcas)»
+              }
+              «ENDIF»
+             «ENDFOR»
+            ]
           }
-          «ENDFOR»
-        }
-        «ELSE»
-          «IF ((current+=1)<size)»«ENDIF»
         «ENDIF»
         «ENDFOR»
         «ENDIF»
@@ -127,9 +132,11 @@ def String clearScopeString(String scope) {
   return scope;
 }
 
-
+/*
+ * A licensing statement (in any focus) only must be fulfilled
+ * if it has been found
+ */
 def boolean isAnyLicenseReferenceValid (FileComplianceArtifactSet fcasl) {
-
   for ( ComplianceArtifactSet fcas :  fcasl.fcasl) {
     if (fcas.spdxId !== null) {
       if (fcas.spdxId != 'null') return true;
@@ -138,12 +145,16 @@ def boolean isAnyLicenseReferenceValid (FileComplianceArtifactSet fcasl) {
   return false;
 }
 
+
+
 def String insertCas(ComplianceArtifactSet cas) {
   if (cas.spdxId == '"MIT"') return insertMitCas(cas);
   if (cas.spdxId == '"BSD-2-Clause"') return insertBsd2clCas(cas);
   if (cas.spdxId == '"BSD-3-Clause"') return insertBsd3clCas(cas);
   if (cas.spdxId == '"Apache-2.0"') return insertApache20Cas(cas); 
-  if (cas.spdxId == 'null') return insertNullCas(); 
+  if (cas.spdxId == '"noassertion"') return insertNoAssertCas();  
+  /* this method should never been used due to  isAnyLicenseReferenceValid  */ 
+  /* if (cas.spdxId == 'null') return insertNullCas(); */
   return insertUnknownCas(cas);
 }
 
@@ -185,28 +196,43 @@ def String insertApache20Cas(ComplianceArtifactSet cas) '''
 "licenseTextInArchive" : "multiply-usable" ,
 «writeRequiredValue("apacheNoticeTextInArchive","muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden")»
 '''
-
+/*
 def String insertNullCas() '''
 "license" : null ,
 "licenseTextInArchive" : null
 '''
+*/
+
+def String insertNoAssertCas() '''
+"license" : "noassertion" ,
+"licenseTextInArchive" : null /* TODO MUST: write an OSCC-Task: resolve noassertion */
+'''
 
 def String insertUnknownCas(ComplianceArtifactSet cas) '''
 "license" : «cas.spdxId» ,
-"licenseTextInArchive" : "911"
+"licenseTextInArchive" : "911"  /* TODO MUST: write an OSCC-Task: resolve 911 */
 '''
 
 def writeRequiredValue(String kword, String kval) '''
 «IF (kval === null)»
 "«kword»" : "911"
-«ELSEIF (kval=="911")»
+«ELSEIF (kval=='"911"')»
 "«kword»" : "911"
 «ELSEIF (kval == 'null')»
 "«kword»" : null
 «ELSE»
-"«kword»" : "«kval»"
+"«kword»" : "«kval»" 
 «ENDIF»
 '''
+
+def String createKeyValuePairOfOptionalOsccElement(String key, String value, String cm, String state ) {
+  val String comment=' /* TODO write an OSCC task: value for '+ key + ' ' + state + ' be inserted */';
+  
+  if (value===null) return ('"' + key + '" : "unknown" ' + cm + comment);
+  if (value=="") return ('"' + key + '" : "unknown" ' + cm + comment);
+  if (value=='null') return ('"' + key + '" : "unknown" ' + cm + comment);
+  return ('"' + key + '" : "' + value + '" ' + cm);
+}
 
 def Boolean isDefined(String istr) {
   if ( istr === null) return false;
