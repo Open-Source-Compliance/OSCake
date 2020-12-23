@@ -86,7 +86,7 @@ def CharSequence toCode(ComplianceArtifactCollection cac) '''
         «IF (pkg.fileComplianceArtifactSets !== null && pkg.fileComplianceArtifactSets.length > 0) »
         «var boolean ofirst=true»
         «FOR fcasp : pkg.fileComplianceArtifactSets BEFORE '' SEPARATOR '' AFTER ''» 
-        «IF isAnyLicenseReferenceValid(fcasp)»    
+        «IF isAnyLicenseReferenceRelevant(fcasp,pkg)»    
           «IF (!(ofirst))»,«ELSE»«IF (ofirst=false)»«ENDIF»«ENDIF»
           { 
             "fileScope" : "«clearScopeString(fcasp.fpath)»" ,
@@ -96,7 +96,7 @@ def CharSequence toCode(ComplianceArtifactCollection cac) '''
             "fileLicenses" : [
               «var boolean ifirst=true»
               «FOR fcas : fcasp.fcasl BEFORE '' SEPARATOR '' AFTER ''»
-              «IF (fcas.spdxId!==null && fcas.spdxId!='null')»
+              «IF isThisFileLicenseReferenceRelevant(fcas,pkg) »
               «IF (!(ifirst))»,«ELSE»«IF (ifirst=false)»«ENDIF»«ENDIF»
               { 
                 «insertCas(fcas)»
@@ -136,15 +136,45 @@ def String clearScopeString(String scope) {
  * A licensing statement (in any focus) only must be fulfilled
  * if it has been found
  */
-def boolean isAnyLicenseReferenceValid (FileComplianceArtifactSet fcasl) {
+def boolean isAnyLicenseReferenceRelevant (FileComplianceArtifactSet fcasl,ComplianceArtifactPackage pkg) {
   for ( ComplianceArtifactSet fcas :  fcasl.fcasl) {
-    if (fcas.spdxId !== null) {
-      if (fcas.spdxId != 'null') return true;
-    }
+    if (isThisFileLicenseReferenceRelevant (fcas, pkg)) return true;
   }
   return false;
 }
 
+/*
+ * An entry of the file licensing statements is relevant 
+ * a) if the license identifier is neither null nor 'null' and
+ * b) if it is not covered by the any of the default licensing statements
+ */
+def boolean isThisFileLicenseReferenceRelevant (ComplianceArtifactSet fcas, ComplianceArtifactPackage pkg) {
+  
+  if ( fcas.spdxId === null ) return false; 
+  if ( fcas.spdxId == 'null' )  return false; 
+
+  if (isThisLicenseReferenceCoveredByAnyDefaultLicense(fcas, pkg)) return false;
+  
+  return true;
+}
+
+
+
+ /* 
+ * A local compliance set is covered by any of the default compliance sets
+ * a) if the license identifier is the same and
+ * b) if local compliance set does not have its own license text (in archive)
+ */
+def boolean isThisLicenseReferenceCoveredByAnyDefaultLicense(ComplianceArtifactSet cas, ComplianceArtifactPackage pkg) {
+  if (pkg.casl === null || pkg.casl.length == 0) return false;
+  for (dcas : pkg.casl ) {
+    if (dcas.spdxId.equals(cas.spdxId)) {
+      if (( cas.lfPath === null ) || ( cas.lfPath.equals('null') )) return true;
+      if ( cas.lfPath.equals('null') ) return true;
+    }
+  }
+  return false;
+}
 
 
 def String insertCas(ComplianceArtifactSet cas) {
@@ -152,7 +182,7 @@ def String insertCas(ComplianceArtifactSet cas) {
   if (cas.spdxId == '"BSD-2-Clause"') return insertBsd2clCas(cas);
   if (cas.spdxId == '"BSD-3-Clause"') return insertBsd3clCas(cas);
   if (cas.spdxId == '"Apache-2.0"') return insertApache20Cas(cas); 
-  if (cas.spdxId == '"noassertion"') return insertNoAssertCas();  
+  if ((cas.spdxId == '"noassertion"')||(cas.spdxId == '"NOASSERTION"')) return insertNoAssertCas();  
   /* this method should never been used due to  isAnyLicenseReferenceValid  */ 
   /* if (cas.spdxId == 'null') return insertNullCas(); */
   return insertUnknownCas(cas);

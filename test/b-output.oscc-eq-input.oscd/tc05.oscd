@@ -4,11 +4,11 @@
     "author" : "Karsten Reincke" ,
     "release" : "0.22" ,
     "date" : "2020-11-02T15:00" ,
-    "archivePath" : "/home/karsten/data.dsl/tdosca-tc05.zip" ,
-    "archiveType" : "ZIP"
+    "archivePath" : "/home/karsten/data.dsl/tdosca.tc05" ,
+    "archiveType" : "DIR"
   } ,
   "complianceArtifactPackages" : [
-    {
+    { 
       "pid" : "tc05" , 
       "release" : "1.0" ,
       "repository" : "https://github.com/Open-Source-Compliance/tdosca-tc05-simplhw/tree/master/input-sources" ,
@@ -17,20 +17,10 @@
           "license" : "MIT" ,
           "licenseTextInArchive" : "tc05.default.copying" 
         }
-      ], 
+      ],
       "dirLicensings" : [
       ],
       "fileLicensings" : [
-        { 
-          "fileScope" : "AUTHORS" ,
-          "fileLicenses" : [
-            { 
-              "license" : "MIT" ,
-              "licenseTextInArchive" : null
-            }
-          ]
-        }
-        ,
         { 
           "fileScope" : "COPYING" ,
           "fileLicenses" : [
@@ -52,40 +42,10 @@
         }
         ,
         { 
-          "fileScope" : "src/main/java/de/tdosca/tc05/GreetingService.java" ,
-          "fileLicenses" : [
-            { 
-              "license" : "MIT" ,
-              "licenseTextInArchive" : null
-            }
-          ]
-        }
-        ,
-        { 
-          "fileScope" : "src/main/java/de/tdosca/tc05/Main.java" ,
-          "fileLicenses" : [
-            { 
-              "license" : "MIT" ,
-              "licenseTextInArchive" : null
-            }
-          ]
-        }
-        ,
-        { 
           "fileScope" : "src/test/java/de/tdosca/common/EnvServiceTest.java" ,
           "fileLicenses" : [
             { 
               "license" : "BSD-2-Clause" ,
-              "licenseTextInArchive" : null
-            }
-          ]
-        }
-        ,
-        { 
-          "fileScope" : "src/test/java/de/tdosca/tc05/GreetingServiceTest.java" ,
-          "fileLicenses" : [
-            { 
-              "license" : "MIT" ,
               "licenseTextInArchive" : null
             }
           ]

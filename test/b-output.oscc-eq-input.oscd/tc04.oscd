@@ -17,7 +17,7 @@
           "license" : "MIT" ,
           "licenseTextInArchive" : "tc04.default.license" 
         },
-        {
+        { 
           "license" : "Apache-2.0" ,
           "licenseTextInArchive" : "multiply-usable" ,
           "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
@@ -26,16 +26,6 @@
       "dirLicensings" : [
       ],
       "fileLicensings" : [
-        { 
-          "fileScope" : "AUTHORS" ,
-          "fileLicenses" : [
-            { 
-              "license" : "MIT" ,
-              "licenseTextInArchive" : null
-            }
-          ]
-        } 
-        ,
         { 
           "fileScope" : "LICENSE" ,
           "fileLicenses" : [
@@ -58,44 +48,11 @@
         }
         ,
         { 
-          "fileScope" : "NOTICE.md" ,
-          "fileContentInArchive" : "tc04.notice.md" ,
-          "fileLicenses" : [
-            { 
-              "license" : "Apache-2.0" ,
-              "licenseTextInArchive" : "multiply-usable" ,
-              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
-            }
-          ]
-        }
-        ,
-        { 
           "fileScope" : "src/main/java/de/all/common/Tipster.java" ,
           "fileLicenses" : [
             { 
               "license" : "BSD-3-Clause" ,
               "licenseTextInArchive" : "tc04.de.tdosca.all.tipster.license" 
-            }
-          ]
-        }
-        ,
-        { 
-          "fileScope" : "src/main/java/de/tdosca/tc04/Greeter.java" ,
-          "fileLicenses" : [
-            { 
-              "license" : "Apache-2.0" ,
-              "licenseTextInArchive" : "multiply-usable" ,
-              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
-            }
-          ]
-        }
-        ,
-        { 
-          "fileScope" : "src/main/java/de/tdosca/tc04/Main.java" ,
-          "fileLicenses" : [
-            { 
-              "license" : "MIT" ,
-              "licenseTextInArchive" : null
             }
           ]
         }
@@ -147,16 +104,6 @@
       "dirLicensings" : [
       ],
       "fileLicensings" : [
-        { 
-          "fileScope" : "gradle/wrapper/gradle-wrapper.jar" ,
-          "fileLicenses" : [
-            { 
-              "license" : "Apache-2.0" ,
-              "licenseTextInArchive" : "multiply-usable" ,
-              "apacheNoticeTextInArchive" : "muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden" 
-            }
-          ]
-        }
       ]     
     }
   ] ,

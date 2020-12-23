@@ -13,6 +13,10 @@
 
 package de.oscake.strict.generator
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
@@ -90,7 +94,7 @@ the Open Source Compliance Artifacts of and for the program collection
   «IF ((oter=0)==0)»«ENDIF»
   «FOR dcas : pkg.casl»
 «mtab+mtab»- Compliance artifacts for the «(oter+=1).toString». default licensing statement 
-«insertCas(dcas,mtab+mtab+mtab)»
+«insertCas(dcas,mtab+mtab+mtab,cac.cacContPath,cac.cacContType)»
   «ENDFOR»
   «FOR scasl : pkg.dirComplianceArtifactSets»
 «mtab»- Scope: DIR
@@ -98,7 +102,7 @@ the Open Source Compliance Artifacts of and for the program collection
     «IF ((oter=0)==0)»«ENDIF»
     «FOR cas : scasl.dcasl»
 «mtab+mtab»- Compliance artifacts for the «(oter+=1).toString». licensing statement in dir *«scasl.dpath»*: 
-«insertCas(cas, mtab+mtab+mtab)»
+«insertCas(cas, mtab+mtab+mtab,cac.cacContPath,cac.cacContType)»
     «ENDFOR»
   «ENDFOR»
   «FOR scasl : pkg.fileComplianceArtifactSets»
@@ -107,7 +111,7 @@ the Open Source Compliance Artifacts of and for the program collection
     «IF ((oter=0)==0)»«ENDIF»
     «FOR cas : scasl.fcasl»
 «mtab+mtab»- Compliance artifacts for the «(oter+=1).toString». licensing statement in file *«scasl.fpath»*:  
-«insertCas(cas, mtab+mtab+mtab)»
+«insertCas(cas, mtab+mtab+mtab,cac.cacContPath,cac.cacContType)»
     «ENDFOR»
   «ENDFOR»
   
@@ -148,16 +152,16 @@ def boolean moreMeta(ComplianceArtifactCollection cac) {
 
 
 
-def insertCas(ComplianceArtifactSet cas, String tabs) '''
+def insertCas(ComplianceArtifactSet cas, String tabs, String cacContPath,String cacContType) '''
 «tabs»- LicenseID: «cas.spdxId»
 «IF (cas.spdxId == '"MIT"')»
-  «insertMitCas(tabs,cas.casMit,"contPath","contType")»
+  «insertMitCas(tabs,cas.casMit,cacContPath,cacContType)»
 «ELSEIF (cas.spdxId == '"BSD-2-Clause"')»
-  «insertBsd2clCas(tabs,cas.casBsd2Cl,"contPath","contType")»
+  «insertBsd2clCas(tabs,cas.casBsd2Cl,cacContPath,cacContType)»
 «ELSEIF (cas.spdxId == '"BSD-3-Clause"')»
-  «insertBsd3clCas(tabs,cas.casBsd3Cl,"contPath","contType")»
+  «insertBsd3clCas(tabs,cas.casBsd3Cl,cacContPath,cacContType)»
 «ELSEIF (cas.spdxId == '"Apache-2.0"')»
-  «insertApache20Cas(tabs,cas,"contPath","contType")»
+  «insertApache20Cas(tabs,cas,cacContPath,cacContType)»
 «ELSEIF (cas.spdxId == '"noassertion"')»
   «insertNoAssertCas(tabs)»
 «ELSE»«insertUnknownCas(tabs)»
@@ -309,11 +313,34 @@ def String clearId(String istr) {
 def String quoteFileContent(String filePath, String repoPath, String repoType) '''
 
 ```
-*OSCake*-***TODO*** fetch the file **«filePath»** from repository 
-*«repoPath»* (type *«repoType»*)
-and insert its content as a quote at this position
+«quoteFileInArchive(filePath, repoPath,repoType)»
 ```
 
 '''
+
+def String quoteFileInArchive(String filePath, String repoPath, String repoType) {
+  val String absFilePath=repoPath+"/"+filePath;
+
+  var File file = new File(absFilePath);
+  if (!file.canRead() || !file.isFile()) 
+    return ("ERROR: Didn't find '" + absFilePath + "'");
+  
+  var FileReader fr = null;
+  var int c;
+  
+  var StringBuffer buff = new StringBuffer();
+  
+  try {
+    fr = new FileReader(file);
+    while ((c =fr.read()) != -1) {
+      buff.append( c as char);
+    }
+    fr.close();
+  } catch (IOException e) {
+    return ("ERROR: Couldn't read content of file '" + absFilePath + "'");
+  }
+  return buff.toString();
+
+}
 
 }

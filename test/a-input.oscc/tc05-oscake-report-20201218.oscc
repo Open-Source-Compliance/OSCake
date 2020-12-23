@@ -1,0 +1,108 @@
+{
+  "complianceArtifactCollection": {
+    "cid": "Maven:de.tdosca.tc05:tdosca-tc05:1.0",
+    "author": "OSCake-Reporter",
+    "release": "0.1",
+    "date": "2020-12-18T13:20:36.003287",
+    "archivePath": "./tdosca-tc05.zip",
+    "archiveType": "ZIP"
+  },
+  "complianceArtifactPackages": [
+    {
+      "pid": "tdosca-tc05",
+      "release": "1.0",
+      "repository": "https://github.com/Open-Source-Compliance/tdosca-tc05-simplhw",
+      "defaultLicensings": [
+        {
+          "license": "MIT",
+          "licenseTextInArchive": "Maven%de.tdosca.tc05%tdosca-tc05%1.0%input-sources%COPYING.lic"
+        }
+      ],
+      "dirLicensings": [],
+      "fileLicensings": [
+        {
+          "fileScope": "src/main/java/de/tdosca/common/EnvService.java",
+          "fileLicenses": [
+            {
+              "license": "BSD-2-Clause",
+              "licenseTextInArchive": "Maven%de.tdosca.tc05%tdosca-tc05%1.0%input-sources%src%main%java%de%tdosca%common%EnvService.java.lic"
+            }
+          ]
+        },
+        {
+          "fileScope": "COPYING",
+          "fileContentInArchive": "Maven%de.tdosca.tc05%tdosca-tc05%1.0%input-sources%COPYING",
+          "fileLicenses": [
+            {
+              "license": "MIT",
+              "licenseTextInArchive": "Maven%de.tdosca.tc05%tdosca-tc05%1.0%input-sources%COPYING.lic"
+            }
+          ]
+        },
+        {
+          "fileScope": "pom.xml",
+          "fileLicenses": [
+            {
+              "license": "NOASSERTION",
+              "licenseTextInArchive": null
+            }
+          ]
+        },
+        {
+          "fileScope": "src/main/java/de/tdosca/tc05/GreetingService.java",
+          "fileLicenses": [
+            {
+              "license": "MIT",
+              "licenseTextInArchive": null
+            }
+          ]
+        },
+        {
+          "fileScope": "src/test/java/de/tdosca/tc05/GreetingServiceTest.java",
+          "fileLicenses": [
+            {
+              "license": "MIT",
+              "licenseTextInArchive": null
+            }
+          ]
+        },
+        {
+          "fileScope": "README.md",
+          "fileLicenses": [
+            {
+              "license": "MIT",
+              "licenseTextInArchive": null
+            }
+          ]
+        },
+        {
+          "fileScope": "AUTHORS",
+          "fileLicenses": [
+            {
+              "license": "MIT",
+              "licenseTextInArchive": null
+            }
+          ]
+        },
+        {
+          "fileScope": "src/main/java/de/tdosca/tc05/Main.java",
+          "fileLicenses": [
+            {
+              "license": "MIT",
+              "licenseTextInArchive": null
+            }
+          ]
+        },
+        {
+          "fileScope": "src/test/java/de/tdosca/common/EnvServiceTest.java",
+          "fileLicenses": [
+            {
+              "license": "BSD-2-Clause",
+              "licenseTextInArchive": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
