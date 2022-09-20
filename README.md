@@ -56,7 +56,7 @@ So, existing Open Source scan tools create large lists of compliance entities th
     - Project name: `de.oscake.weak`
     - Language name: `de.oscake.weak.Oscc`
     - Extensions: `oscc`
-7. Inside of your Eclipse, call `run as/Generate XText Artifacts` from the context menu of the files which have automatically been created:
+7. Inside of your Eclipse, select the context menu in the language editor and call `run as/Generate XText Artifacts`. The language editor has automatically  opened the newly create language definition files (if not, open them manually):
   - *src/de.oscake.strict/Oscf.Xtext*
   - *src/de.oscake.weak/Oscc.Xtext*
 8. On the file level copy the following files from the OSCake repository to the eclipse working directory:
