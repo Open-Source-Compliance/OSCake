@@ -52,49 +52,49 @@ So, existing Open Source scan tools create large lists of compliance entities th
 6. Switch to the XText view and create two new XText projects with the parameters:
   - Project a:
     - Project name: `de.oscake.strict`
-    - Language name: `de.oscake.strict.Oscd`
-    - Extensions: `oscd`
+    - Language name: `de.oscake.strict.Oscf`
+    - Extensions: `oscf`
   - Project b:
     - Project name: `de.oscake.weak`
     - Language name: `de.oscake.weak.Oscc`
     - Extensions: `oscc`
 7. Inside of your Eclipse, call `run as/Generate XText Artifacts` from the context menu of the files which have automatically been created:
-  - *src/de.oscake.strict/Oscd.Xtext*
+  - *src/de.oscake.strict/Oscf.Xtext*
   - *src/de.oscake.weak/Oscc.Xtext*
 8. On the file level copy the following files from the OSCake repository to the eclipse working directory:
   - `cp src/Oscc.xtext -> $HOME/ews.dsl/ews.xtx/de.oscake.weak/src/de/oscake/weak/`
   - `cp src/OsccGenerator.xtend -> $HOME/ews.dsl/ews.xtx/de.oscake.weak/src/de/oscake/weak/generator/`
-  - `cp src/Oscd.xtext -> $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/`
-  - `cp src/OscdGenerator.xtend -> $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/generator/`
-9. Inside of your Eclipse, recall `run as/Generate XText Artifacts` from the context menu of the replaced file *src/de.oscake.strict/Oscd.Xtext* and *src/de.oscake.weak/Oscc.Xtext*
+  - `cp src/Oscf.xtext -> $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/`
+  - `cp src/OscfGenerator.xtend -> $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/generator/`
+9. Inside of your Eclipse, recall `run as/Generate XText Artifacts` from the context menu of the replaced file *src/de.oscake.strict/Oscf.Xtext* and *src/de.oscake.weak/Oscc.Xtext*
 10. Call `run as/Eclipse Application` from the context menu of *de.oscake.strict*
 11. Select `ews.dsl/ews.osc` as working directory for the automatically started second eclipse instance
 12. Create a new Java project.
 13. Inside of this project, create a directory `src-gen` as sibling of the directory `src`
-14. Create a new file *src/what-ever-you-want.***oscd**.
+14. Create a new file *src/what-ever-you-want.***oscf**.
 15. Play around with inserting your first *Open Source Compliance Declaration*. (Keep in mind: `String Space` allows you to select the next syntactically valid input)
 16. On the file level copy test/a-input.oscc/\*.oscc from the OSCake repository -> $HOME/ews.dsl/ews.osc/src/`
 17. Press key F5
-18. Exec the following steps to test a complete round trip from oscc via oscd to oscf.md:
-  - open `tc05.oscd`
-  - insert a blank outside of the code and save the file (that triggers the automatical generation of tc05.oscd)
-  - open `tc05.oscd`
+18. Exec the following steps to test a complete round trip from oscc via oscf to oscf.md:
+  - open `tc05.oscf`
+  - insert a blank outside of the code and save the file (that triggers the automatical generation of tc05.oscf)
+  - open `tc05.oscf`
   - insert a blank outside of the code and save the file (that triggers the automatical generation of tc05.oscf.md)
   - open `tc05.oscf.md` 
 
-### Modifyiing the language definition of OSCD
+### Modifyiing the language definition of OSCF
 
-* Work on `src/de.oscake.strict/Oscd.Xtext` for improving the strict Open Source Compliance Definition language.
-* Work on `src/de.oscake.strict.generator/OscdGenerator.xtend` for improving the evaluation of oscf-files.
+* Work on `src/de.oscake.strict/Oscf.Xtext` for improving the strict Open Source Compliance Definition language.
+* Work on `src/de.oscake.strict.generator/OscfGenerator.xtend` for improving the evaluation of oscf-files.
 * Work on `src/de.oscake.weak/Oscc.Xtext` for improving the weak Open Source Compliance Collection language. 
 * Work on `src/de.oscake.weak.generator/OsccGenerator.xtend` for improving the evaluation of oscf-files.
 
 Keep in mind:
 
-* The definition of a valid OSCD file (written in the XText file Oscd.Xtext) declaratively defines the compliance knowledge.
-* The corresponding Open Source Compliance File (im Markdown format) is derived from the OSCD file by the OscdGenerator.xtend.
+* The definition of a valid OSCF file (written in the XText file Oscf.Xtext) declaratively defines the compliance knowledge.
+* The corresponding Open Source Compliance File (im Markdown format) is derived from the OSCF file by the OscfGenerator.xtend.
 * The definition of a valid OSCC file (written in the XText file Oscc.Xtext) defines the elements a scanner can collect / handover to OSCake.
-* The OsccGenerator.xtend applies the knowledge defined in OSCD: he derives OSCD file from the OSCC file (by throwing away what's unnecessary etc.) and to mark what's still missed to create a valid OSCD = a appropriate OSCF.
+* The OsccGenerator.xtend applies the knowledge defined in OSCF: he derives OSCF file from the OSCC file (by throwing away what's unnecessary etc.) and to mark what's still missed to create a valid OSCF = a appropriate OSCF.
 
 ## Code of Conduct
 

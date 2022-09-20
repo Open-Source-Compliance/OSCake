@@ -127,7 +127,7 @@
          * either covered by the default licensing statement or the n ext dir licensing
          * statement or does not require any compliance artifacts.
          * 
-         * Hence: OSCake will hide this entry from the strict compliance descriptor OSCD
+         * Hence: OSCake will hide this entry from the strict compliance descriptor OSCF
          * the OSCC generator derives from the OSCC file
          */        
         { 
@@ -147,7 +147,7 @@
          * 
          * The OSCC generator knows that this needs still a human review. Therefore it
          * - writes a task into the todo file
-         * - writes the "noassertion" into the OSCD file 
+         * - writes the "noassertion" into the OSCF file 
          *   (which than marks the OSCF file as still undistributable
          */        
         { 
@@ -169,7 +169,7 @@
           *
           * It is task of OSCake to recognize that theses files are
           * covered by the default licensing statements and hence
-          * can be hidden from the OSCD file the OSCC generator creates
+          * can be hidden from the OSCF file the OSCC generator creates
           */               
         { 
           "fileScope" : "LICENSE" ,
@@ -199,7 +199,7 @@
          * OSCake ignores the problem report and takes resort to
          * multiply usable license text instances.
          * 
-         * Hence: this file should appear in the OSCD file
+         * Hence: this file should appear in the OSCF file
          * with reference to the generally usable apache license
          */
         { 
@@ -216,11 +216,11 @@
          * statement in the archive
          * 
          * In case of an instantiated license, OSCake will 
-         * - take over this file entry into the OSCD file so
-         * - envoke the OSCD generator to mark the md file as indistributable
+         * - take over this file entry into the OSCF file so
+         * - envoke the OSCF generator to mark the md file as indistributable
          * - create a clarify-task 
          * 
-         * Hence: this file should appear in the OSCD file
+         * Hence: this file should appear in the OSCF file
          * And the MD ocument should say STOP: not usable. need a statement
          */
         { 
@@ -237,11 +237,11 @@
          * statement in the archive
          * 
          * In case of an instantiated license, OSCake will 
-         * - take over this file entry into the OSCD file so
-         * - envoke the OSCD generator to mark the md file as indistributable
+         * - take over this file entry into the OSCF file so
+         * - envoke the OSCF generator to mark the md file as indistributable
          * - create a clarify-task 
          * 
-         * Hence: this file should appear in the OSCD file
+         * Hence: this file should appear in the OSCF file
          * And the MD document should say STOP: not usable. need a statement
          */
         { 

@@ -33,10 +33,10 @@ class OsccGenerator extends AbstractGenerator {
 
 override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
  val cac = resource.contents.head as ComplianceArtifactCollection;
- fsa.generateFile(cac.cacid+'.oscd', cac.toCode());
+ fsa.generateFile(cac.cacid+'.oscf', cac.toCode());
 }
 /**
- *  aggregates and pipes the ComplianceArtifactCollection (evaluates the OSCD file)
+ *  aggregates and pipes the ComplianceArtifactCollection (evaluates the OSCF file)
  * 
  *  @param cac the ComplianceArtifactCollection 
  *  @param mtag the main indentation
@@ -218,7 +218,7 @@ def String insertBsd3clCas(ComplianceArtifactSet cas) '''
  * den Wert von fcPath hier als Wert von "apacheNoticeTextInArchive" 
  * schreiben.
  * 
- * Achtung: der OSCD-Generator muss anders operieren:
+ * Achtung: der OSCF-Generator muss anders operieren:
  * Er überpfügt die Dateien nicht, sondern verlässt sich auf diesen Wert.
  */
 def String insertApache20Cas(ComplianceArtifactSet cas) '''

@@ -1,5 +1,5 @@
 /********************************************************
- * OSCake / OSCD = Open Source Compliance Description
+ * OSCake / OSCF = Open Source Compliance Description
  * Open Source Compliance artifacts knowledge engine
  * 
  * Copyright (c) {2020 Karsten Reincke, Deutsche Telekom AG
@@ -22,14 +22,14 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 
-import de.oscake.strict.oscd.ComplianceArtifactCollection
-import de.oscake.strict.oscd.ComplianceArtifactPackage
-import de.oscake.strict.oscd.ComplianceArtifactSet
-import de.oscake.strict.oscd.ComplianceArtifactSetMIT
-import de.oscake.strict.oscd.ComplianceArtifactSetBSD2Clause
-import de.oscake.strict.oscd.ComplianceArtifactSetBSD3Clause
-import de.oscake.strict.oscd.ComplianceArtifactSetApache20
-import de.oscake.strict.oscd.MultiplyUsableFossLicense
+import de.oscake.strict.oscf.ComplianceArtifactCollection
+import de.oscake.strict.oscf.ComplianceArtifactPackage
+import de.oscake.strict.oscf.ComplianceArtifactSet
+import de.oscake.strict.oscf.ComplianceArtifactSetMIT
+import de.oscake.strict.oscf.ComplianceArtifactSetBSD2Clause
+import de.oscake.strict.oscf.ComplianceArtifactSetBSD3Clause
+import de.oscake.strict.oscf.ComplianceArtifactSetApache20
+import de.oscake.strict.oscf.MultiplyUsableFossLicense
 
 /**
  * Generates code from your model files on save.
@@ -37,7 +37,7 @@ import de.oscake.strict.oscd.MultiplyUsableFossLicense
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 
-class OscdGenerator extends AbstractGenerator {
+class OscfGenerator extends AbstractGenerator {
   
 val String notDeliverable="-> can not be included in this copy/portion of the software";
 val String notInOrigRepo="neither part of the file nor part of the original repository";
@@ -48,7 +48,7 @@ override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorCo
 }
 
 /**
- *  aggregates and pipes the ComplianceArtifactCollection (evaluates the OSCD file)
+ *  aggregates and pipes the ComplianceArtifactCollection (evaluates the OSCF file)
  * 
  *  @param cac the ComplianceArtifactCollection 
  *  @param mtag the main indentation

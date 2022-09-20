@@ -120,10 +120,10 @@ ComplianceArtifactPackage:
   * 
   * The meaning of 'null' '911', STRING is this
   * - If OSCake does not need the content, the the OSCC-Generator 
-  *   hides the information when writing the OSCD file
+  *   hides the information when writing the OSCF file
   * - If OSCake knows, that it needs the file content in any context, the OSCC-Generator 
   *   - writes a 'get more information-' or 'resolve-the-trouble-' task into the todo-file
-  *   - marks the generated OSCD.md as undistributable.
+  *   - marks the generated OSCF.md as undistributable.
   */
 FileComplianceArtifactSet:
   
@@ -161,11 +161,11 @@ FileComplianceArtifactSet:
  * 
  * It is the task (competence) of OSCake to look for the necessary 
  * compliance artifacts and 
- * - if possible to insert them into the OSCD.md file created at the end 
+ * - if possible to insert them into the OSCF.md file created at the end 
  * - or
  *   - to insert a 'get more information-' or 'resolve-the-trouble-' task into 
  *   the todo-file
- *   - to mark the the generated OSCD.md as undistributable
+ *   - to mark the the generated OSCF.md as undistributable
  */
  ComplianceArtifactSet:
   '"license"' ':'

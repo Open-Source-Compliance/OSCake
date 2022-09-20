@@ -1,5 +1,5 @@
 /********************************************************
- * OSCake / OSCD = Open Source Compliance Description
+ * OSCake / OSCF = Open Source Compliance Description
  * Open Source Compliance artifacts knowledge engine
  * 
  * Copyright (c) {2020 Karsten Reincke, Deutsche Telekom AG
@@ -11,9 +11,9 @@
  * SPDX-License-Identifier: EPL-2.0
   *******************************************************/
 
-grammar de.oscake.strict.Oscd with org.eclipse.xtext.common.Terminals
+grammar de.oscake.strict.Oscf with org.eclipse.xtext.common.Terminals
 
-generate oscd "http://www.oscake.de/strict/Oscd"
+generate oscf "http://www.oscake.de/strict/Oscf"
 
 /**
  * A strict Compliance Artifact Collection consist of
