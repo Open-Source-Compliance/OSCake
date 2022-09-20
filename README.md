@@ -19,16 +19,13 @@
 
 ![OSCake logo](img/oscake-logo-100x121.png)
 
-develop branch
-
 The goal of the OSCake project is to develop an XTEXT / XTEND based intelligent Open Source Compliance artifact knowledge engine, that
 
 * takes a description of a package collection and the compliance artifacts found in the packages
 
 * creates the one **O**pen **S**ource **C**ompliance **F**ile that - if distributed together with package collection - assures that the package collection is distributed compliantly = in accordance with the requirements of the involved licenses.
 
-The point of this project is, that the knowledge which Open Source compliance artifacts have to be created / delivered in the context of which licenses and which architectural constraints is inherently embedded into the Domain Specific Language(s) defined and evaluated by XText and XTend. 
-
+The point of this project is, that the knowledge which Open Source compliance artifacts have to be created / delivered in the context of which licenses and which architectural constraints is inherently embedded into the Domain Specific Language(s) defined and evaluated by XText and XTend.
 
 ## About this component
 
@@ -49,7 +46,7 @@ So, existing Open Source scan tools create large lists of compliance entities th
 3. Create a new *Eclipse Working Directory* `ews.dsl`.
 4. Inside of this directory create the *Eclipse Working Directories* `ews.xtx.` and `ews.osc`
 5. Start Eclipse and select `ews.dsl/ews.xtx` as working directory.
-6. Switch to the XText view and create two new XText projects with the parameters:
+6. Create two new XText projects (New/Project/Xtext/Xtext-Project) with the parameters:
   - Project a:
     - Project name: `de.oscake.strict`
     - Language name: `de.oscake.strict.Oscf`
@@ -58,35 +55,43 @@ So, existing Open Source scan tools create large lists of compliance entities th
     - Project name: `de.oscake.weak`
     - Language name: `de.oscake.weak.Oscc`
     - Extensions: `oscc`
-7. Inside of your Eclipse, call `run as/Generate XText Artifacts` from the context menu of the files which have automatically been created:
+7. Inside of your Eclipse, select the context menu in the language editor and call `run as/Generate XText Artifacts`. The language editor has automatically  opened the newly create language definition files (if not, open them manually):
   - *src/de.oscake.strict/Oscf.Xtext*
   - *src/de.oscake.weak/Oscc.Xtext*
-8. On the file level copy the following files from the OSCake repository to the eclipse working directory:
-  - `cp src/Oscc.xtext -> $HOME/ews.dsl/ews.xtx/de.oscake.weak/src/de/oscake/weak/`
-  - `cp src/OsccGenerator.xtend -> $HOME/ews.dsl/ews.xtx/de.oscake.weak/src/de/oscake/weak/generator/`
-  - `cp src/Oscf.xtext -> $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/`
-  - `cp src/OscfGenerator.xtend -> $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/generator/`
+8. Stop Eclipse and copy the following files from the OSCake repository to the eclipse working directory using the normal file system:
+  - `cp src/Oscc.xtext $HOME/ews.dsl/ews.xtx/de.oscake.weak/src/de/oscake/weak/`
+  - `cp src/OsccGenerator.xtend $HOME/ews.dsl/ews.xtx/de.oscake.weak/src/de/oscake/weak/generator/`
+  - `cp src/Oscf.xtext $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/`
+  - `cp src/OscfGenerator.xtend $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/generator/`
 9. Inside of your Eclipse, recall `run as/Generate XText Artifacts` from the context menu of the replaced file *src/de.oscake.strict/Oscf.Xtext* and *src/de.oscake.weak/Oscc.Xtext*
-10. Call `run as/Eclipse Application` from the context menu of *de.oscake.strict*
-11. Select `ews.dsl/ews.osc` as working directory for the automatically started second eclipse instance
-12. Create a new Java project.
+10. Touch the `oscf` project with your alternative mouse key, select `properties`, open `Run/Debug Settings,` and do this
+  - Duplicate the item 'Launch Runtime Eclipse'
+  - Edit the created item
+  - set its name to osc
+  - set the value of *Location* to `${workspace_loc}/../ews.osc`
+11. Call `run as/Eclipse Application` from the context menu of *de.oscake.strict* and select the created *osc*-configuration in the dialog *select a launch configuration to run*
+12. Create a new Java project named 'tc' (testcase)
 13. Inside of this project, create a directory `src-gen` as sibling of the directory `src`
 14. Create a new file *src/what-ever-you-want.***oscf**.
-15. Play around with inserting your first *Open Source Compliance Declaration*. (Keep in mind: `String Space` allows you to select the next syntactically valid input)
-16. On the file level copy test/a-input.oscc/\*.oscc from the OSCake repository -> $HOME/ews.dsl/ews.osc/src/`
+15. Play around with inserting your first *Open Source Compliance Declaration*. (Keep in mind: `String Space` allows you to select the next syntactically valid input). At the end, delete the created 'play-around'-files
+16. On the file level copy test/tc-a.oscc from the OSCake repository to $HOME/ews.dsl/ews.osc/tc/src/`
 17. Press key F5
 18. Exec the following steps to test a complete round trip from oscc via oscf to oscf.md:
   - open `tc05.oscf`
   - insert a blank outside of the code and save the file (that triggers the automatical generation of tc05.oscf)
   - open `tc05.oscf`
   - insert a blank outside of the code and save the file (that triggers the automatical generation of tc05.oscf.md)
-  - open `tc05.oscf.md` 
+  - open `tc05.oscf.md`
 
-### Modifyiing the language definition of OSCF
+### About some traps
+
+* Sometimes - while trying to create the Xtext Artifacts via the respective file context menu, you will run into an error. We still could not figure out why this happens. It could perhaps be related to the succession of calling the commands. We will update this paragraphs as soon as we know the real reason. Up to this moment ther is a work 'around': simply delete thew errow messages on the eclipse level and let the artifacts be created again.
+
+## the language definition of OSCF
 
 * Work on `src/de.oscake.strict/Oscf.Xtext` for improving the strict Open Source Compliance Definition language.
 * Work on `src/de.oscake.strict.generator/OscfGenerator.xtend` for improving the evaluation of oscf-files.
-* Work on `src/de.oscake.weak/Oscc.Xtext` for improving the weak Open Source Compliance Collection language. 
+* Work on `src/de.oscake.weak/Oscc.Xtext` for improving the weak Open Source Compliance Collection language.
 * Work on `src/de.oscake.weak.generator/OsccGenerator.xtend` for improving the evaluation of oscf-files.
 
 Keep in mind:
