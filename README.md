@@ -19,6 +19,8 @@
 
 ![OSCake logo](img/oscake-logo-100x121.png)
 
+develop branch
+
 The goal of the OSCake project is to develop an XTEXT / XTEND based intelligent Open Source Compliance artifact knowledge engine, that
 
 * takes a description of a package collection and the compliance artifacts found in the packages
