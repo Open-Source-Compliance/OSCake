@@ -4,7 +4,7 @@
     "author" : "Karsten Reincke", 
     "release" : "0.22",
     "date" : "2020-12-02T15:00",
-    "archivePath" : "/home/karsten/data-oscake-reference" ,
+    "archivePath" : "/home/kreincke/data.dsl/refs.osc" ,
     "archiveType" : "DIR"  
   } ,  
   "complianceArtifactPackages" : [

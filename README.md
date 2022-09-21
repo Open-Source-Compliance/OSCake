@@ -85,7 +85,9 @@ So, existing Open Source scan tools create large lists of compliance entities th
 
 ### About some traps
 
-* Sometimes - while trying to create the Xtext Artifacts via the respective file context menu, you will run into an error. We still could not figure out why this happens. It could perhaps be related to the succession of calling the commands. We will update this paragraphs as soon as we know the real reason. Up to this moment ther is a work 'around': simply delete thew errow messages on the eclipse level and let the artifacts be created again.
+* While creating the Xtext Artifacts via the respective file context menu in step 9, you can run into an error: The semantic of both languages (Xtend implementation) depends on each other, but does not cooperate with the artifacts created in step 7. The solution is:
+  - delete thew error messages on the eclipse level
+  - let the artifacts be created again.
 
 ## the language definition of OSCF
 
