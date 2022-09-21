@@ -39,6 +39,8 @@ generate oscc "http://www.oscake.de/weak/Oscc"
  */
 ComplianceArtifactCollection:
 '{'
+  '"hasIssues"' ':' hiv=Boolean ',' 
+  '"containsHiddenSections"' ':' chs=Boolean ',' 
   '"complianceArtifactCollection"' ':' '{'
     '"cid"' ':' cacid=STRING ','
     ('"author"' ':' cacComposer=STRING ',')?
@@ -68,27 +70,43 @@ ComplianceArtifactPackage:
   '"pid"' ':' capid=STRING ','
   ('"release"' ':' capReleaseNumber=STRING ',')?
   ('"repository"' ':' capRepoUrl=STRING ',')? 
+  '"id"' ':' calid=STRING ','
+  '"distribution"' ':' dist=('"DISTRIBUTED"') ','
+  '"packageType"' ':' pkgType=('"EXECUTABLE"') ','
+  '"sourceRoot"' ':' srcRoot=STRING ','
+  '"hasIssues"' ':' hiv=Boolean ',' 
   
-  '"defaultLicensings"' ':' '['
-    '{'
+  '"defaultLicenses"' ':' '['
+    '{' 
+      '"foundInFileScope"' ":"  defpath=STRING ','
       (casl+=ComplianceArtifactSet '}' ',' '{')* 
       (casl+=ComplianceArtifactSet '}')    
-  ']' ',' 
+  ']' 
+  ( "," '"defaultCopyrights"' ':' '['
+  	(defaultCrstList+=CopyrightStatement ',')* 
+  	(defaultCrstList+=CopyrightStatement)?
+  ']' )?
+  ( ','
+  '"unifiedCopyrights"' ':' '['
+  	(unifiedCrstList+=CopyrightStatement ',')* 
+  	(unifiedCrstList+=CopyrightStatement)?
   
-  '"dirLicensings"' ':' '['
+  ']')?
+  
+  (',' '"dirLicensings"' ':' '['
     (
       '{'
        (dirComplianceArtifactSets+=DirComplianceArtifactSet '}' ',' '{')* 
        (dirComplianceArtifactSets+=DirComplianceArtifactSet '}')
     )?
-  ']' ',' 
-  '"fileLicensings"' ':' '['
+  ']' )?
+  (',' '"fileLicensings"' ':' '['
     (
       '{'
         (fileComplianceArtifactSets+=FileComplianceArtifactSet '}' ',' '{')* 
         (fileComplianceArtifactSets+=FileComplianceArtifactSet '}')
     )?
-  ']'  
+  ']' )? 
 ;
  
  /*
@@ -144,6 +162,10 @@ FileComplianceArtifactSet:
       (fcasl+=ComplianceArtifactSet '}')
    ']'
    
+    ( "," '"fileCopyrights"' ':' '['
+  		(fileCrstList+=CopyrightStatement ',')* 
+  		(fileCcrstList+=CopyrightStatement)?
+  	']' )?
 ;
 
 /*
@@ -179,7 +201,12 @@ FileComplianceArtifactSet:
     ) 
   
   (',' '"licenseTextInArchive"' ':' lfPath=('null' | '"911"' | STRING ))?
+  (',' '"hasIssues"' ':' hiv=Boolean) ?
   (',' '"dummyComplianceArtifact"' ':' dummyArtifact=('null' | '"911"' | STRING ))?
 ;
 
+
+Boolean: bval=('true'|'false');
+
+CopyrightStatement : crStatement=STRING;
 

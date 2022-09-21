@@ -1,4 +1,5 @@
-{ 
+{ "hasIssues" : false ,
+	"containsHiddenSections" : false ,
   "complianceArtifactCollection" : {
     "cid" : "tc05",
     "author" : "Karsten Reincke", 
@@ -8,19 +9,29 @@
     "archiveType" : "DIR"
   } , 
   "complianceArtifactPackages" : [
-    { 
-      "pid" : "tc05", 
+    { "pid" : "tc05", 
       "release" : "1.0" ,
       "repository" : "https://github.com/Open-Source-Compliance/tdosca-tc05-simplhw/tree/master/input-sources" ,
-      "defaultLicensings" : [
-        { 
+      "id" : "XYZ" ,
+      "distribution" : "DISTRIBUTED" ,
+      "packageType" : "EXECUTABLE" ,
+      "sourceRoot" : "input-sources" ,
+      "hasIssues" : false ,
+      "defaultLicenses" : [
+        { "foundInFileScope" : "COPYING" ,
           "license" : "MIT" ,
           "licenseTextInArchive" : "tc05.default.copying" 
         }
-      ],
+      ] ,
+      "defaultCopyrights" : [ ] ,
+      "unifiedCopyrights" : [ 
+        "Copyright (C) 2022 Karsten Reincke / Deutsche Telekom AG" , 
+        "Copyright (C) 2022 kreincke / Deutsche Telekom AG",
+        "Copyright (C) 2022 K.Reincke, Deutsche Telekom AG"
+      ] ,      
       "dirLicensings" : [ ] ,
       "fileLicensings" : [
-        { 
+      	 { 
           "fileScope" : "AUTHORS" ,
           "fileLicenses" : [
             { 
@@ -46,7 +57,7 @@
               "licenseTextInArchive" : "tc05.default.copying"
             }
            ]
-        },
+        }, 
         { 
           "fileScope" : "pom.xml" ,
           "fileLicenses" : [
@@ -120,7 +131,10 @@
             }
           ]
         }
+      	 
+      	 
       ]
+      	
     }
   ] 
 }

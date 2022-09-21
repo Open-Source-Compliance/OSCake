@@ -6,9 +6,9 @@
     "date" : "2020-11-02T15:00" ,
     "archivePath" : "/home/kreincke/data.dsl/tc05" ,
     "archiveType" : "DIR"
-  } ,
+  } , 
   "complianceArtifactPackages" : [
-    { 
+    {
       "pid" : "tc05" , 
       "release" : "1.0" ,
       "repository" : "https://github.com/Open-Source-Compliance/tdosca-tc05-simplhw/tree/master/input-sources" ,
