@@ -74,11 +74,15 @@ So, existing Open Source scan tools create large lists of compliance entities th
 13. Inside of this project, create a directory `src-gen` as sibling of the directory `src`
 14. Create a new file *src/what-ever-you-want.***oscf**.
 15. Play around with inserting your first *Open Source Compliance Declaration*. (Keep in mind: `String Space` allows you to select the next syntactically valid input). At the end, delete the created 'play-around'-files
-16. On the file level copy test/tc-a.oscc from the OSCake repository to $HOME/ews.dsl/ews.osc/tc/src/`
-17. Press key F5
+16. On the file level
+  - copy `test/tc05.a.oscc` from the OSCake repository to `$HOME/ews.dsl/ews.osc/tc/src/tc05.oscc`
+  - cp `data.dsl` from the repository to `$HOME/data.dsl`
+17. Inside of Eclipse press key F5
 18. Exec the following steps to test a complete round trip from oscc via oscf to oscf.md:
   - open `tc05.oscf`
+  - update the value of `archivePath` with respect to your home
   - insert a blank outside of the code and save the file (that triggers the automatical generation of tc05.oscf)
+  - cp `src-gen/tc05.oscf` `src/tc05.oscf`
   - open `tc05.oscf`
   - insert a blank outside of the code and save the file (that triggers the automatical generation of tc05.oscf.md)
   - open `tc05.oscf.md`
