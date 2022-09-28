@@ -1,0 +1,140 @@
+{ "hasIssues" : false ,
+	"containsHiddenSections" : false ,
+  "complianceArtifactCollection" : {
+    "cid" : "tc05",
+    "author" : "Karsten Reincke", 
+    "release" : "0.22",
+    "date" : "2020-11-02T15:00",
+    "archivePath" : "tc05" ,
+    "archiveType" : "DIR"
+  } , 
+  "complianceArtifactPackages" : [
+    { "pid" : "tc05", 
+      "release" : "1.0" ,
+      "repository" : "https://github.com/Open-Source-Compliance/tdosca-tc05-simplhw/tree/master/input-sources" ,
+      "id" : "XYZ" ,
+      "distribution" : "DISTRIBUTED" ,
+      "packageType" : "EXECUTABLE" ,
+      "sourceRoot" : "input-sources" ,
+      "hasIssues" : false ,
+      "defaultLicenses" : [
+        { "foundInFileScope" : "COPYING" ,
+          "license" : "MIT" ,
+          "licenseTextInArchive" : "tc05.default.copying" 
+        }
+      ] ,
+      "defaultCopyrights" : [ ] ,
+      "unifiedCopyrights" : [ 
+        "Copyright (C) 2022 Karsten Reincke / Deutsche Telekom AG" , 
+        "Copyright (C) 2022 kreincke / Deutsche Telekom AG",
+        "Copyright (C) 2022 K.Reincke, Deutsche Telekom AG"
+      ] ,      
+      "dirLicensings" : [ ] ,
+      "fileLicensings" : [
+      	 { 
+          "fileScope" : "AUTHORS" ,
+          "fileLicenses" : [
+            { 
+            "license" : "MIT" ,
+            "licenseTextInArchive" : null
+            }
+           ]
+        },
+        { 
+          "fileScope" : "bin/tc05.sh" ,
+          "fileLicenses" : [
+            { 
+              "license" : null ,
+              "licenseTextInArchive" : null
+            }  
+          ]
+        }, 
+        { 
+          "fileScope" : "COPYING" ,
+          "fileLicenses" : [
+            { 
+              "license" : "MIT" ,
+              "licenseTextInArchive" : "tc05.default.copying"
+            }
+           ]
+        }, 
+        { 
+          "fileScope" : "pom.xml" ,
+          "fileLicenses" : [
+            { 
+              "license" : null ,
+              "licenseTextInArchive" : null
+            }
+          ]
+        },
+         { 
+          "fileScope" : "README" ,
+          "fileLicenses" : [
+            { 
+              "license" : null ,
+              "licenseTextInArchive" : null
+            }
+          ]
+        },
+        { 
+          "fileScope" : "src/main/assembly/bin.xml" ,
+          "fileLicenses" : [
+            { 
+              "license" : null ,
+              "licenseTextInArchive" : null
+            }
+          ]
+        },
+        { 
+          "fileScope" : "src/main/java/de/tdosca/common/EnvService.java" ,
+          "fileContentInArchive" : null , 
+          "fileLicenses" : [
+            { 
+              "license" : "BSD-2-Clause" ,
+              "licenseTextInArchive" : "tc05.de.common.envservice.license"
+            }
+          ]
+        },
+        { 
+          "fileScope" : "src/main/java/de/tdosca/tc05/GreetingService.java" ,
+          "fileLicenses" : [
+            {
+              "license" : "MIT" ,
+              "licenseTextInArchive" : null
+            }
+          ]
+        },
+        { 
+          "fileScope" : "src/main/java/de/tdosca/tc05/Main.java" ,
+          "fileLicenses" : [
+            {
+              "license" : "MIT" ,
+              "licenseTextInArchive" : null
+            }
+          ]
+        },
+        { 
+          "fileScope" : "src/test/java/de/tdosca/common/EnvServiceTest.java" ,
+          "fileLicenses" : [ 
+            { 
+              "license" : "BSD-2-Clause" ,
+              "licenseTextInArchive" : null
+            }
+          ]
+        },
+        { 
+          "fileScope" : "src/test/java/de/tdosca/tc05/GreetingServiceTest.java" ,
+          "fileLicenses" : [
+            {
+              "license" : "MIT" ,
+              "licenseTextInArchive" : null
+            }
+          ]
+        }
+      	 
+      	 
+      ]
+      	
+    }
+  ] 
+}

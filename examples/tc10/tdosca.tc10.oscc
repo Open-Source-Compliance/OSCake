@@ -1,0 +1,48 @@
+{
+  "hasIssues" : false,
+  "containsHiddenSections" : true,
+  "complianceArtifactCollection" : {
+    "cid" : "Maven:de.tdosca.tc10:tdosca-tc10:1.0",
+    "author" : "OSCake-Deduplicator",
+    "release" : "0.1",
+    "date" : "2022-09-14T14:55:31.274949500",
+    "archivePath" : "./tdosca-tc10_curated_resolved_selected_metadata_dedup.zip",
+    "archiveType" : "ZIP"
+  },
+  "complianceArtifactPackages" : [ {
+    "pid" : "tdosca-tc10",
+    "release" : "1.0",
+    "repository" : "https://github.com/Open-Source-Compliance/tdosca-tc10.git",
+    "id" : "Maven:de.tdosca.tc10:tdosca-tc10:1.0",
+    "distribution" : "DISTRIBUTED",
+    "packageType" : "EXECUTABLE",
+    "sourceRoot" : "input-sources",
+    "hasIssues" : false,
+    "defaultLicenses" : [ {
+      "foundInFileScope" : "COPYING",
+      "license" : "MIT",
+      "licenseTextInArchive" : "Maven%de.tdosca.tc10%tdosca-tc10%1.0%input-sources%COPYING.MIT",
+      "hasIssues" : false
+    } ],
+    "defaultCopyrights" : [ ],
+    "unifiedCopyrights" : [ "Copyright (c) 2022 K.Reincke, Deutsche Telekom AG", "Copyright (c) 2022 Karsten Reincke / Deutsche Telekom AG", "Copyright (c) 2022 Karsten Reincke, Deutsche Telekom AG", "Copyright (c) 2022 kreincke / Deutsche Telekom AG", "Copyright 2022 Karsten Reincke, Deutsche Telekom AG" ],
+    "fileLicensings" : [ {
+      "fileScope" : "src/main/java/de/tdosca/common/EnvService.java",
+      "fileLicenses" : [ {
+        "license" : "BSD-2-Clause",
+        "licenseTextInArchive" : "Maven%de.tdosca.tc10%tdosca-tc10%1.0%input-sources%src%main%java%de%tdosca%common%EnvService.java.BSD-2-Clause"
+      }, {
+        "license" : "BSD-2-Clause",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "src/test/java/de/tdosca/common/EnvServiceTest.java",
+      "fileLicenses" : [ {
+        "license" : "BSD-2-Clause",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    } ]
+  } ]
+}

@@ -25,74 +25,114 @@ The goal of the OSCake project is to develop an XTEXT / XTEND based intelligent 
 
 * creates the one **O**pen **S**ource **C**ompliance **F**ile that - if distributed together with package collection - assures that the package collection is distributed compliantly = in accordance with the requirements of the involved licenses.
 
-The point of this project is, that the knowledge which Open Source compliance artifacts have to be created / delivered in the context of which licenses and which architectural constraints is inherently embedded into the Domain Specific Language(s) defined and evaluated by XText and XTend. 
-
+**The point of OSCake is, that the (legal, licenses specific and architectural) knowledge which Open Source compliance artifacts have to be created and bundled with a product to distribute it compliantly
+is inherently embedded into a set of two Domain Specific Languages defined and evaluated by XText and XTend.**
 
 ## About this component
 
-If you read the [reasons to set up the TDOSCA initiative](https://github.com/Open-Source-Compliance/tdosca) and especially the transcription of our lecture given on the [Open Compliance Summit 2020](https://github.com/Open-Source-Compliance/tdosca/blob/master/doc/20201201-lecture-at-open-compliance-summit/README.md), then you end up in sheet signaling in which sense (for example) ORT and OSCake will cooperate: OSCake takes results gathered by ORT and compiles the really license adequate Open Source Compliance File:
+If you read the [reasons to set up the TDOSCA initiative](https://github.com/Open-Source-Compliance/tdosca) and especially the transcription of our lecture given on the [Open Compliance Summit 2020](https://github.com/Open-Source-Compliance/tdosca/blob/master/doc/20201201-lecture-at-open-compliance-summit/README.md), then you end up in a sheet signaling in which sense (for example) ORT and OSCake will cooperate:
+
+**OSCake takes results gathered by ORT and automatically compiles a license adequate Open Source Compliance File which can be bundled with the respective product to distribute it compliantly:**
 
 ![ORT & OSCake cooperation](img/a-ort-oscake-cooperation.png)
 
-OSCake applies the Open Source License Compliance knowledge - inherently in a declarative manner represented into the domain specific language - and creates the inherently license adequate Open Source Declaration File from which it derives the distributable markdown version. The more precise architecture of *OSCake* looks like this
+To do so, firstly *OSCake* has defined a weak compliance artifact language *OSCC*. By this domain specific language it defines, which data have generally to be gathered. It follows the principle 'One (method to gather data) fits all (licenses)'.
+
+Secondly, *OSCake* has defined the strict compliance artifact language *OSCF*. By this domain specific language it defines, which data have to be put together with respect to each component to distribute all these components compliantly.
+
+As interpretation of the *OSCC* file, *OSCake* creates the respective *OSCF*-File: using the gathered data described in the *OSCC* file, it creates the license specific *Open Source Compliance File*
+
+As interpretation of the *OSCF* file, *OSCake* creates the respective *OSCF.md*-File: by evaluating the *OSCF* file and some external data, it creates the one *Open Source Compliance (Markdown) File*, which can indeed be bundled with the respective product to distribute it compliantly.
+
+The advantage of using a domain specific language in this context is, that one can represent the Open Source License Compliance knowledge in a declarative manner:
 
 ![OSCake architecture](img/b-oscake-architecture.png)
 
-So, existing Open Source scan tools create large lists of compliance entities that in any sense could be relevant for creating Open Source Compliance Artifact(s). *OSCake* takes these more or less complete and mostly over-fulfillinf sets. The *Open Source Compliance artifact knowledge engine* knows which of the articats found by the Open Source scanning tools must used in which license context and derives the one Open Source Compliance File which really meets the requirements of the involved licenses.
+So, existing Open Source scan tools create large lists of compliance entities that in any sense could be relevant for creating Open Source Compliance Artifact(s). But *OSCake* takes these more or less complete and mostly over-fulfillinf sets. The *Open Source Compliance artifact knowledge engine* knows which of the articats found by the Open Source scanning tools must used in which license context and derives the one Open Source Compliance File which really meets the requirements of the involved licenses.
 
 ## Getting the OSCX language definitions run:
 
+### Preparing the environment
+
 1. Install the *Eclipse IDE for Java and DSL Developers* from [https://www.eclipse.org/downloads/packages/](https://www.eclipse.org/downloads/packages/). (Alternatively install the Xtext and Xtend via the Eclipse Marketplace)
-2. Install a markdown viewer (optional)
-3. Create a new *Eclipse Working Directory* `ews.dsl`.
+2. Install a markdown viewer being able to deal with GitHub flavored markdown - either as *Eclipse Plugin* or as an *external Editor*
+3. Create a new *Eclipse Working Directory* `$HOME/ews.dsl`.
 4. Inside of this directory create the *Eclipse Working Directories* `ews.xtx.` and `ews.osc`
 5. Start Eclipse and select `ews.dsl/ews.xtx` as working directory.
-6. Switch to the XText view and create two new XText projects with the parameters:
+6. Create two new XText projects (New/Project/Xtext/Xtext-Project) with the parameters:
   - Project a:
     - Project name: `de.oscake.strict`
-    - Language name: `de.oscake.strict.Oscd`
-    - Extensions: `oscd`
+    - Language name: `de.oscake.strict.Oscf`
+    - Extensions: `oscf`
   - Project b:
     - Project name: `de.oscake.weak`
     - Language name: `de.oscake.weak.Oscc`
     - Extensions: `oscc`
-7. Inside of your Eclipse, call `run as/Generate XText Artifacts` from the context menu of the files which have automatically been created:
-  - *src/de.oscake.strict/Oscd.Xtext*
+7. Inside of your Eclipse, select the context menu in the language editor and call `run as/Generate XText Artifacts`. The language editor has automatically  opened the newly create language definition files (if not, open them manually):
+  - *src/de.oscake.strict/Oscf.Xtext*
   - *src/de.oscake.weak/Oscc.Xtext*
-8. On the file level copy the following files from the OSCake repository to the eclipse working directory:
-  - `cp src/Oscc.xtext -> $HOME/ews.dsl/ews.xtx/de.oscake.weak/src/de/oscake/weak/`
-  - `cp src/OsccGenerator.xtend -> $HOME/ews.dsl/ews.xtx/de.oscake.weak/src/de/oscake/weak/generator/`
-  - `cp src/Oscd.xtext -> $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/`
-  - `cp src/OscdGenerator.xtend -> $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/generator/`
-9. Inside of your Eclipse, recall `run as/Generate XText Artifacts` from the context menu of the replaced file *src/de.oscake.strict/Oscd.Xtext* and *src/de.oscake.weak/Oscc.Xtext*
-10. Call `run as/Eclipse Application` from the context menu of *de.oscake.strict*
-11. Select `ews.dsl/ews.osc` as working directory for the automatically started second eclipse instance
-12. Create a new Java project.
-13. Inside of this project, create a directory `src-gen` as sibling of the directory `src`
-14. Create a new file *src/what-ever-you-want.***oscd**.
-15. Play around with inserting your first *Open Source Compliance Declaration*. (Keep in mind: `String Space` allows you to select the next syntactically valid input)
-16. On the file level copy test/a-input.oscc/\*.oscc from the OSCake repository -> $HOME/ews.dsl/ews.osc/src/`
-17. Press key F5
-18. Exec the following steps to test a complete round trip from oscc via oscd to oscf.md:
-  - open `tc05.oscd`
-  - insert a blank outside of the code and save the file (that triggers the automatical generation of tc05.oscd)
-  - open `tc05.oscd`
+8. Stop Eclipse and copy the following files from the OSCake repository to the eclipse working directory using the normal file system:
+  - `cp src/Oscc.xtext $HOME/ews.dsl/ews.xtx/de.oscake.weak/src/de/oscake/weak/`
+  - `cp src/OsccGenerator.xtend $HOME/ews.dsl/ews.xtx/de.oscake.weak/src/de/oscake/weak/generator/`
+  - `cp src/Oscf.xtext $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/`
+  - `cp src/OscfGenerator.xtend $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/generator/`
+9. Create a directory `$HOME/data.dsl`
+10. Open the file `$HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/generator/OscfGenerator.xtend` and set the value `absRepoPath` to the absolute(!) path of the created *data.dsl-directory*
+11. Restart Eclipse and recall `run as/Generate XText Artifacts` from the context menu of the replaced files *src/de.oscake.strict/Oscf.Xtext* and *src/de.oscake.weak/Oscc.Xtext*
+12. Touch the `de.oscake.strict` project with your alternative mouse key, select `properties`, open `Run/Debug Settings,` and do this
+  - Duplicate the item 'Launch Runtime Eclipse'
+  - Edit the created item
+  - set its name to ews.osc
+  - set the value of *Location* to `${workspace_loc}/../ews.osc`
+13. Call `run as/Eclipse Application` from the context menu of *de.oscake.strict* and select the created *osc*-configuration in the dialog *select a launch configuration to run*
+14. Create a new Java project named 'tc' (testcase)
+15. Inside of this project, create a directory `src-gen` as sibling of the directory `src`
+16. Create a new file *src/what-ever-you-want.***oscf**.
+17. Play around with inserting your first *Open Source Compliance Declaration*. (Keep in mind: `String Space` allows you to select the next syntactically valid input). At the end, delete the created 'play-around'-files
+
+### Installing the test case TC05
+
+18. On the file level
+  - copy `examples/tc05/tc05.oscc` from the OSCake repository to `$HOME/ews.dsl/ews.osc/tc/src/`
+  - inside of  `$HOME/data.dsl` create a directory with the name of the zip-file without the extension = `tc05`
+  - inside of `$HOME/data.dsl/tc05` unzip the  zip file `examples/tc05/tc05.zip`
+  - copy the directories `examples/multiply.usable.licenses` and examples `company.specific.snippets` (including their content) to `$HOME/data.dsl`
+19. Inside of Eclipse press key F5
+20. Exec the following steps to test a complete round trip from oscc via oscf to oscf.md:
+  - open `tc05.oscf`
+  - insert a blank outside of the code and save the file (that triggers the automatical generation of tc05.oscf)
+  - cp `src-gen/tc05.oscf` `src/tc05.oscf`
+  - open `tc05.oscf`
   - insert a blank outside of the code and save the file (that triggers the automatical generation of tc05.oscf.md)
-  - open `tc05.oscf.md` 
+  - open `tc05.oscf.md`
 
-### Modifyiing the language definition of OSCD
+### About the other use cases
 
-* Work on `src/de.oscake.strict/Oscd.Xtext` for improving the strict Open Source Compliance Definition language.
-* Work on `src/de.oscake.strict.generator/OscdGenerator.xtend` for improving the evaluation of oscf-files.
-* Work on `src/de.oscake.weak/Oscc.Xtext` for improving the weak Open Source Compliance Collection language. 
+The directory `examples` in the *OSCake-Repository* also contains other test cases. Each of them consists of
+- the *OSCC* file, created by ORT on the base of the data it has gathered
+- a zip-File - also created by ORT - which contains some additional data - also gathered by ORT - which are necessary to create the respective *OSCF* file.
+
+These cases can be used / evaluated in the same manner as tc05 has been activated in *OSCake*
+
+### About some traps
+
+* While creating the Xtext Artifacts via the respective file context menu in step 11, you can run into an error: The semantic of both languages (Xtend implementation) depends on each other, but does not cooperate with the artifacts created in step 7. The solution is:
+  - delete the error messages on the eclipse level
+  - let the artifacts be created again.
+
+## The language definition of OSCF
+
+* Work on `src/de.oscake.strict/Oscf.Xtext` for improving the strict Open Source Compliance Definition language.
+* Work on `src/de.oscake.strict.generator/OscfGenerator.xtend` for improving the evaluation of oscf-files.
+* Work on `src/de.oscake.weak/Oscc.Xtext` for improving the weak Open Source Compliance Collection language.
 * Work on `src/de.oscake.weak.generator/OsccGenerator.xtend` for improving the evaluation of oscf-files.
 
 Keep in mind:
 
-* The definition of a valid OSCD file (written in the XText file Oscd.Xtext) declaratively defines the compliance knowledge.
-* The corresponding Open Source Compliance File (im Markdown format) is derived from the OSCD file by the OscdGenerator.xtend.
+* The definition of a valid OSCF file (written in the XText file Oscf.Xtext) declaratively defines the compliance knowledge.
+* The corresponding Open Source Compliance File (im Markdown format) is derived from the OSCF file by the OscfGenerator.xtend.
 * The definition of a valid OSCC file (written in the XText file Oscc.Xtext) defines the elements a scanner can collect / handover to OSCake.
-* The OsccGenerator.xtend applies the knowledge defined in OSCD: he derives OSCD file from the OSCC file (by throwing away what's unnecessary etc.) and to mark what's still missed to create a valid OSCD = a appropriate OSCF.
+* The OsccGenerator.xtend applies the knowledge defined in OSCF: he derives OSCF file from the OSCC file (by throwing away what's unnecessary etc.) and to mark what's still missed to create a valid OSCF = a appropriate OSCF.
 
 ## Code of Conduct
 
@@ -103,10 +143,6 @@ This project has adopted the [Contributor Covenant](https://www.contributor-cove
 We decided to apply _English_ as the primary project language.  
 
 Consequently, all content will be made available primarily in English. We also ask all interested people to use English as language to create issues, in their code (comments, documentation etc.) and when you send requests to us. The application itself and all end-user facing content will be made available in other languages as needed.
-
-## Documentation
-
-_TBD_
 
 ## Support and Feedback
 The following channels are available for discussions, feedback, and support requests:

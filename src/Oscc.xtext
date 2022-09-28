@@ -39,6 +39,8 @@ generate oscc "http://www.oscake.de/weak/Oscc"
  */
 ComplianceArtifactCollection:
 '{'
+  hiv=HasIssues ',' 
+  '"containsHiddenSections"' ':' chs=Boolean ',' 
   '"complianceArtifactCollection"' ':' '{'
     '"cid"' ':' cacid=STRING ','
     ('"author"' ':' cacComposer=STRING ',')?
@@ -68,27 +70,42 @@ ComplianceArtifactPackage:
   '"pid"' ':' capid=STRING ','
   ('"release"' ':' capReleaseNumber=STRING ',')?
   ('"repository"' ':' capRepoUrl=STRING ',')? 
-  
-  '"defaultLicensings"' ':' '['
-    '{'
+  '"id"' ':' calid=STRING ','
+  '"distribution"' ':' dist=('"DISTRIBUTED"') ','
+  '"packageType"' ':' pkgType=('"EXECUTABLE"'|'"LIBRARY"') ','
+  '"sourceRoot"' ':' srcRoot=STRING ',' 
+  (	hiv=HasIssues ',' )?
+  '"defaultLicenses"' ':' '['
+    '{' 
+      '"foundInFileScope"' ":"  defpath=STRING ','
       (casl+=ComplianceArtifactSet '}' ',' '{')* 
       (casl+=ComplianceArtifactSet '}')    
-  ']' ',' 
+  ']' 
+  ( "," '"defaultCopyrights"' ':' '['
+  	(defaultCrstList+=CopyrightStatement ',')* 
+  	(defaultCrstList+=CopyrightStatement)?
+  ']' )?
+  ( ','
+  '"unifiedCopyrights"' ':' '['
+  	(unifiedCrstList+=CopyrightStatement ',')* 
+  	(unifiedCrstList+=CopyrightStatement)?
   
-  '"dirLicensings"' ':' '['
+  ']')?
+  
+  (',' '"dirLicensings"' ':' '['
     (
       '{'
        (dirComplianceArtifactSets+=DirComplianceArtifactSet '}' ',' '{')* 
        (dirComplianceArtifactSets+=DirComplianceArtifactSet '}')
     )?
-  ']' ',' 
-  '"fileLicensings"' ':' '['
+  ']' )?
+  (',' '"fileLicensings"' ':' '['
     (
       '{'
         (fileComplianceArtifactSets+=FileComplianceArtifactSet '}' ',' '{')* 
         (fileComplianceArtifactSets+=FileComplianceArtifactSet '}')
     )?
-  ']'  
+  ']' )? 
 ;
  
  /*
@@ -120,10 +137,10 @@ ComplianceArtifactPackage:
   * 
   * The meaning of 'null' '911', STRING is this
   * - If OSCake does not need the content, the the OSCC-Generator 
-  *   hides the information when writing the OSCD file
+  *   hides the information when writing the OSCF file
   * - If OSCake knows, that it needs the file content in any context, the OSCC-Generator 
   *   - writes a 'get more information-' or 'resolve-the-trouble-' task into the todo-file
-  *   - marks the generated OSCD.md as undistributable.
+  *   - marks the generated OSCF.md as undistributable.
   */
 FileComplianceArtifactSet:
   
@@ -144,6 +161,10 @@ FileComplianceArtifactSet:
       (fcasl+=ComplianceArtifactSet '}')
    ']'
    
+    ( "," '"fileCopyrights"' ':' '['
+  		(fileCrstList+=CopyrightStatement ',')* 
+  		(fileCcrstList+=CopyrightStatement)?
+  	']' )?
 ;
 
 /*
@@ -161,11 +182,11 @@ FileComplianceArtifactSet:
  * 
  * It is the task (competence) of OSCake to look for the necessary 
  * compliance artifacts and 
- * - if possible to insert them into the OSCD.md file created at the end 
+ * - if possible to insert them into the OSCF.md file created at the end 
  * - or
  *   - to insert a 'get more information-' or 'resolve-the-trouble-' task into 
  *   the todo-file
- *   - to mark the the generated OSCD.md as undistributable
+ *   - to mark the the generated OSCF.md as undistributable
  */
  ComplianceArtifactSet:
   '"license"' ':'
@@ -174,12 +195,39 @@ FileComplianceArtifactSet:
       '"BSD-2-Clause"' |
       '"BSD-3-Clause"' |
       '"Apache-2.0"' |
+      '"EPL-1.0"' |
+      '"EPL-2.0"' |
+      '"LGPL-2.1-or-later"' |
+      '"LGPL-2.0-or-later"' |
       '"noassertion"' | '"NOASSERTION"' |
       'null'
     ) 
   
   (',' '"licenseTextInArchive"' ':' lfPath=('null' | '"911"' | STRING ))?
+  ( ',' hiv=HasIssues )?
   (',' '"dummyComplianceArtifact"' ':' dummyArtifact=('null' | '"911"' | STRING ))?
 ;
 
+HasIssues:
+	( '"hasIssues"' ':' ival='true'
+	  (	',' '"issues"' ":" "{"
+	  	 '"warnings"' ":" "[" 
+	  	 "{" 
+	  	 	'"id"' ":" mid=STRING ","
+		 	'"message"' ":" mstr=STRING
+		  "}"
+	  	"]"
+	  	"}"
+	  )?
+	)
+	|
+	( '"hasIssues"' ':' ival='false')
+;
+
+
+
+
+Boolean: bval=('true'|'false');
+
+CopyrightStatement : crStatement=STRING;
 

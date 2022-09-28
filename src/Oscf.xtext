@@ -1,5 +1,5 @@
 /********************************************************
- * OSCake / OSCD = Open Source Compliance Description
+ * OSCake / OSCF = Open Source Compliance Description
  * Open Source Compliance artifacts knowledge engine
  * 
  * Copyright (c) {2020 Karsten Reincke, Deutsche Telekom AG
@@ -11,9 +11,9 @@
  * SPDX-License-Identifier: EPL-2.0
   *******************************************************/
 
-grammar de.oscake.strict.Oscd with org.eclipse.xtext.common.Terminals
+grammar de.oscake.strict.Oscf with org.eclipse.xtext.common.Terminals
 
-generate oscd "http://www.oscake.de/strict/Oscd"
+generate oscf "http://www.oscake.de/strict/Oscf"
 
 /**
  * A strict Compliance Artifact Collection consist of
@@ -27,22 +27,20 @@ ComplianceArtifactCollection:
     '"cid"' ':' cacid=STRING ','
     ('"author"' ':' cacComposer=STRING ',')?
     ('"release"' ':' cacReleaseNumber=STRING ',')?
-    ('"date"' ':' cacReleaseDate=STRING ',')?  
-    '"archivePath"' ':' cacContPath=STRING ','
-    '"archiveType"' ':' cacContType=('"ZIP"'|'"DIR"')
+    ('"date"' ':' cacReleaseDate=STRING ',')? 
+    /*
+     * Note: in the generator is defined an absolute path to a general data repository / directory
+     * contentDir is a directory inside of the general data repository.
+     * In this content directory, the evaluating xtend program expects the
+     * files found by ORT which must be integrated into the final OSCF
+     */ 
+    '"contentDir"' ':' cacContDir=STRING 
   '}' ','
 
   '"complianceArtifactPackages"' ':' '['
     '{'
       (complianceArtifactPackages+=ComplianceArtifactPackage '}' ',' '{')*
       (complianceArtifactPackages+=ComplianceArtifactPackage '}')
-  ']' ','
-  '"multiplyUsableFossLicenses"' ':' '['
-    (
-      '{'
-        (multiplyUsableFossLicenses+=MultiplyUsableFossLicense '}' ',' '{')* 
-        (multiplyUsableFossLicenses+=MultiplyUsableFossLicense '}')
-    )?
   ']' 
 '}';
 
@@ -120,36 +118,52 @@ FileComplianceArtifactSet:
      (spdxId='"BSD-2-Clause"' ',' casBsd2Cl=ComplianceArtifactSetBSD2Clause) |
      (spdxId='"BSD-3-Clause"' ',' casBsd3Cl=ComplianceArtifactSetBSD3Clause) |
      (spdxId='"Apache-2.0"' ',' casApache20=ComplianceArtifactSetApache20) |
+     (spdxId='"EPL-1.0"' ',' casEpl10=ComplianceArtifactSetEpl10) |
+     (spdxId='"EPL-2.0"' ',' casEpl20=ComplianceArtifactSetEpl20) |
+     (spdxId='"LGPL-2.0-or-later"' ',' casLgpl20=ComplianceArtifactSetLgpl20) |
+     (spdxId='"LGPL-2.1-or-later"' ',' casLgpl21=ComplianceArtifactSetLgpl21) |
      (spdxId='"noassertion"' ',' casNoAssert=ComplianceArtifactSetNoAssert) 
    )
 ;
 
 ComplianceArtifactSetNoAssert:
+  '"licenseType"' ':' ltype='"instantiated"' ','
   '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | '"911"') 
 ;
 
 
 ComplianceArtifactSetMIT:
+  '"licenseType"' ':' ltype='"instantiated"' ','
   '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | '"911"') 
 ;
 
 ComplianceArtifactSetBSD2Clause:
+  '"licenseType"' ':' ltype='"instantiated"' ','
   '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | '"911"')
 ;
 
 ComplianceArtifactSetBSD3Clause:
+  '"licenseType"' ':' ltype='"instantiated"' ','
   '"licenseTextInArchive"' ':' lfPath=(STRING | 'null' | '"911"')
 ;
 
 ComplianceArtifactSetApache20:
-  '"licenseTextInArchive"' ':' apl='"multiply-usable"' ','
+  '"licenseType"' ':' ltype='"multiply-usable"' ','
   '"apacheNoticeTextInArchive"' ':' nfPath=(STRING | 'null' | '"911"')
 ; 
 
-MultiplyUsableFossLicense:
-  '"license"' ':'  
-  spdxId= ( '"Apache-2.0"' | 
-            '"Apache-1.0"'
-          ) ','
-  '"licenseTextInArchive"' ':' lfPath=STRING 
+ComplianceArtifactSetEpl10:
+  '"licenseType"' ':' ltype='"multiply-usable"' 
 ;
+
+ComplianceArtifactSetEpl20:
+  '"licenseType"' ':' ltype='"multiply-usable"' 
+;
+
+ComplianceArtifactSetLgpl20:
+  '"licenseType"' ':' ltype='"multiply-usable"' 
+; 
+
+ComplianceArtifactSetLgpl21:
+  '"licenseType"' ':' ltype='"multiply-usable"' 
+; 
