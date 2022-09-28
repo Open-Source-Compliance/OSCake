@@ -29,8 +29,6 @@ import de.oscake.weak.oscc.FileComplianceArtifactSet
  */
 class OsccGenerator extends AbstractGenerator {
 
-
-
 override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
  val cac = resource.contents.head as ComplianceArtifactCollection;
  fsa.generateFile(cac.cacid+'.oscf', cac.toCode());
@@ -48,8 +46,7 @@ def CharSequence toCode(ComplianceArtifactCollection cac) '''
     «IF (isDefined(cac.cacComposer))»"author" : "«cac.cacComposer»" ,«ENDIF»
     «IF (isDefined(cac.cacReleaseNumber))»"release" : "«cac.cacReleaseNumber»" ,«ENDIF»
     «IF (isDefined(cac.cacReleaseDate))»"date" : "«cac.cacReleaseDate»" ,«ENDIF»
-    "archivePath" : "«cac.cacContPath»" ,
-    "archiveType" : «cac.cacContType»
+    "contentDir" : "« eraseZipExtension(cac.cacContPath)»" 
   } ,
   "complianceArtifactPackages" : [
     «FOR pkg : cac.complianceArtifactPackages BEFORE '' SEPARATOR ',' AFTER ''»
@@ -111,8 +108,7 @@ def CharSequence toCode(ComplianceArtifactCollection cac) '''
       ]     
     }
     «ENDFOR»            
-  ] ,
-  "multiplyUsableFossLicenses" : [ ]
+  ] 
 }
 '''
 
@@ -182,6 +178,11 @@ def String insertCas(ComplianceArtifactSet cas) {
   if (cas.spdxId == '"BSD-2-Clause"') return insertBsd2clCas(cas);
   if (cas.spdxId == '"BSD-3-Clause"') return insertBsd3clCas(cas);
   if (cas.spdxId == '"Apache-2.0"') return insertApache20Cas(cas); 
+  if (cas.spdxId == '"EPL-1.0"') return insertEpl10Cas(cas); 
+  if (cas.spdxId == '"EPL-2.0"') return insertEpl10Cas(cas); 
+  if (cas.spdxId == '"LGPL-2.0-or-later"') return insertLgpl20Cas(cas); 
+  if (cas.spdxId == '"LGPL-2.1-or-later"') return insertLgpl21Cas(cas); 
+  
   if ((cas.spdxId == '"noassertion"')||(cas.spdxId == '"NOASSERTION"')) return insertNoAssertCas();  
   /* this method should never been used due to  isAnyLicenseReferenceValid  */ 
   /* if (cas.spdxId == 'null') return insertNullCas(); */
@@ -190,18 +191,24 @@ def String insertCas(ComplianceArtifactSet cas) {
 
 def String insertMitCas(ComplianceArtifactSet cas) '''
 "license" : «cas.spdxId» ,
+"licenseType" : "instantiated" ,
 «writeRequiredValue("licenseTextInArchive",cas.lfPath)»
 '''
 
 def String insertBsd2clCas(ComplianceArtifactSet cas) '''
 "license" : «cas.spdxId» ,
+"licenseType" : "instantiated" ,
 «writeRequiredValue("licenseTextInArchive",cas.lfPath)»
 '''
 
 def String insertBsd3clCas(ComplianceArtifactSet cas) '''
 "license" : «cas.spdxId» ,
+"licenseType" : "instantiated" ,
 «writeRequiredValue("licenseTextInArchive",cas.lfPath)»
 '''
+
+
+
 
 /* TODO
  * Der OsccGenerator muss checken, ob überhaupt eine Datei
@@ -223,9 +230,29 @@ def String insertBsd3clCas(ComplianceArtifactSet cas) '''
  */
 def String insertApache20Cas(ComplianceArtifactSet cas) '''
 "license" : «cas.spdxId» ,
-"licenseTextInArchive" : "multiply-usable" ,
-«writeRequiredValue("apacheNoticeTextInArchive","muss-systemisch-noch-aus-NOTICE-Eintrag-übertragen-werden")»
+"licenseType" : "multiply-usable" ,
+«writeRequiredValue("apacheNoticeTextInArchive","NOTICE.dummy")»
 '''
+
+def String insertEpl10Cas(ComplianceArtifactSet cas) '''
+"license" : «cas.spdxId» ,
+"licenseType" : "multiply-usable"
+'''
+
+def String insertEpl20Cas(ComplianceArtifactSet cas) '''
+"license" : «cas.spdxId» ,
+"licenseType" : "multiply-usable"
+'''
+
+def String insertLgpl20Cas(ComplianceArtifactSet cas) '''
+"license" : «cas.spdxId» ,
+"licenseType" : "multiply-usable"
+'''
+def String insertLgpl21Cas(ComplianceArtifactSet cas) '''
+"license" : «cas.spdxId» ,
+"licenseType" : "multiply-usable"
+'''
+
 /*
 def String insertNullCas() '''
 "license" : null ,
@@ -270,6 +297,12 @@ def Boolean isDefined(String istr) {
   return true;
 }
 
+def String eraseZipExtension(String zipName) {
+   if ( zipName === null) return "";
+   if (zipName.endsWith(".zip"))
+     return zipName.replaceAll("\\.zip*$", "");
+   return zipName
+}
 }
 
 

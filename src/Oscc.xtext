@@ -39,7 +39,7 @@ generate oscc "http://www.oscake.de/weak/Oscc"
  */
 ComplianceArtifactCollection:
 '{'
-  '"hasIssues"' ':' hiv=Boolean ',' 
+  hiv=HasIssues ',' 
   '"containsHiddenSections"' ':' chs=Boolean ',' 
   '"complianceArtifactCollection"' ':' '{'
     '"cid"' ':' cacid=STRING ','
@@ -72,10 +72,9 @@ ComplianceArtifactPackage:
   ('"repository"' ':' capRepoUrl=STRING ',')? 
   '"id"' ':' calid=STRING ','
   '"distribution"' ':' dist=('"DISTRIBUTED"') ','
-  '"packageType"' ':' pkgType=('"EXECUTABLE"') ','
-  '"sourceRoot"' ':' srcRoot=STRING ','
-  '"hasIssues"' ':' hiv=Boolean ',' 
-  
+  '"packageType"' ':' pkgType=('"EXECUTABLE"'|'"LIBRARY"') ','
+  '"sourceRoot"' ':' srcRoot=STRING ',' 
+  (	hiv=HasIssues ',' )?
   '"defaultLicenses"' ':' '['
     '{' 
       '"foundInFileScope"' ":"  defpath=STRING ','
@@ -196,14 +195,36 @@ FileComplianceArtifactSet:
       '"BSD-2-Clause"' |
       '"BSD-3-Clause"' |
       '"Apache-2.0"' |
+      '"EPL-1.0"' |
+      '"EPL-2.0"' |
+      '"LGPL-2.1-or-later"' |
+      '"LGPL-2.0-or-later"' |
       '"noassertion"' | '"NOASSERTION"' |
       'null'
     ) 
   
   (',' '"licenseTextInArchive"' ':' lfPath=('null' | '"911"' | STRING ))?
-  (',' '"hasIssues"' ':' hiv=Boolean) ?
+  ( ',' hiv=HasIssues )?
   (',' '"dummyComplianceArtifact"' ':' dummyArtifact=('null' | '"911"' | STRING ))?
 ;
+
+HasIssues:
+	( '"hasIssues"' ':' ival='true'
+	  (	',' '"issues"' ":" "{"
+	  	 '"warnings"' ":" "[" 
+	  	 "{" 
+	  	 	'"id"' ":" mid=STRING ","
+		 	'"message"' ":" mstr=STRING
+		  "}"
+	  	"]"
+	  	"}"
+	  )?
+	)
+	|
+	( '"hasIssues"' ':' ival='false')
+;
+
+
 
 
 Boolean: bval=('true'|'false');

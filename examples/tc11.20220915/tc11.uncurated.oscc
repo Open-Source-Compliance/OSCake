@@ -1,0 +1,367 @@
+{
+  "hasIssues" : true,
+  "containsHiddenSections" : true,
+  "complianceArtifactCollection" : {
+    "cid" : "Gradle::tdosca-tc11:",
+    "author" : "OSCake-Deduplicator",
+    "release" : "0.1",
+    "date" : "2022-09-15T10:28:09.514760700",
+    "archivePath" : "./tdosca-tc11_curated_resolved_selected_metadata_dedup.zip",
+    "archiveType" : "ZIP"
+  },
+  "complianceArtifactPackages" : [ {
+    "pid" : "tdosca-tc11",
+    "release" : "",
+    "repository" : "https://github.com/Open-Source-Compliance/tdosca-tc11.git",
+    "id" : "Gradle::tdosca-tc11:",
+    "distribution" : "DISTRIBUTED",
+    "packageType" : "EXECUTABLE",
+    "sourceRoot" : "input-sources",
+    "hasIssues" : false,
+    "defaultLicenses" : [ {
+      "foundInFileScope" : "LICENSE",
+      "license" : "MIT",
+      "licenseTextInArchive" : "Gradle%unknown%tdosca-tc11%unknown%input-sources%LICENSE.MIT",
+      "hasIssues" : false
+    } ],
+    "defaultCopyrights" : [ ],
+    "unifiedCopyrights" : [ "Copyright (c) 2020 Karsten Reincke / Deutsche Telekom AG", "Copyright (c) 2020 Karsten Reincke / Deutsche Telekom AG <karsten.reincke@telekom.de>", "Copyright (c) 2020 Karsten Reincke, Deutsche Telekom AG", "Copyright (c) 2020 kreincke / Deutsche Telekom AG", "Copyright 2015 the original author or authors", "Copyright 2020 Karsten Reincke, Deutsche Telekom AG" ],
+    "fileLicensings" : [ {
+      "fileScope" : "gradlew.bat",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "src/main/java/tdosca/tc11/Greeter.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "gradlew",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "src/main/java/tdosca/all/Tipster.java",
+      "fileLicenses" : [ {
+        "license" : "BSD-3-Clause",
+        "licenseTextInArchive" : "Gradle%unknown%tdosca-tc11%unknown%input-sources%src%main%java%tdosca%all%Tipster.java.BSD-3-Clause"
+      }, {
+        "license" : "BSD-3-Clause",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "src/test/java/tdosca/all/TipsterTest.java",
+      "fileLicenses" : [ {
+        "license" : "BSD-3-Clause",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "README.md",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      }, {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "src/test/java/tdosca/tc11/GreeterTest.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    } ]
+  }, {
+    "pid" : "joda-time",
+    "release" : "2.2",
+    "repository" : "ssh://git@github.com/JodaOrg/joda-time.git",
+    "id" : "Maven:joda-time:joda-time:2.2",
+    "distribution" : "DISTRIBUTED",
+    "packageType" : "LIBRARY",
+    "sourceRoot" : "",
+    "hasIssues" : false,
+    "defaultLicenses" : [ {
+      "foundInFileScope" : "META-INF/LICENSE.txt",
+      "license" : "Apache-2.0",
+      "licenseTextInArchive" : "Maven%joda-time%joda-time%2.2%META-INF%LICENSE.txt.Apache-2.0",
+      "hasIssues" : false
+    } ],
+    "defaultCopyrights" : [ ],
+    "unifiedCopyrights" : [ "Copyright 2001-2005 Stephen Colebourne", "Copyright 2001-2006 Stephen Colebourne", "Copyright 2001-2007 Stephen Colebourne", "Copyright 2001-2009 Stephen Colebourne", "Copyright 2001-2010 Stephen Colebourne", "Copyright 2001-2011 Stephen Colebourne", "Copyright 2001-2012 Stephen Colebourne", "Copyright 2001-2013 Stephen Colebourne" ]
+  }, {
+    "pid" : "junit",
+    "release" : "4.12",
+    "repository" : "https://github.com/junit-team/junit.git",
+    "id" : "Maven:junit:junit:4.12",
+    "distribution" : "DISTRIBUTED",
+    "packageType" : "LIBRARY",
+    "sourceRoot" : "",
+    "hasIssues" : false,
+    "defaultLicenses" : [ {
+      "foundInFileScope" : "LICENSE-junit.txt",
+      "license" : "EPL-1.0",
+      "licenseTextInArchive" : "Maven%junit%junit%4.12%LICENSE-junit.txt.EPL-1.0",
+      "hasIssues" : false
+    } ],
+    "defaultCopyrights" : [ ],
+    "unifiedCopyrights" : [ "Copyright 2013 LinkedIn Corp." ],
+    "fileLicensings" : [ {
+      "fileScope" : "src/site/resources/scripts/hopscotch-0.1.2.min.js",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "src/site/resources/css/hopscotch-0.1.2.min.css",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "pom.xml",
+      "fileLicenses" : [ {
+        "license" : "EPL-1.0",
+        "licenseTextInArchive" : null
+      }, {
+        "license" : "LGPL-2.1-or-later",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "NOTICE.txt",
+      "fileContentInArchive" : "Maven%junit%junit%4.12%NOTICE.txt_archived",
+      "fileLicenses" : [ {
+        "license" : null,
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    } ]
+  }, {
+    "pid" : "log4j-api",
+    "release" : "2.13.3",
+    "repository" : "https://git-wip-us.apache.org/repos/asf/logging-log4j2.git",
+    "id" : "Maven:org.apache.logging.log4j:log4j-api:2.13.3",
+    "distribution" : "DISTRIBUTED",
+    "packageType" : "LIBRARY",
+    "sourceRoot" : "",
+    "hasIssues" : false,
+    "defaultLicenses" : [ {
+      "foundInFileScope" : "LICENSE.txt",
+      "license" : "Apache-2.0",
+      "licenseTextInArchive" : "Maven%org.apache.logging.log4j%log4j-api%2.13.3%LICENSE.txt.Apache-2.0",
+      "hasIssues" : false
+    } ],
+    "defaultCopyrights" : [ ],
+    "unifiedCopyrights" : [ "Copyright (c) 2017 public", "Copyright 1999-2005 The Apache Software Foundation", "Copyright 1999-2012 Apache Software Foundation", "Copyright 1999-2017 Apache Software Foundation", "Copyright 2002-2012 Ramnivas Laddad, Juergen Hoeller, Chris Beams", "Copyright 2004 Jason Paul Kitchen", "Copyright 2005-2006 Tim Fennell", "Copyright 2011 LMAX Ltd.", "Copyright 2015 Apache Software Foundation", "Copyright 2017 Remko Popma", "Copyright Terracotta, Inc." ],
+    "fileLicensings" : [ {
+      "fileScope" : "log4j-core/src/test/java/org/apache/logging/dumbster/smtp/SmtpMessage.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-api/src/main/java/org/apache/logging/log4j/message/ParameterizedMessage.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      }, {
+        "license" : "LGPL-2.0-or-later",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-core/src/test/java/org/apache/logging/dumbster/smtp/SmtpResponse.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-core/src/test/java/org/apache/logging/dumbster/smtp/SimpleSmtpServer.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-core/src/test/java/org/apache/logging/dumbster/smtp/SmtpActionType.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-core/src/test/java/org/apache/logging/dumbster/smtp/SmtpRequest.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-core/src/test/java/org/apache/logging/dumbster/smtp/SmtpState.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "pom.xml",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      }, {
+        "license" : "MIT",
+        "licenseTextInArchive" : null
+      }, {
+        "license" : "MIT",
+        "licenseTextInArchive" : null
+      }, {
+        "license" : "MIT",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-perf/src/main/java/org/apache/logging/log4j/perf/nogc/ParameterizedMessage.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      }, {
+        "license" : "LGPL-2.0-or-later",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    } ]
+  }, {
+    "pid" : "log4j-core",
+    "release" : "2.13.3",
+    "repository" : "https://git-wip-us.apache.org/repos/asf/logging-log4j2.git",
+    "id" : "Maven:org.apache.logging.log4j:log4j-core:2.13.3",
+    "distribution" : "DISTRIBUTED",
+    "packageType" : "LIBRARY",
+    "sourceRoot" : "",
+    "hasIssues" : false,
+    "defaultLicenses" : [ {
+      "foundInFileScope" : "LICENSE.txt",
+      "license" : "Apache-2.0",
+      "licenseTextInArchive" : "Maven%org.apache.logging.log4j%log4j-core%2.13.3%LICENSE.txt.Apache-2.0",
+      "hasIssues" : false
+    } ],
+    "defaultCopyrights" : [ ],
+    "unifiedCopyrights" : [ "Copyright (c) 2017 public", "Copyright 1999-2005 The Apache Software Foundation", "Copyright 1999-2012 Apache Software Foundation", "Copyright 1999-2017 Apache Software Foundation", "Copyright 2002-2012 Ramnivas Laddad, Juergen Hoeller, Chris Beams", "Copyright 2004 Jason Paul Kitchen", "Copyright 2005-2006 Tim Fennell", "Copyright 2011 LMAX Ltd.", "Copyright 2015 Apache Software Foundation", "Copyright 2017 Remko Popma", "Copyright Terracotta, Inc." ],
+    "fileLicensings" : [ {
+      "fileScope" : "log4j-core/src/test/java/org/apache/logging/dumbster/smtp/SmtpMessage.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-api/src/main/java/org/apache/logging/log4j/message/ParameterizedMessage.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      }, {
+        "license" : "LGPL-2.0-or-later",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-core/src/test/java/org/apache/logging/dumbster/smtp/SmtpResponse.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-core/src/test/java/org/apache/logging/dumbster/smtp/SimpleSmtpServer.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-core/src/test/java/org/apache/logging/dumbster/smtp/SmtpActionType.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-core/src/test/java/org/apache/logging/dumbster/smtp/SmtpRequest.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-core/src/test/java/org/apache/logging/dumbster/smtp/SmtpState.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "pom.xml",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      }, {
+        "license" : "MIT",
+        "licenseTextInArchive" : null
+      }, {
+        "license" : "MIT",
+        "licenseTextInArchive" : null
+      }, {
+        "license" : "MIT",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    }, {
+      "fileScope" : "log4j-perf/src/main/java/org/apache/logging/log4j/perf/nogc/ParameterizedMessage.java",
+      "fileLicenses" : [ {
+        "license" : "Apache-2.0",
+        "licenseTextInArchive" : null
+      }, {
+        "license" : "LGPL-2.0-or-later",
+        "licenseTextInArchive" : null
+      } ],
+      "fileCopyrights" : [ ]
+    } ]
+  }, {
+    "pid" : "hamcrest-core",
+    "release" : "1.3",
+    "repository" : "ssh://git@github.com/hamcrest/JavaHamcrest.git",
+    "id" : "Maven:org.hamcrest:hamcrest-core:1.3",
+    "distribution" : "DISTRIBUTED",
+    "packageType" : "LIBRARY",
+    "sourceRoot" : "",
+    "hasIssues" : true,
+    "issues" : {
+      "warnings" : [ {
+        "id" : "W01",
+        "message" : "Declared license: <BSD-3-Clause> is instanced license - no license text provided!"
+      } ]
+    },
+    "defaultLicenses" : [ {
+      "foundInFileScope" : "[DECLARED]",
+      "license" : "BSD-3-Clause",
+      "hasIssues" : false
+    } ],
+    "defaultCopyrights" : [ ],
+    "unifiedCopyrights" : [ "Copyright (c) 2000-2006 hamcrest.org", "Copyright (c) 2000-2009 hamcrest.org", "Copyright (c) 2000-2010 hamcrest.org" ]
+  } ]
+}

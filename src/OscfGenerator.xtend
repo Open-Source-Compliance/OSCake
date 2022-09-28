@@ -16,6 +16,9 @@ package de.oscake.strict.generator
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.String;
+import java.util.*;  
+import java.util.stream.*;  
 
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
@@ -29,7 +32,10 @@ import de.oscake.strict.oscf.ComplianceArtifactSetMIT
 import de.oscake.strict.oscf.ComplianceArtifactSetBSD2Clause
 import de.oscake.strict.oscf.ComplianceArtifactSetBSD3Clause
 import de.oscake.strict.oscf.ComplianceArtifactSetApache20
-import de.oscake.strict.oscf.MultiplyUsableFossLicense
+import de.oscake.strict.oscf.ComplianceArtifactSetEpl10
+import de.oscake.strict.oscf.ComplianceArtifactSetEpl20
+import de.oscake.strict.oscf.ComplianceArtifactSetLgpl20
+import de.oscake.strict.oscf.ComplianceArtifactSetLgpl21
 
 /**
  * Generates code from your model files on save.
@@ -41,6 +47,16 @@ class OscfGenerator extends AbstractGenerator {
   
 val String notDeliverable="-> can not be included in this copy/portion of the software";
 val String notInOrigRepo="neither part of the file nor part of the original repository";
+
+/*
+ * This is a hack! 
+ * 
+ * TODO: at the end this must be determined by an external configuration file
+ */
+val String absRepoPath="/home/kreincke/data.dsl";
+val String muLicenseDir="multiply.usable.licenses";
+
+val List<String> muLicenseSet = new ArrayList<String>();
 
 override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
  val cac = resource.contents.head as ComplianceArtifactCollection;
@@ -58,10 +74,17 @@ def CharSequence toCode(ComplianceArtifactCollection cac, String mtab) '''
 # Open Source Compliance File for the package «cac.cacid» 
 ## 0.) About this file:
 
-Based on the data container `«cac.cacContPath»` of type: «cac.cacContType», 
-the Open Source Compliance Artifacts of and for the program collection 
-**«cac.cacid»** have been gathered into the *Open Source Compliance File*
-`«cac.cacid+'.oscf.md'»`. «IF  moreMeta(cac)»This OSCF ...
+This *Open Source Compliance File* 
+`«cac.cacid+'.oscf.md'»`
+valid of and for the program collection 
+**«cac.cacid»** 
+has been compiled on the base  of the case specific data repository 
+`«absRepoPath»/«cac.cacContDir»` 
+containing the case specific files gathered by ORT and the OSCake 
+collection of multiply usable license files 
+«absRepoPath»/«muLicenseDir»
+
+«IF  moreMeta(cac)»This OSCF ...
       
 «IF ( cac.cacComposer !== null)»* was compiled by «cac.cacComposer»,«ENDIF»
 «IF ( cac.cacReleaseDate !== null )»* was released at «cac.cacReleaseDate»,«ENDIF»
@@ -94,7 +117,7 @@ the Open Source Compliance Artifacts of and for the program collection
   «IF ((oter=0)==0)»«ENDIF»
   «FOR dcas : pkg.casl»
 «mtab+mtab»- Compliance artifacts for the «(oter+=1).toString». default licensing statement 
-«insertCas(dcas,mtab+mtab+mtab,cac.cacContPath,cac.cacContType)»
+«insertCas(dcas,mtab+mtab+mtab,cac.cacContDir)»
   «ENDFOR»
   «FOR scasl : pkg.dirComplianceArtifactSets»
 «mtab»- Scope: DIR
@@ -102,7 +125,7 @@ the Open Source Compliance Artifacts of and for the program collection
     «IF ((oter=0)==0)»«ENDIF»
     «FOR cas : scasl.dcasl»
 «mtab+mtab»- Compliance artifacts for the «(oter+=1).toString». licensing statement in dir *«scasl.dpath»*: 
-«insertCas(cas, mtab+mtab+mtab,cac.cacContPath,cac.cacContType)»
+«insertCas(cas, mtab+mtab+mtab,cac.cacContDir)»
     «ENDFOR»
   «ENDFOR»
   «FOR scasl : pkg.fileComplianceArtifactSets»
@@ -111,23 +134,24 @@ the Open Source Compliance Artifacts of and for the program collection
     «IF ((oter=0)==0)»«ENDIF»
     «FOR cas : scasl.fcasl»
 «mtab+mtab»- Compliance artifacts for the «(oter+=1).toString». licensing statement in file *«scasl.fpath»*:  
-«insertCas(cas, mtab+mtab+mtab,cac.cacContPath,cac.cacContType)»
+«insertCas(cas, mtab+mtab+mtab,cac.cacContDir)»
     «ENDFOR»
   «ENDFOR»
   
 «ENDFOR»  
 «ENDIF»
 
-«IF ( cac.multiplyUsableFossLicenses !== null && cac.multiplyUsableFossLicenses.length > 0)»
-«IF ((oter=0)==0)»«ENDIF»
-## 4.) Multiply used license texts:
-  «FOR lic : cac.multiplyUsableFossLicenses»
-<a name=«clearId(lic.spdxId)»></a>
-### 4.«(oter+=1).toString» «lic.spdxId» License Text
-«quoteFileContent(lic.lfPath,"GeneralLicRepo","GeneralLicRepoType") »
-  «ENDFOR»  
-«ENDIF»
+«var int lter=0»
+## 4.) Multiply Usable License Texts
+«Collections.sort(muLicenseSet)»
+«FOR String lic : muLicenseSet»
+### 4.«(lter+=1).toString» «lic» License Text:
+«quoteFileContent(absRepoPath,muLicenseDir,lic.toLowerCase() +".md")»
+«ENDFOR»
+
 '''
+
+
 
 def boolean moreMeta(ComplianceArtifactCollection cac) {
   if (cac.cacComposer !== null) return true;
@@ -136,11 +160,7 @@ def boolean moreMeta(ComplianceArtifactCollection cac) {
   return false;
 }
  
-/* 
 
-
-'''
-*/
 /**
  * routes the writer to the license specific artifacts
  * 
@@ -152,16 +172,28 @@ def boolean moreMeta(ComplianceArtifactCollection cac) {
 
 
 
-def insertCas(ComplianceArtifactSet cas, String tabs, String cacContPath,String cacContType) '''
+def insertCas(ComplianceArtifactSet cas, String tabs, String cacContDir) '''
 «tabs»- LicenseID: «cas.spdxId»
+  
 «IF (cas.spdxId == '"MIT"')»
-  «insertMitCas(tabs,cas.casMit,cacContPath,cacContType)»
+  «insertMitCas(tabs,cas.casMit,cacContDir)»
 «ELSEIF (cas.spdxId == '"BSD-2-Clause"')»
-  «insertBsd2clCas(tabs,cas.casBsd2Cl,cacContPath,cacContType)»
+  «insertBsd2clCas(tabs,cas.casBsd2Cl,cacContDir)»
 «ELSEIF (cas.spdxId == '"BSD-3-Clause"')»
-  «insertBsd3clCas(tabs,cas.casBsd3Cl,cacContPath,cacContType)»
+  «insertBsd3clCas(tabs,cas.casBsd3Cl,cacContDir)»
 «ELSEIF (cas.spdxId == '"Apache-2.0"')»
-  «insertApache20Cas(tabs,cas,cacContPath,cacContType)»
+  «insertApache20Cas(tabs,cas.casApache20,cacContDir)»
+«ELSEIF (cas.spdxId == '"EPL-1.0"')»
+  «insertEpl10Cas(tabs,cas.casEpl10,cacContDir)»
+«ELSEIF (cas.spdxId == '"EPL-2.0"')»
+   «insertEpl20Cas(tabs,cas.casEpl20,cacContDir)»
+ «ELSEIF ( (cas.spdxId == '"LGPL-2.0-or-later"')
+        || (cas.spdxId == '"LGPL-2.0"'))»
+   «insertLgpl20Cas(tabs,cas.casLgpl20,cacContDir
+   )» 
+«ELSEIF ( (cas.spdxId == '"LGPL-2.1-or-later"')
+         || (cas.spdxId == '"LGPL-1.0"'))»
+   «insertLgpl21Cas(tabs,cas.casLgpl21,cacContDir)»
 «ELSEIF (cas.spdxId == '"noassertion"')»
   «insertNoAssertCas(tabs)»
 «ELSE»«insertUnknownCas(tabs)»
@@ -179,22 +211,26 @@ def insertCas(ComplianceArtifactSet cas, String tabs, String cacContPath,String 
  * 
  * @param lmtab the indentation string (due to the md-quotations we must manage this manually) 
  * @param cas the set of compliance artifacts required by the MIT
- * @param cacContPath the path of the collection container 
+ * @param cacContDir the path of the collection container 
  * @param cacContType the type of the collection container ("zip" | "dir")
  */
 def String insertMitCas(
     String lmtab,
     ComplianceArtifactSetMIT cas,
-    String cacContPath,
-    String cacContType
+    String cacContDir
   ) '''
 «IF (cas.lfPath == 'null')»
 «lmtab»- LicenseText: «notInOrigRepo» «notDeliverable»
+«ELSEIF  ((cas.lfPath == '911')||(cas.lfPath == '"911"')) »
+ORT has reported an issue concerning this file.
+Please curate that issue on ORT level.
 
+THIS OSCF MUST NOT BE DISTRIBUTED IN THIS FORM!
 «ELSE»
 «lmtab»- LicenseText:
-«quoteFileContent(cas.lfPath,cacContPath,cacContType)»
+«quoteFileContent(absRepoPath,cacContDir,cas.lfPath)»
 «ENDIF»
+«toMuLicenseSet("MIT",cas.ltype)»
 '''
 
 /**
@@ -202,22 +238,27 @@ def String insertMitCas(
  * 
  * @param lmtab the indentation string (due to the md-quotations we must manage this manually) 
  * @param cas the set of compliance artifacts required by the BSD-2-Clause
- * @param cacContPath the path of the collection container 
+ * @param cacContDir the path of the collection container 
  * @param cacContType the type of the collection container ("zip" | "dir")
  */
 def String insertBsd2clCas(
     String lmtab,
     ComplianceArtifactSetBSD2Clause cas,
-    String cacContPath,
-    String cacContType
+    String cacContDir
   ) '''
 «IF (cas.lfPath == 'null')»
 «lmtab»- LicenseText: «notInOrigRepo» «notDeliverable»
+«ELSEIF  ((cas.lfPath == '911')||(cas.lfPath == '"911"')) »
+ORT has reported an issue concerning this file.
+Please curate that issue on ORT level.
+
+THIS OSCF MUST NOT BE DISTRIBUTED IN THIS FORM!
 
 «ELSE»
 «lmtab»- LicenseText:
-«quoteFileContent(cas.lfPath,cacContPath,cacContType)»
+«quoteFileContent(absRepoPath,cacContDir,cas.lfPath)»
 «ENDIF»
+«toMuLicenseSet("BSD-2-Clause",cas.ltype)»
 '''  
 
 
@@ -226,22 +267,27 @@ def String insertBsd2clCas(
  * 
  * @param lmtab the indentation string (due to the md-quotations we must manage this manually) 
  * @param cas the set of compliance artifacts required by the BSD-3-Clause license
- * @param cacContPath the path of the collection container 
+ * @param cacContDir the path of the collection container 
  * @param cacContType the type of the collection container ("zip" | "dir")
  */
 def String insertBsd3clCas(
     String lmtab,
     ComplianceArtifactSetBSD3Clause cas,
-    String cacContPath,
-    String cacContType
+    String cacContDir
   ) '''
 «IF (cas.lfPath == 'null')»
 «lmtab»- LicenseText: «notInOrigRepo» «notDeliverable»
+«ELSEIF  ((cas.lfPath == '911')||(cas.lfPath == '"911"')) »
+ORT has reported an issue concerning this file.
+Please curate that issue on ORT level.
+
+THIS OSCF MUST NOT BE DISTRIBUTED IN THIS FORM!
 
 «ELSE»
 «lmtab»- LicenseText:
-«quoteFileContent(cas.lfPath,cacContPath,cacContType)»
+«quoteFileContent(absRepoPath,cacContDir,cas.lfPath)»
 «ENDIF»
+«toMuLicenseSet("BSD-3-Clause",cas.ltype)»
 ''' 
 
 /**
@@ -249,25 +295,93 @@ def String insertBsd3clCas(
  * 
  * @param lmtab the indentation string (due to the md-quotations we must manage this manually) 
  * @param cas the set of compliance artifacts required by the Apache-2.0 license
- * @param cacContPath the path of the collection container 
+ * @param cacContDir the path of the collection container 
  * @param cacContType the type of the collection container ("zip" | "dir")
  */
 
 def String insertApache20Cas(
     String lmtab,
-    ComplianceArtifactSet cas,
-    String cacContPath,
-    String cacContType
+    ComplianceArtifactSetApache20 cas,
+    String cacContDir
   ) '''
-«lmtab»- LicenseText: see [«cas.spdxId»](«clearId(cas.spdxId)»)
-«IF (cas.casApache20 == 'null')»
-«lmtab»- NoticeFile: «lmtab»- LicenseText: «notInOrigRepo» «notDeliverable»
+«lmtab»- LicenseText: see [Apache20](Apache20)
+
+«IF (cas.nfPath == 'null')»
+  «lmtab»- NoticeFile: «lmtab»- LicenseText: «notInOrigRepo» «notDeliverable»
+
+«ELSEIF  ((cas.nfPath == '911')||(cas.nfPath == '"911"')) »
+ORT has reported an issue concerning this file.
+Please curate that issue on ORT level.
+
+THIS OSCF MUST NOT BE DISTRIBUTED IN THIS FORM!
 
 «ELSE»
 «lmtab»- NoticeFile: 
-«quoteFileContent(cas.casApache20.nfPath,cacContPath,cacContType)»
+«quoteFileContent(absRepoPath,cacContDir,cas.nfPath)»
 «ENDIF»
+«toMuLicenseSet("Apache-2.0",cas.ltype)»
 ''' 
+
+
+/**
+ * inserts the artifacts required my the Eclipse Public License 1.0
+ * 
+ * @param lmtab the indentation string (due to the md-quotations we must manage this manually) 
+ * @param cas the set of compliance artifacts required by the Apache-2.0 license
+ * @param cacContDir the path of the collection container 
+ * @param cacContType the type of the collection container ("zip" | "dir")
+ */
+
+def String insertEpl10Cas(
+    String lmtab,
+    ComplianceArtifactSetEpl10 cas,
+    String cacContDir
+  ) '''
+«lmtab»- LicenseText: see [EPL-1.0](EPL-1.0)
+«toMuLicenseSet("EPL-1.0",cas.ltype)»
+''' 
+
+/**
+ * inserts the artifacts required my the Eclipse Public License 2.0
+ * 
+ * @param lmtab the indentation string (due to the md-quotations we must manage this manually) 
+ * @param cas the set of compliance artifacts required by the Apache-2.0 license
+ * @param cacContDir the path of the collection container 
+ * @param cacContType the type of the collection container ("zip" | "dir")
+ */
+
+def String insertEpl20Cas(
+    String lmtab,
+    ComplianceArtifactSetEpl20 cas,
+    String cacContDir
+  ) '''
+«lmtab»- LicenseText: see [EPL-2.0](EPL-2.0)
+''' 
+/**
+ * inserts the artifacts required my the Lgpl 2.x
+ * 
+ * @param lmtab the indentation string (due to the md-quotations we must manage this manually) 
+ * @param cas the set of compliance artifacts required by the Apache-2.0 license
+ * @param cacContDir the path of the collection container 
+ * @param cacContType the type of the collection container ("zip" | "dir")
+ */
+
+def String insertLgpl20Cas(
+    String lmtab,
+    ComplianceArtifactSetLgpl20 cas,
+    String cacContDir
+  ) '''
+«lmtab»- LicenseText: see [LGPL-2.0](LGPL-2.0)
+''' 
+
+def String insertLgpl21Cas(
+    String lmtab,
+    ComplianceArtifactSetLgpl21 cas,
+    String cacContDir
+  ) '''
+«lmtab»- LicenseText: see [LGPL-2.1](LGPL-2.1)
+''' 
+
 
 /**
  * reacts on an unclear license assertion
@@ -277,7 +391,7 @@ def String insertApache20Cas(
 def String insertNoAssertCas(
     String lmtab
   ) '''
-«lmtab»- ERROR. OSDF must not be delivered in this form. 'No-Assertion' of the scanning tool must be clarified manually!
+«lmtab»- ERROR. OSCF must not be delivered in this form. 'No-Assertion' of the scanning tool must be clarified manually!
 
 '''
 
@@ -310,16 +424,24 @@ def String clearId(String istr) {
  * 
  * @todo implement getting the file and inserting its content
  */
-def String quoteFileContent(String filePath, String repoPath, String repoType) '''
+def String quoteFileContent(String absRepoPath, String repoDir,String fileName) '''
 
 ```
-«quoteFileInArchive(filePath, repoPath,repoType)»
+«quoteFileInArchive(absRepoPath,repoDir,fileName)»
 ```
 
 '''
 
-def String quoteFileInArchive(String filePath, String repoPath, String repoType) {
-  val String absFilePath=repoPath+"/"+filePath;
+def void toMuLicenseSet(String lname, String ltype) {
+  
+  if (ltype=='"multiply-usable"') {
+    if (!(muLicenseSet.contains(lname)))
+      muLicenseSet.add(lname);
+  }
+}
+
+def String quoteFileInArchive(String absRepoPath, String repoDir,String fileName) {
+  val String absFilePath=absRepoPath+"/"+repoDir+"/"+fileName;
 
   var File file = new File(absFilePath);
   if (!file.canRead() || !file.isFile()) 

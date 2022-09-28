@@ -6,8 +6,8 @@
     "author" : "OSCake-Deduplicator",
     "release" : "0.1",
     "date" : "2022-09-14T14:55:31.274949500",
-    "archivePath" : "/home/kreincke/data.dsl/" ,
-    "archiveType" : "DIR"
+    "archivePath" : "./tdosca-tc10_curated_resolved_selected_metadata_dedup.zip",
+    "archiveType" : "ZIP"
   },
   "complianceArtifactPackages" : [ {
     "pid" : "tdosca-tc10",
