@@ -96,6 +96,7 @@ So, existing Open Source scan tools create large lists of compliance entities th
   - copy `examples/tc05/tc05.oscc` from the OSCake repository to `$HOME/ews.dsl/ews.osc/tc/src/`
   - inside of  `$HOME/data.dsl` create a directory with the name of the zip-file without the extension = `tc05`
   - inside of `$HOME/data.dsl/tc05` unzip the  zip file `examples/tc05/tc05.zip`
+  - copy the directories `examples/multiply.usable.licenses` and examples `company.specific.snippets` (including their content) to `$HOME/data.dsl`
 19. Inside of Eclipse press key F5
 20. Exec the following steps to test a complete round trip from oscc via oscf to oscf.md:
   - open `tc05.oscf`
@@ -104,6 +105,14 @@ So, existing Open Source scan tools create large lists of compliance entities th
   - open `tc05.oscf`
   - insert a blank outside of the code and save the file (that triggers the automatical generation of tc05.oscf.md)
   - open `tc05.oscf.md`
+
+### About the other use cases
+
+The directory `examples` in the *OSCake-Repository* also contains other test cases. Each of them consists of
+- the *OSCC* file, created by ORT on the base of the data it has gathered
+- a zip-File - also created by ORT - which contains some additional data - also gathered by ORT - which are necessary to create the respective *OSCF* file.
+
+These cases can be used / evaluated in the same manner as tc05 has been activated in *OSCake*
 
 ### About some traps
 
