@@ -78,11 +78,11 @@ So, existing Open Source scan tools create large lists of compliance entities th
   - `cp src/OscfGenerator.xtend $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/generator/`
 9. Create a directory `$HOME/data.dsl`
 10. Open the file `$HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/generator/OscfGenerator.xtend` and set the value `absRepoPath` to the absolute(!) path of the created *data.dsl-directory*
-11. Inside of your Eclipse, recall `run as/Generate XText Artifacts` from the context menu of the replaced file *src/de.oscake.strict/Oscf.Xtext* and *src/de.oscake.weak/Oscc.Xtext*
-12. Touch the `oscf` project with your alternative mouse key, select `properties`, open `Run/Debug Settings,` and do this
+11. Restart Eclipse and recall `run as/Generate XText Artifacts` from the context menu of the replaced files *src/de.oscake.strict/Oscf.Xtext* and *src/de.oscake.weak/Oscc.Xtext*
+12. Touch the `de.oscake.strict` project with your alternative mouse key, select `properties`, open `Run/Debug Settings,` and do this
   - Duplicate the item 'Launch Runtime Eclipse'
   - Edit the created item
-  - set its name to osc
+  - set its name to ews.osc
   - set the value of *Location* to `${workspace_loc}/../ews.osc`
 13. Call `run as/Eclipse Application` from the context menu of *de.oscake.strict* and select the created *osc*-configuration in the dialog *select a launch configuration to run*
 14. Create a new Java project named 'tc' (testcase)
