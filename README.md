@@ -1,3 +1,4 @@
+<!-- LTeX:Language=en-US -->
 <h1 align="center">
     OSCake : Open Source Compliance artifact knowledge engine
 </h1>
@@ -25,8 +26,7 @@ The goal of the OSCake project is to develop an XTEXT / XTEND based intelligent 
 
 * creates the one **O**pen **S**ource **C**ompliance **F**ile that - if distributed together with package collection - assures that the package collection is distributed compliantly = in accordance with the requirements of the involved licenses.
 
-**The point of OSCake is, that the (legal, licenses specific and architectural) knowledge which Open Source compliance artifacts have to be created and bundled with a product to distribute it compliantly
-is inherently embedded into a set of two Domain Specific Languages defined and evaluated by XText and XTend.**
+**The point of OSCake is, that the (legal, licenses specific and architectural) knowledge which Open Source compliance artifacts have to be created and bundled with a product to distribute it compliantly is inherently embedded into a set of two Domain Specific Languages defined and evaluated by XText and XTend.**
 
 ## About this component
 
@@ -68,10 +68,8 @@ So, existing Open Source scan tools create large lists of compliance entities th
     - Project name: `de.oscake.weak`
     - Language name: `de.oscake.weak.Oscc`
     - Extensions: `oscc`
-7. Inside of your Eclipse, select the context menu in the language editor and call `run as/Generate XText Artifacts`. The language editor has automatically  opened the newly create language definition files (if not, open them manually):
-  - *src/de.oscake.strict/Oscf.Xtext*
-  - *src/de.oscake.weak/Oscc.Xtext*
-8. Stop Eclipse and copy the following files from the OSCake repository to the eclipse working directory using the normal file system:
+7. After having done so, the Eclipse Language editor should have automatically opened the newly create language definition files (if not, open them manually: *src/de.oscake.strict/Oscf.Xtext* and *src/de.oscake.weak/Oscc.Xtext*) In each of these opened windows, select the context menu in the language editor and call `run as/Generate XText Artifacts`. 
+9.  Stop Eclipse and copy the following files from the OSCake repository to the eclipse working directory using the normal file system:
   - `cp src/Oscc.xtext $HOME/ews.dsl/ews.xtx/de.oscake.weak/src/de/oscake/weak/`
   - `cp src/OsccGenerator.xtend $HOME/ews.dsl/ews.xtx/de.oscake.weak/src/de/oscake/weak/generator/`
   - `cp src/Oscf.xtext $HOME/ews.dsl/ews.xtx/de.oscake.strict/src/de/oscake/strict/`
