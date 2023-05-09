@@ -1,6 +1,6 @@
 <!-- LTeX:Language=en-US -->
 <h1 align="center">
-    OSCake : Open Source Compliance artifact knowledge engine
+    OSCake : An Open Source Compliance artifact knowledge engine
 </h1>
 
 <p align="center">
